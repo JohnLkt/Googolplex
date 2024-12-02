@@ -11,6 +11,32 @@ export interface User {
   user_class_member: UserClassMember[]
 }
 
+export interface RegisterCredentials {
+  userName: string
+  email: string
+  password: string
+}
+
+export interface RegisterResponse {
+  status: number
+  message: string
+  data: {
+    access_token: string
+  }
+}
+
+export interface LoginCredentials {
+  email: string
+  password: string
+}
+
+export interface LoginResponse {
+  status: number
+  message: string
+  data: {
+    access_token: string
+  }
+}
 export interface Notification {
   id?: string
   title: string

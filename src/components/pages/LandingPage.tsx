@@ -1,7 +1,19 @@
+import { useState } from 'react'
+import LoginForm from '../organisms/Login'
+import RegisterForm from '../organisms/Register'
+
 function Landing() {
+  const [authMode, setAuthMode] = useState(false)
   return (
     <div className="bg-primary text-accent text-3xl font-plusJakarta font-bold max-mobile:text-secondary">
-      this is Landing. try npm run lint
+      {authMode ? <RegisterForm /> : <LoginForm />}
+      <button
+        onClick={() => {
+          setAuthMode(!authMode)
+        }}
+      >
+        Change Mode
+      </button>
     </div>
   )
 }
