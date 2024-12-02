@@ -1,7 +1,11 @@
 import React, { useState } from 'react'
 import { useLogin } from '../../api/queries/Auth'
+import { useAuthContext } from '../../contexts/AuthContext'
+import { useNavigate } from 'react-router'
 
 const LoginForm: React.FC = () => {
+  const { setAuthState } = useAuthContext()
+  const navigate = useNavigate()
   const {
     mutate: register,
     isPending,
@@ -28,7 +32,11 @@ const LoginForm: React.FC = () => {
     e.preventDefault()
     register(formData, {
       onSuccess: (response) => {
-        console.log('Registration successful:', response.data)
+        console.log('Registration successful:', response?.data)
+        const data = response?.data?.data
+
+        setAuthState('accessToken', data?.access_token)
+        navigate('/dashboard')
       },
       onError: (err) => {
         console.error('Registration failed:', err)
