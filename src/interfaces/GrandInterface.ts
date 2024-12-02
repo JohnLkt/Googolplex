@@ -48,7 +48,7 @@ export interface Article {
   id?: string
   title: string
   content: string
-  posts: Post[]
+  post: Post
 }
 
 export interface Assignment {
@@ -56,7 +56,7 @@ export interface Assignment {
   title: string
   content: string
   due_date: string
-  posts: Post[]
+  post: Post
 }
 
 export interface Post {
