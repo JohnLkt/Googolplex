@@ -5,7 +5,7 @@ import RegisterForm from '../organisms/Register'
 function Landing() {
   const [authMode, setAuthMode] = useState(false)
   return (
-    <div className="bg-primary text-accent text-3xl font-plusJakarta font-bold max-mobile:text-secondary">
+    <div className="text-primary text-3xl font-plusJakarta font-bold max-mobile:text-secondary">
       {authMode ? <RegisterForm /> : <LoginForm />}
       <button
         onClick={() => {
