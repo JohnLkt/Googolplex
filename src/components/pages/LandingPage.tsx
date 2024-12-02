@@ -1,7 +1,6 @@
 import { useState } from 'react'
 import LoginForm from '../organisms/Login'
 import RegisterForm from '../organisms/Register'
-import ClassTitle from '../atoms/ClassTitle'
 
 function Landing() {
   const [authMode, setAuthMode] = useState(false)
@@ -15,7 +14,6 @@ function Landing() {
       >
         Change Mode
       </button>
-      <ClassTitle subject="LB40 English Tutor" />
     </div>
   )
 }
