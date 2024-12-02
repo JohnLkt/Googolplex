@@ -4,16 +4,29 @@ import {
   AuthContextInterface,
   ChildrenProps,
 } from '../interfaces/AuthContextInterface'
+import { jwtDecode } from 'jwt-decode'
 
 export const initialState: AuthContextInterface = {
   accessToken: null,
+  userId: null,
   username: null,
   email: null,
+  profilePicture: null,
+  isSet: false,
 }
 
 export type AuthContextType = {
   authState: AuthContextInterface
   setAuthState: (key: keyof AuthContextInterface, value: string) => void
+}
+
+export type jwtPayload = {
+  id: string
+  email: string
+  name: string
+  picture: string
+  iat: number
+  exp: number
 }
 
 export const AuthContext = createContext<AuthContextType | null>(null)
@@ -38,12 +51,27 @@ export const AuthProvider = ({
     }
   }
 
+  const finishedSettingState = (value: boolean): void => {
+    setState((prevState) => ({
+      ...prevState,
+      ['isSet']: value,
+    }))
+  }
+
   useEffect(() => {
     if (!authState.accessToken) {
-      const access_token: string | null = localStorage.getItem('access_token')
-      setAuthState('accessToken', access_token)
+      const accessToken: string | null = localStorage.getItem('accessToken')
+      if (accessToken) {
+        const decodedToken = jwtDecode<jwtPayload>(accessToken)
+        setAuthState('accessToken', accessToken)
+        setAuthState('username', decodedToken?.name)
+        setAuthState('email', decodedToken?.email)
+        setAuthState('profilePicture', decodedToken?.picture)
+        setAuthState('userId', decodedToken?.id)
+
+        finishedSettingState(true)
+      }
     }
-    console.log(authState, 'authState')
   }, [authState])
 
   return (

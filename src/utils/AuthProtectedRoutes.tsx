@@ -3,9 +3,12 @@ import { useAuthContext } from '../contexts/AuthContext'
 
 const ProtectedRoutes: React.FC = () => {
   const { authState } = useAuthContext()
-  const isAuthenticated =
-    !!authState?.accessToken && authState?.accessToken?.length > 0
-  return isAuthenticated ? <Outlet /> : <Navigate to="/" replace />
+  if (authState.isSet) {
+    const isAuthenticated =
+      !!authState?.accessToken && authState?.accessToken?.length > 0
+    return isAuthenticated ? <Outlet /> : <Navigate to="/" replace />
+  }
+  return null
 }
 
 export default ProtectedRoutes
