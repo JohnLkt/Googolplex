@@ -1,36 +1,20 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { useLogin } from '../../api/queries/Auth'
 import { useAuthContext } from '../../contexts/AuthContext'
 import { useNavigate } from 'react-router'
+import { Form, Formik } from 'formik'
+import * as Yup from 'yup'
+import { LoginCredentials } from '../../interfaces/GrandInterface'
+import Input from '../molecules/Input'
 
 const LoginForm: React.FC = () => {
   const { setAuthState } = useAuthContext()
   const navigate = useNavigate()
-  const {
-    mutate: register,
-    isPending,
-    isError,
-    error,
-    isSuccess,
-    data,
-  } = useLogin()
 
-  const [formData, setFormData] = useState({
-    email: '',
-    password: '',
-  })
+  const { mutate: register, isPending } = useLogin()
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target
-    setFormData((prev) => ({
-      ...prev,
-      [name]: value,
-    }))
-  }
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
-    register(formData, {
+  const handleSubmit = (values: LoginCredentials) => {
+    register(values, {
       onSuccess: (response) => {
         console.log('Registration successful:', response?.data)
         const data = response?.data?.data
@@ -44,38 +28,37 @@ const LoginForm: React.FC = () => {
     })
   }
 
+  const LoginSchema = Yup.object().shape({
+    email: Yup.string().email('Invalid email').required('Required'),
+    password: Yup.string()
+      .min(2, 'Too Short!')
+      .max(20, 'Too Long!')
+      .required('Required'),
+  })
+
   return (
-    <form onSubmit={handleSubmit}>
-      <div>
-        <label>
-          Email:
-          <input
-            type="email"
-            name="email"
-            value={formData.email}
-            onChange={handleInputChange}
-            required
-          />
-        </label>
-      </div>
-      <div>
-        <label>
-          Password:
-          <input
-            type="password"
-            name="password"
-            value={formData.password}
-            onChange={handleInputChange}
-            required
-          />
-        </label>
-      </div>
-      <button type="submit" disabled={isPending}>
-        {isPending ? 'Logging in...' : 'Login'}
-      </button>
-      {isError && <p>Error: {(error as Error).message}</p>}
-      {isSuccess && <p>Success: {data?.data.message}</p>}
-    </form>
+    <Formik<LoginCredentials>
+      initialValues={{ email: '', password: '' }}
+      validationSchema={LoginSchema}
+      onSubmit={(values) => {
+        handleSubmit(values)
+      }}
+      validateOnChange={true}
+      validateOnBlur={true}
+    >
+      <Form>
+        <Input name="email" type="text" label="Email" placeholder="Email" />
+        <Input
+          name="password"
+          type="password"
+          label="Password"
+          placeholder="Password"
+        />
+        <button type="submit" disabled={isPending}>
+          {isPending ? 'Submitting...' : 'Submit'}
+        </button>
+      </Form>
+    </Formik>
   )
 }
 

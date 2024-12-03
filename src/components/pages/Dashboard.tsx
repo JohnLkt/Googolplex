@@ -1,7 +1,7 @@
 import { useAuthContext } from '../../contexts/AuthContext'
 
 function Dashboard() {
-  const { authState } = useAuthContext()
+  const { authState, LogOut } = useAuthContext()
   return (
     <div className="bg-red-400">
       this is dashboard
@@ -13,6 +13,13 @@ function Dashboard() {
           src={authState?.profilePicture || 'https://placehold.co/600x400'}
         ></img>
       </div>
+      <button
+        onClick={() => {
+          LogOut()
+        }}
+      >
+        Log Out
+      </button>
     </div>
   )
 }

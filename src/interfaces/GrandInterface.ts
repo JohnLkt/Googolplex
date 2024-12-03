@@ -96,3 +96,9 @@ export interface Post {
   class_id: string
   assignment_id: string
 }
+export interface ChildrenProps {
+  children?: React.ReactNode | React.ReactElement
+}
+export interface ChildrenPropsWithClassName extends ChildrenProps {
+  className?: string
+}
