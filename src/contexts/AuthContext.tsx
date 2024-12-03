@@ -58,18 +58,14 @@ export const AuthProvider = ({
   }
 
   useEffect(() => {
-    if (!authState.accessToken) {
-      const accessToken: string | null = localStorage.getItem('accessToken')
-      if (accessToken) {
-        const decodedToken = jwtDecode<jwtPayload>(accessToken)
-        setAuthState('accessToken', accessToken)
-        setAuthState('username', decodedToken?.name)
-        setAuthState('email', decodedToken?.email)
-        setAuthState('profilePicture', decodedToken?.picture)
-        setAuthState('userId', decodedToken?.id)
-      }
+    if (authState.accessToken) {
+      const decodedToken = jwtDecode<jwtPayload>(authState.accessToken)
+      setAuthState('username', decodedToken?.name)
+      setAuthState('email', decodedToken?.email)
+      setAuthState('profilePicture', decodedToken?.picture)
+      setAuthState('userId', decodedToken?.id)
     }
-  }, [authState])
+  }, [authState.accessToken])
 
   return (
     <AuthContext.Provider value={{ authState, setAuthState, LogOut }}>
