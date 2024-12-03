@@ -33,7 +33,7 @@ function Dashboard() {
   return (
     <div>
       <div className="flex flex-col bg-primary">
-        <div className="flex gap-3 bg-primary p-6 border-b-2 border-accent sticky top-0">
+        <div className="flex gap-3 bg-primary p-6 border-b-2 border-accent sticky top-0 z-30">
           <div className="flex-1 flex flex-row space-x-4 items-center">
             <button
               onClick={() => {
@@ -63,7 +63,7 @@ function Dashboard() {
         <div className="flex flex-row">
           <div
             id="navbar"
-            className={`transition-all duration-300 ${
+            className={`z-20 transition-all duration-300 ${
               navbarWiden ? 'w-1/5 max-mobile:w-1/3' : 'w-16'
             } bg-primary p-4 border-r-2 border-accent overflow-auto`}
           >
