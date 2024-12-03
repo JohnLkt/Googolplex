@@ -10,6 +10,7 @@ import {
   faPeopleGroup,
   faPlus,
 } from '@fortawesome/free-solid-svg-icons'
+import ParticlesBackground from '../molecules/Particles'
 
 library.add(
   faCheckSquare,
@@ -29,78 +30,83 @@ function Dashboard() {
   const [classEnrolled, setClassEnrolled] = useState('')
 
   return (
-    <div className="flex flex-col bg-primary">
-      <div className="flex gap-3 bg-primary p-6 border-b border-accent sticky top-0">
-        <div className="flex-1 flex flex-row space-x-4 items-center">
-          <button
-            onClick={() => {
-              setNavbarWiden(!navbarWiden)
-              setClassEnrolled('')
-              setClassTeaching('')
-              if (!navbarWiden) {
-                setClassEnrolled('Class Enrolled')
-                setClassTeaching('Class Teaching')
-              }
-            }}
-          >
-            <FontAwesomeIcon icon="bars" className="text-accent text-xl" />
-          </button>
-          <div className="font-plusJakarta font-bold text-2xl text-accent">
-            Googolplex
-          </div>
-        </div>
-        <div className="flex flex-row space-x-4 items-center">
-          <button>
-            <FontAwesomeIcon icon="plus" className="text-accent text-2xl" />
-          </button>
-          <div className=" w-8 h-8 bg-accent rounded-full"></div>
-        </div>
-      </div>
-
-      <div className="flex flex-row h-screen">
-        <div
-          className={`transition-all duration-300 ${
-            navbarWiden ? 'w-1/5' : 'w-16'
-          } bg-primary p-4 border-r border-accent`}
-        >
-          <div className="flex flex-col space-y-4">
-            <div className="flex flex-row space-x-2">
-              <FontAwesomeIcon
-                icon="people-group"
-                className="text-accent text-xl"
-              />
-              <div className="font-plusJakarta text-sm font-medium text-accent">
-                {classTeaching}
-              </div>
-            </div>
-            <div className="flex flex-row space-x-2">
-              <FontAwesomeIcon
-                icon="graduation-cap"
-                className="text-accent text-xl"
-              />
-              <div className="font-plusJakarta text-sm font-medium text-accent">
-                {classEnrolled}
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Content Area */}
-        <div className={` ${navbarWiden ? 'w-4/5' : 'flex-1'} bg-primary p-6`}>
-          <div className="flex flex-col">
-            <div className="text-xl font-plusJakarta font-medium text-accent">
-              Welcome, {authState!.username}
-            </div>
+    <div>
+      <div className="flex flex-col bg-primary">
+        <div className="flex gap-3 bg-primary p-6 border-b border-accent sticky top-0">
+          <div className="flex-1 flex flex-row space-x-4 items-center">
             <button
               onClick={() => {
-                LogOut()
+                setNavbarWiden(!navbarWiden)
+                setClassEnrolled('')
+                setClassTeaching('')
+                if (!navbarWiden) {
+                  setClassEnrolled('Class Enrolled')
+                  setClassTeaching('Class Teaching')
+                }
               }}
             >
-              Log Out
+              <FontAwesomeIcon icon="bars" className="text-accent text-xl" />
             </button>
+            <div className="font-plusJakarta font-bold text-2xl text-accent">
+              Googolplex
+            </div>
+          </div>
+          <div className="flex flex-row space-x-4 items-center">
+            <button>
+              <FontAwesomeIcon icon="plus" className="text-accent text-2xl" />
+            </button>
+            <div className=" w-8 h-8 bg-accent rounded-full"></div>
+          </div>
+        </div>
+
+        <div className="flex flex-row h-screen">
+          <div
+            className={`transition-all duration-300 ${
+              navbarWiden ? 'w-1/5' : 'w-16'
+            } bg-primary p-4 border-r border-accent`}
+          >
+            <div className="flex flex-col space-y-4">
+              <div className="flex flex-row space-x-2">
+                <FontAwesomeIcon
+                  icon="people-group"
+                  className="text-accent text-xl"
+                />
+                <div className="font-plusJakarta text-sm font-medium text-accent">
+                  {classTeaching}
+                </div>
+              </div>
+              <div className="flex flex-row space-x-2">
+                <FontAwesomeIcon
+                  icon="graduation-cap"
+                  className="text-accent text-xl"
+                />
+                <div className="font-plusJakarta text-sm font-medium text-accent">
+                  {classEnrolled}
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Content Area */}
+          <div
+            className={` ${navbarWiden ? 'w-4/5' : 'flex-1'} bg-primary p-6`}
+          >
+            <div className="flex flex-col">
+              <div className="text-xl font-plusJakarta font-medium text-accent">
+                Welcome, {authState!.username}
+              </div>
+              <button
+                onClick={() => {
+                  LogOut()
+                }}
+              >
+                Log Out
+              </button>
+            </div>
           </div>
         </div>
       </div>
+      <ParticlesBackground />
     </div>
   )
 }
