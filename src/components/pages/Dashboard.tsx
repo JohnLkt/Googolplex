@@ -25,8 +25,8 @@ function Dashboard() {
 
   const [navbarWiden, setNavbarWiden] = useState(false)
 
-  const [classTeaching, setClassTeaching] = useState('Class Teaching')
-  const [classEnrolled, setClassEnrolled] = useState('Class Enrolled')
+  const [classTeaching, setClassTeaching] = useState('')
+  const [classEnrolled, setClassEnrolled] = useState('')
 
   return (
     <div className="flex flex-col bg-primary">
@@ -89,7 +89,7 @@ function Dashboard() {
         <div className={` ${navbarWiden ? 'w-4/5' : 'flex-1'} bg-primary p-6`}>
           <div className="flex flex-col">
             <div className="text-xl font-plusJakarta font-medium text-accent">
-              Welcome, {authState?.username}
+              Welcome, {authState!.username}
             </div>
             <button
               onClick={() => {
