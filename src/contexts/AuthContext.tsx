@@ -1,23 +1,22 @@
 /* eslint-disable react-refresh/only-export-components */
 import { createContext, useContext, useEffect, useState } from 'react'
-import {
-  AuthContextInterface,
-  ChildrenProps,
-} from '../interfaces/AuthContextInterface'
+import { AuthContextInterface } from '../interfaces/AuthContextInterface'
+import { ChildrenProps } from '../interfaces/GrandInterface'
 import { jwtDecode } from 'jwt-decode'
+import { useNavigate } from 'react-router'
 
 export const initialState: AuthContextInterface = {
-  accessToken: null,
-  userId: null,
-  username: null,
-  email: null,
-  profilePicture: null,
-  isSet: false,
+  accessToken: localStorage.getItem('accessToken'),
+  userId: localStorage.getItem('userId'),
+  username: localStorage.getItem('username'),
+  email: localStorage.getItem('email'),
+  profilePicture: localStorage.getItem('profilePicture'),
 }
 
 export type AuthContextType = {
   authState: AuthContextInterface
   setAuthState: (key: keyof AuthContextInterface, value: string) => void
+  LogOut: () => void
 }
 
 export type jwtPayload = {
@@ -34,6 +33,7 @@ export const AuthContext = createContext<AuthContextType | null>(null)
 export const AuthProvider = ({
   children,
 }: ChildrenProps): React.ReactElement => {
+  const navigate = useNavigate()
   const [authState, setState] = useState<AuthContextInterface>(initialState)
 
   const setAuthState = (
@@ -51,11 +51,10 @@ export const AuthProvider = ({
     }
   }
 
-  const finishedSettingState = (value: boolean): void => {
-    setState((prevState) => ({
-      ...prevState,
-      ['isSet']: value,
-    }))
+  const LogOut = (): void => {
+    localStorage.clear()
+    setState(initialState)
+    navigate('/')
   }
 
   useEffect(() => {
@@ -68,14 +67,12 @@ export const AuthProvider = ({
         setAuthState('email', decodedToken?.email)
         setAuthState('profilePicture', decodedToken?.picture)
         setAuthState('userId', decodedToken?.id)
-
-        finishedSettingState(true)
       }
     }
   }, [authState])
 
   return (
-    <AuthContext.Provider value={{ authState, setAuthState }}>
+    <AuthContext.Provider value={{ authState, setAuthState, LogOut }}>
       {children}
     </AuthContext.Provider>
   )

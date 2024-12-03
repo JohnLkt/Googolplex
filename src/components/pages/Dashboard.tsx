@@ -21,7 +21,7 @@ library.add(
 )
 
 function Dashboard() {
-  const { authState } = useAuthContext()
+  const { authState, LogOut } = useAuthContext()
 
   const [navbarWiden, setNavbarWiden] = useState(false)
 
@@ -91,6 +91,13 @@ function Dashboard() {
             <div className="text-xl font-plusJakarta font-medium text-accent">
               Welcome, {authState?.username}
             </div>
+            <button
+              onClick={() => {
+                LogOut()
+              }}
+            >
+              Log Out
+            </button>
           </div>
         </div>
       </div>
