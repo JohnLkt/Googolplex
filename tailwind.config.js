@@ -9,7 +9,7 @@ export default {
         laptop: '1000px',
       },
       colors: {
-        primary: '#292421',
+        primary: '#020150',
         secondary: '#7DF9FF',
         accent: '#F1F1F2',
       },
