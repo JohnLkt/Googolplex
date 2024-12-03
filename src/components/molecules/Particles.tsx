@@ -86,7 +86,7 @@ const ParticlesBackground = () => {
 
   if (!init) return null // Avoid rendering until initialization is complete
 
-  return <Particles options={particlesOptions} />
+  return <Particles className="z-0" options={particlesOptions} />
 }
 
 export default ParticlesBackground
