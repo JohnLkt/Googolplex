@@ -53,8 +53,8 @@ function Dashboard() {
             </div>
           </div>
           <div className="flex flex-row space-x-4 items-center">
-            <button>
-              <FontAwesomeIcon icon="plus" className="text-accent text-2xl" />
+            <button className="w-8 h-8 rounded-full text-accent focus:text-primary border-2 border-transparent hover:border-accent focus:border-transparent focus:bg-accent hover:scale-120 transition ease-in-out">
+              <FontAwesomeIcon icon="plus" />
             </button>
             <div className=" w-8 h-8 bg-accent rounded-full"></div>
           </div>

@@ -11,26 +11,39 @@ function Landing() {
   return (
     <div className="font-plusJakarta z-10">
       <ParticlesBackground />
-      <div className="w-full h-screen grid grid-rows-2 grid-cols-1 md:grid-rows-1 md:grid-cols-2">
-        <CenteredContainer className="bg-primary">
-          <div className="flex flex-col gap-10 w-2/3">
-            {/* <h1 className="text-6xl text-accent font-bold pb-4">
-              Manage your educational pursuit with Googolplex
-            </h1> */}
-            <LandingTitle />
+      <div className="w-full h-screen grid grid-cols-1 grid-rows-none lg:grid-rows-1 lg:grid-cols-2">
+        <CenteredContainer className="bg-primary h-screen lg:h-auto">
+          <div className="flex flex-col py-4 w-2/3">
+            <LandingTitle
+              title="Manage your educational pursuit with Googolplex"
+              textColor="text-accent mb-8 max-mobile:mb-4"
+            />
             <ActionDarkButton actionText={'Get Started'}></ActionDarkButton>
           </div>
         </CenteredContainer>
-        <CenteredContainer className="bg-accent">
-          <div className="w-3/5 bg-slate-500 p-4">
+        <CenteredContainer className="bg-accent z-20 flex flex-col h-screen lg:h-auto">
+          <div className="w-3/5 py-4 z-20">
+            <LandingTitle
+              title="Find out how Googolplex helps you achieve your dreams"
+              textColor="text-primary mb-8 max-mobile:mb-4"
+            />
             {authMode ? <RegisterForm /> : <LoginForm />}
-            <button
-              onClick={() => {
-                setAuthMode(!authMode)
-              }}
-            >
-              Change Mode
-            </button>
+
+            <div className="flex flex-row space-x-1 mt-2 items-center text-sm">
+              {authMode ? (
+                <div>Don't have an account?</div>
+              ) : (
+                <div>Have registered before?</div>
+              )}
+              <button
+                className="underline"
+                onClick={() => {
+                  setAuthMode(!authMode)
+                }}
+              >
+                {authMode ? 'Log in' : 'Register'}
+              </button>
+            </div>
           </div>
         </CenteredContainer>
       </div>

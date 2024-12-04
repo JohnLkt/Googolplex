@@ -1,7 +1,7 @@
 import React from 'react'
 import { Field, FieldProps, useFormikContext } from 'formik'
-import HelperText from '../atoms/HelperText'
-import ErrorText from '../atoms/ErrorText'
+// import HelperText from '../atoms/HelperText'
+// import ErrorText from '../atoms/ErrorText'
 
 interface InputProps {
   name: string
@@ -17,12 +17,12 @@ const Input: React.FC<InputProps> = ({
   type,
   label,
   placeholder,
-  helper,
+  // helper,
 }) => {
   const { setFieldValue } = useFormikContext()
 
   return (
-    <div className="mb-6">
+    <div className="mb-3">
       <label htmlFor={name} className="block text-sm font-medium text-primary">
         {label}
       </label>
@@ -33,18 +33,22 @@ const Input: React.FC<InputProps> = ({
               {...field}
               id={name}
               type={type}
-              className="block w-full p-2 mt-1 rounded-md border-primary shadow-sm text-base sm:text-sm"
-              placeholder={placeholder}
+              className="block w-full p-3 mt-1 rounded-md border-primary shadow-sm text-base max-mobile:text-sm"
+              placeholder={
+                meta.touched && meta.error
+                  ? 'This is a required field'
+                  : placeholder
+              }
               onBlur={(e) => {
                 const finalValue = e.target.value.trim()
                 setFieldValue(name, finalValue)
               }}
             />
-            {meta.touched && meta.error ? (
+            {/* {meta.touched && meta.error ? (
               <ErrorText className="absolute">{meta.error}</ErrorText>
             ) : (
               <HelperText className="absolute">{helper}</HelperText>
-            )}
+            )} */}
           </>
         )}
       </Field>
