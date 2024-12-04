@@ -47,7 +47,7 @@ function Landing() {
           </div>
         </CenteredContainer>
       </div>
-      <div>Footer</div>
+      <div>Footer div</div>
     </div>
   )
 }
