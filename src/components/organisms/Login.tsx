@@ -6,6 +6,7 @@ import { Form, Formik } from 'formik'
 import * as Yup from 'yup'
 import { LoginCredentials } from '../../interfaces/GrandInterface'
 import Input from '../molecules/Input'
+import AuthTitle from '../atoms/AuthTitle'
 
 const LoginForm: React.FC = () => {
   const { setAuthState } = useAuthContext()
@@ -46,15 +47,25 @@ const LoginForm: React.FC = () => {
       validateOnChange={true}
       validateOnBlur={true}
     >
-      <Form>
-        <Input name="email" type="text" label="Email" placeholder="Email" />
+      <Form className="flex flex-col space-y-3">
+        <AuthTitle title="Log in now to continue the grind" />
+        <Input
+          name="email"
+          type="text"
+          label="Email"
+          placeholder="Please enter a valid email"
+        />
         <Input
           name="password"
           type="password"
           label="Password"
-          placeholder="Password"
+          placeholder="Please enter a valid password"
         />
-        <button type="submit" disabled={isPending}>
+        <button
+          type="submit"
+          className="w-full bg-gradient-to-r from-primary to-secondary p-3 rounded-md font-bold text-sm text-accent"
+          disabled={isPending}
+        >
           {isPending ? 'Submitting...' : 'Submit'}
         </button>
       </Form>

@@ -6,6 +6,7 @@ import { Form, Formik } from 'formik'
 import * as Yup from 'yup'
 import { RegisterCredentials } from '../../interfaces/GrandInterface'
 import Input from '../molecules/Input'
+import AuthTitle from '../atoms/AuthTitle'
 
 const RegisterForm: React.FC = () => {
   const { setAuthState } = useAuthContext()
@@ -45,21 +46,31 @@ const RegisterForm: React.FC = () => {
       validateOnChange={true}
       validateOnBlur={true}
     >
-      <Form>
+      <Form className="flex flex-col space-y-3">
+        <AuthTitle title="Register now to chase your dreams" />
         <Input
           name="username"
           type="text"
           label="Username"
-          placeholder="Username"
+          placeholder="Please enter a valid username"
         />
-        <Input name="email" type="text" label="Email" placeholder="Email" />
+        <Input
+          name="email"
+          type="text"
+          label="Email"
+          placeholder="Please enter a valid email"
+        />
         <Input
           name="password"
           type="password"
           label="Password"
-          placeholder="Password"
+          placeholder="Please enter a valid password"
         />
-        <button type="submit" disabled={isPending}>
+        <button
+          type="submit"
+          className="w-full bg-gradient-to-r from-primary to-secondary p-3 rounded-md font-bold text-sm text-accent"
+          disabled={isPending}
+        >
           {isPending ? 'Submitting...' : 'Submit'}
         </button>
       </Form>
