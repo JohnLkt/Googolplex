@@ -1,6 +1,15 @@
+import { useEffect } from 'react'
 import ClassCard from '../molecules/ClassCard'
 
-export default function ClassGrid() {
+interface ClassGridProps {
+  classType: string
+}
+
+export default function ClassGrid({ classType }: ClassGridProps) {
+  useEffect(() => {
+    console.log('class type: ', classType)
+  }, [classType])
+
   return (
     <div className="py-6 flex flex-wrap gap-8">
       <ClassCard />

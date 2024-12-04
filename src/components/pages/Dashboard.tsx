@@ -9,9 +9,11 @@ import {
   faHome,
   faPeopleGroup,
   faPlus,
+  faHomeAlt,
 } from '@fortawesome/free-solid-svg-icons'
 import ParticlesBackground from '../molecules/Particles'
 import ClassGrid from '../organisms/ClassGrid'
+import NavbarItem from '../organisms/NavbarItem'
 
 library.add(
   faCheckSquare,
@@ -19,33 +21,23 @@ library.add(
   faGraduationCap,
   faHome,
   faPeopleGroup,
-  faPlus
+  faPlus,
+  faHomeAlt
 )
 
 function Dashboard() {
-  const { authState, LogOut } = useAuthContext()
+  const { authState } = useAuthContext()
 
   const [navbarWiden, setNavbarWiden] = useState(false)
 
-  const [classTeaching, setClassTeaching] = useState('')
-  const [classEnrolled, setClassEnrolled] = useState('')
+  const [navbarItemSelected, setNavbarItemSelected] = useState('')
 
   return (
     <div>
       <div className="flex flex-col bg-primary">
         <div className="flex gap-3 bg-primary p-6 border-b-2 border-accent sticky top-0 z-30">
           <div className="flex-1 flex flex-row space-x-4 items-center">
-            <button
-              onClick={() => {
-                setNavbarWiden(!navbarWiden)
-                setClassEnrolled('')
-                setClassTeaching('')
-                if (!navbarWiden) {
-                  setClassEnrolled('Class Enrolled')
-                  setClassTeaching('Class Teaching')
-                }
-              }}
-            >
+            <button onClick={() => setNavbarWiden(!navbarWiden)}>
               <FontAwesomeIcon icon="bars" className="text-accent text-xl" />
             </button>
             <div className="font-plusJakarta font-bold text-2xl text-accent">
@@ -63,30 +55,40 @@ function Dashboard() {
         <div className="flex flex-row">
           <div
             id="navbar"
+            onMouseEnter={() => setNavbarWiden(true)}
+            onMouseLeave={() => setNavbarWiden(false)}
             className={`z-20 transition-all duration-300 ${
               navbarWiden ? 'w-1/5 max-mobile:w-1/3' : 'w-16'
             } bg-primary p-4 border-r-2 border-accent overflow-auto`}
           >
-            <div className="flex flex-col space-y-4">
-              <div className="flex flex-row space-x-2">
-                <FontAwesomeIcon
-                  icon="people-group"
-                  className="text-accent text-xl"
-                />
-                <div className="font-plusJakarta text-sm font-medium text-accent">
-                  {classTeaching}
-                </div>
-              </div>
-
-              <div className="flex flex-row space-x-2">
-                <FontAwesomeIcon
-                  icon="graduation-cap"
-                  className="text-accent text-xl"
-                />
-                <div className="font-plusJakarta text-sm font-medium text-accent">
-                  {classEnrolled}
-                </div>
-              </div>
+            <div className="flex flex-col space-y-6">
+              <NavbarItem
+                navbarTitle="Home"
+                navbarWiden={navbarWiden}
+                handleClick={() => {
+                  setNavbarWiden(!navbarWiden)
+                  setNavbarItemSelected('Home')
+                }}
+                iconItem="home-alt"
+              />
+              <NavbarItem
+                navbarTitle="Class Enrolled"
+                navbarWiden={navbarWiden}
+                handleClick={() => {
+                  setNavbarWiden(!navbarWiden)
+                  setNavbarItemSelected('Class Enrolled')
+                }}
+                iconItem="graduation-cap"
+              />
+              <NavbarItem
+                navbarTitle="Class Teaching"
+                navbarWiden={navbarWiden}
+                handleClick={() => {
+                  setNavbarWiden(!navbarWiden)
+                  setNavbarItemSelected('Class Teaching')
+                }}
+                iconItem="people-group"
+              />
             </div>
           </div>
 
@@ -98,14 +100,13 @@ function Dashboard() {
               <div className="text-xl font-plusJakarta font-medium text-accent">
                 Welcome, {authState!.username}
               </div>
-              <ClassGrid />
-              <button
-                onClick={() => {
-                  LogOut()
-                }}
-              >
-                Log Out
-              </button>
+              {navbarItemSelected == 'Class Enrolled' ? (
+                <ClassGrid classType="enrolled" />
+              ) : navbarItemSelected == 'Class Teaching' ? (
+                <ClassGrid classType="teaching" />
+              ) : (
+                <ClassGrid classType="all" />
+              )}
             </div>
           </div>
         </div>
