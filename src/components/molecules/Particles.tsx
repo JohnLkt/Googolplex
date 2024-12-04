@@ -1,92 +1,82 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo } from 'react'
 import Particles, { initParticlesEngine } from '@tsparticles/react'
 import { loadSlim } from '@tsparticles/slim' // For a lightweight bundle
 import { MoveDirection, OutMode } from '@tsparticles/engine'
-// You can replace this with loadFull, loadAll, or other loaders if needed.
 
 const ParticlesBackground = () => {
-  const [init, setInit] = useState(false)
-
   useEffect(() => {
-    // Initialize the particles engine
-    initParticlesEngine(async (engine) => {
-      await loadSlim(engine) // Loads the slim version of tsParticles
-      setInit(true) // Marks initialization as complete
-    })
+    // Initialize the particles engine once
+    initParticlesEngine(loadSlim)
   }, [])
 
-  const particlesOptions = {
-    fullScreen: {
-      enable: true,
-    },
-    fpsLimit: 120,
-    interactivity: {
-      events: {
-        onClick: {
-          enable: true,
-          mode: 'push',
-        },
-        onHover: {
-          enable: true,
-          mode: 'grab',
-          distance: 300,
-        },
+  // Use useMemo to memoize the particles configuration
+  const particlesOptions = useMemo(
+    () => ({
+      fullScreen: {
+        enable: true,
       },
-      modes: {
-        push: {
-          quantity: 4,
+      fpsLimit: 120,
+      interactivity: {
+        events: {
+          onClick: {
+            enable: true,
+            mode: 'push',
+          },
+          onHover: {
+            enable: true,
+            mode: 'grab',
+            distance: 300,
+          },
         },
-        grab: {
-          distance: 300, // Distance within which particles are attracted to the cursor
-          links: {
-            opacity: 0.7, // Opacity of the link during the grab interaction
+        modes: {
+          push: {
+            quantity: 4,
+          },
+          grab: {
+            distance: 300,
+            lineLinked: {
+              opacity: 0.5,
+            },
           },
         },
       },
-    },
-    particles: {
-      color: {
-        value: '#f1f1f2',
-      },
-      links: {
-        color: '#f1f1f2',
-        distance: 150,
-        enable: true,
-        opacity: 0.8,
-        width: 1,
-      },
-      move: {
-        direction: MoveDirection.none,
-        enable: true,
-        outModes: {
-          default: OutMode.out,
-        },
-        random: false,
-        speed: 1,
-        straight: false,
-      },
-      number: {
-        density: {
+      particles: {
+        color: { value: '#ffffff' },
+        links: {
           enable: true,
+          distance: 150,
+          color: '#ffffff',
+          opacity: 0.5,
+          width: 1,
         },
-        value: 150,
+        move: {
+          direction: MoveDirection.none,
+          enable: true,
+          outModes: OutMode.bounce,
+          random: false,
+          speed: 2,
+          straight: false,
+        },
+        number: {
+          density: { enable: true, area: 800 },
+          value: 150,
+        },
+        opacity: {
+          value: 0.5,
+        },
+        shape: {
+          type: 'circle',
+        },
+        size: {
+          value: { min: 1, max: 3 },
+        },
       },
-      opacity: {
-        value: 0.5,
-      },
-      shape: {
-        type: 'circle',
-      },
-      size: {
-        value: { min: 1, max: 3 },
-      },
-    },
-    detectRetina: true,
-  }
+      detectRetina: true,
+    }),
+    [] // Dependencies array ensures the memoized object doesn't change
+  )
 
-  if (!init) return null // Avoid rendering until initialization is complete
-
-  return <Particles className="z-0" options={particlesOptions} />
+  return <Particles options={particlesOptions} />
 }
 
 export default ParticlesBackground

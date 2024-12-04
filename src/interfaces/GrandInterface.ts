@@ -17,6 +17,11 @@ export interface RegisterCredentials {
   password: string
 }
 
+export interface FormCreateClass {
+  classSubject: string
+  classDesc: string
+}
+
 export interface RegisterResponse {
   status: number
   message: string
