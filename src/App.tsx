@@ -4,14 +4,14 @@ import ProtectedRoutes from './utils/AuthProtectedRoutes'
 import Dashboard from './components/pages/Dashboard'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { AuthProvider } from './contexts/AuthContext'
-import { NavbarProvider } from './contexts/NavbarContext'
+import { SidebarProvider } from './contexts/SidebarContext'
 
 function App() {
   const queryClient = new QueryClient()
   // implement Routing Here
   return (
-    <NavbarProvider>
-      <AuthProvider>
+    <AuthProvider>
+      <SidebarProvider>
         <QueryClientProvider client={queryClient}>
           <Routes>
             {/* Public Routes */}
@@ -23,8 +23,8 @@ function App() {
             </Route>
           </Routes>
         </QueryClientProvider>
-      </AuthProvider>
-    </NavbarProvider>
+      </SidebarProvider>
+    </AuthProvider>
   )
 }
 

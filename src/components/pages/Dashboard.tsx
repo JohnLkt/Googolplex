@@ -1,4 +1,3 @@
-import { useState } from 'react'
 import { useAuthContext } from '../../contexts/AuthContext'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { library } from '@fortawesome/fontawesome-svg-core'
@@ -13,8 +12,8 @@ import {
 } from '@fortawesome/free-solid-svg-icons'
 import ParticlesBackground from '../molecules/Particles'
 import ClassGrid from '../organisms/ClassGrid'
-import Navbars from '../organisms/Navbars'
-import { useNavbar } from '../../hooks/useNavbar'
+import Sidebar from '../organisms/Sidebar'
+import { useSidebar } from '../../hooks/useSidebar'
 
 library.add(
   faCheckSquare,
@@ -29,16 +28,14 @@ library.add(
 function Dashboard() {
   const { authState } = useAuthContext()
 
-  const [navbarWiden, setNavbarWiden] = useState(false)
-
-  const { navbarItemSelected } = useNavbar()
+  const { sidebarItemSelected, sidebarWiden, setSidebarWiden } = useSidebar()
 
   return (
-    <div>
-      <div className="flex flex-col bg-primary">
+    <div className="w-full h-screen">
+      <div className="flex flex-col bg-primary h-full">
         <div className="flex gap-3 bg-primary p-6 border-b-2 border-accent sticky top-0 z-30">
           <div className="flex-1 flex flex-row space-x-4 items-center">
-            <button onClick={() => setNavbarWiden(!navbarWiden)}>
+            <button onClick={() => setSidebarWiden(!sidebarWiden)}>
               <FontAwesomeIcon icon="bars" className="text-accent text-xl" />
             </button>
             <div className="font-plusJakarta font-bold text-2xl text-accent">
@@ -53,20 +50,20 @@ function Dashboard() {
           </div>
         </div>
 
-        <div className="flex flex-row">
-          <Navbars />
+        <div className="h-full flex flex-row">
+          <Sidebar />
 
           {/* Content Area */}
           <div
-            className={`overflow-y-auto ${navbarWiden ? 'w-4/5' : 'flex-1'} bg-primary p-6`}
+            className={`overflow-y-auto ${sidebarWiden ? 'w-4/5' : 'flex-1'} bg-primary p-6`}
           >
             <div className="flex flex-col">
               <div className="text-xl font-plusJakarta font-medium text-accent">
                 Welcome, {authState!.username}
               </div>
-              {navbarItemSelected == 'Class Enrolled' ? (
+              {sidebarItemSelected == 'Class Enrolled' ? (
                 <ClassGrid classType="enrolled" />
-              ) : navbarItemSelected == 'Class Teaching' ? (
+              ) : sidebarItemSelected == 'Class Teaching' ? (
                 <ClassGrid classType="teaching" />
               ) : (
                 <ClassGrid classType="all" />

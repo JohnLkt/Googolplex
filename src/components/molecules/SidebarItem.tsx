@@ -1,25 +1,27 @@
 import { IconProp } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
-interface NavbarItemProps {
-  navbarTitle: string
-  navbarWiden: boolean
+interface SidebarItemProps {
+  sidebarTitle: string
+  sidebarWiden: boolean
   iconItem: IconProp
   handleClick: () => void
 }
 
-export default function NavbarItem({ ...navbarProp }: NavbarItemProps) {
+export default function SidebarItem({
+  sidebarTitle,
+  sidebarWiden,
+  iconItem,
+  handleClick,
+}: SidebarItemProps) {
   return (
     <div
-      onClick={navbarProp.handleClick}
+      onClick={handleClick}
       className="cursor-pointer flex flex-row space-x-3 items-center"
     >
-      <FontAwesomeIcon
-        icon={navbarProp.iconItem}
-        className="text-accent text-xl"
-      />
+      <FontAwesomeIcon icon={iconItem} className="text-accent text-xl" />
       <div className="hover:underline text-nowrap font-plusJakarta text-sm font-medium text-accent">
-        {navbarProp.navbarWiden ? navbarProp.navbarTitle : ''}
+        {sidebarWiden ? sidebarTitle : ''}
       </div>
     </div>
   )
