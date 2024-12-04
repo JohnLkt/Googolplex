@@ -14,6 +14,7 @@ import ParticlesBackground from '../molecules/Particles'
 import ClassGrid from '../organisms/ClassGrid'
 import Sidebar from '../organisms/Sidebar'
 import { useSidebar } from '../../hooks/useSidebar'
+import { useState } from 'react'
 
 library.add(
   faCheckSquare,
@@ -26,9 +27,10 @@ library.add(
 )
 
 function Dashboard() {
-  const { authState } = useAuthContext()
+  const { authState, LogOut } = useAuthContext()
 
   const { sidebarItemSelected, sidebarWiden, setSidebarWiden } = useSidebar()
+  const [showProfileOptions, setShowProfileOptions] = useState(false)
 
   return (
     <div className="w-full h-screen">
@@ -46,11 +48,37 @@ function Dashboard() {
             <button className="w-8 h-8 rounded-full text-accent focus:text-primary border-2 border-transparent hover:border-accent focus:border-transparent focus:bg-accent hover:scale-120 transition ease-in-out">
               <FontAwesomeIcon icon="plus" />
             </button>
-            <div className=" w-8 h-8 bg-accent rounded-full"></div>
+            <button
+              onClick={() => {
+                setShowProfileOptions(!showProfileOptions)
+              }}
+            >
+              <img
+                src={authState.profilePicture || ''}
+                alt={'Profile Picture'}
+                width={'32px'}
+                height={'32px'}
+              />
+            </button>
           </div>
         </div>
 
-        <div className="h-full flex flex-row">
+        <div className="h-full flex flex-row relative">
+          {showProfileOptions && (
+            <div className="absolute z-20 bg-white right-2 top-2 w-64 rounded-lg overflow-hidden">
+              <button className="hover:bg-slate-300 p-4 font-semibold w-full text-left">
+                Edit Profile
+              </button>
+              <button
+                className="hover:bg-slate-300 p-4 text-red-500 font-semibold w-full text-left"
+                onClick={() => {
+                  LogOut()
+                }}
+              >
+                Logout
+              </button>
+            </div>
+          )}
           <Sidebar />
 
           {/* Content Area */}
