@@ -18,6 +18,7 @@ import { useState } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { FormCreateClass } from '../../interfaces/GrandInterface'
 import { useCreateClass } from '../../api/queries/Class'
+import { useCreateUserClassMember } from '../../api/queries/UserClassMember'
 
 library.add(
   faCheckSquare,
@@ -42,6 +43,9 @@ function Dashboard() {
   // useform
   const { register, handleSubmit } = useForm<FormCreateClass>()
   const { mutate: createClass } = useCreateClass(authState.accessToken)
+  const { mutate: createUserClassMember } = useCreateUserClassMember(
+    authState.accessToken
+  )
   const onSubmit: SubmitHandler<FormCreateClass> = (data) => {
     console.log('data class subject: ', data.classSubject)
     console.log('data class desc: ', data.classDesc)
@@ -50,9 +54,21 @@ function Dashboard() {
       onSuccess: (response) => {
         const msg = response.data.message
         console.log(msg)
+        const classId = response.data.data.id
+        const userId = authState.userId
 
-        setCreateClassModal(false)
-        setShowClassOptions(false)
+        createUserClassMember(
+          { classId: classId, isTeacher: true, userId: userId! },
+          {
+            onSuccess: (response) => {
+              const msg = response.data.message
+              console.log(msg)
+            },
+            onError: (err) => {
+              console.error('error create user class member', err)
+            },
+          }
+        )
       },
       onError: (err) => {
         console.error('error create class', err)

@@ -1,3 +1,9 @@
+export interface GenericResponse<T> {
+  status: number
+  message: string
+  data: T
+}
+
 export interface User {
   id?: string
   email: string
@@ -64,15 +70,15 @@ export interface Class {
 }
 
 export interface UserClassMember {
-  id?: string
+  id: string
   is_teacher: boolean
   created_at: string
   updated_at: string
   class_id: string
   user_id: string
 
-  class: Class
-  user: User
+  // class: Class
+  // user: User
 }
 
 export interface Article {
