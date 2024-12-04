@@ -4,24 +4,27 @@ import ProtectedRoutes from './utils/AuthProtectedRoutes'
 import Dashboard from './components/pages/Dashboard'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { AuthProvider } from './contexts/AuthContext'
+import { NavbarProvider } from './contexts/NavbarContext'
 
 function App() {
   const queryClient = new QueryClient()
   // implement Routing Here
   return (
-    <AuthProvider>
-      <QueryClientProvider client={queryClient}>
-        <Routes>
-          {/* Public Routes */}
-          <Route path="/" element={<Landing />} />
+    <NavbarProvider>
+      <AuthProvider>
+        <QueryClientProvider client={queryClient}>
+          <Routes>
+            {/* Public Routes */}
+            <Route path="/" element={<Landing />} />
 
-          {/* Protected by Auth */}
-          <Route element={<ProtectedRoutes />}>
-            <Route path="/dashboard" element={<Dashboard />} />
-          </Route>
-        </Routes>
-      </QueryClientProvider>
-    </AuthProvider>
+            {/* Protected by Auth */}
+            <Route element={<ProtectedRoutes />}>
+              <Route path="/dashboard" element={<Dashboard />} />
+            </Route>
+          </Routes>
+        </QueryClientProvider>
+      </AuthProvider>
+    </NavbarProvider>
   )
 }
 
