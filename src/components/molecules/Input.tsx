@@ -33,7 +33,7 @@ const Input: React.FC<InputProps> = ({
               {...field}
               id={name}
               type={type}
-              className="block w-full p-3 mt-1 rounded-md border-primary shadow-sm text-base sm:text-sm"
+              className="block w-full p-3 mt-1 rounded-md border-primary shadow-sm text-base max-mobile:text-sm"
               placeholder={
                 meta.touched && meta.error
                   ? 'This is a required field'
