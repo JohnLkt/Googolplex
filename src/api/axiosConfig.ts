@@ -19,13 +19,15 @@ export const authInstanceById = (id: string) =>
     },
   })
 
-export const classInstance = axios.create({
-  baseURL: `${backendAPIUrl}/class`,
-  headers: {
-    accept: '*/*',
-    'Content-Type': 'application/json',
-  },
-})
+export const classInstance = (token: string) =>
+  axios.create({
+    baseURL: `${backendAPIUrl}/class`,
+    headers: {
+      accept: '*/*',
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+    },
+  })
 
 export const classInstanceById = (id: string) =>
   axios.create({
@@ -36,53 +38,62 @@ export const classInstanceById = (id: string) =>
     },
   })
 
-export const notifInstance = axios.create({
-  baseURL: `${backendAPIUrl}/notification`,
-  headers: {
-    accept: '*/*',
-    'Content-Type': 'application/json',
-  },
-})
+export const notifInstance = (token: string) =>
+  axios.create({
+    baseURL: `${backendAPIUrl}/notification`,
+    headers: {
+      accept: '*/*',
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+    },
+  })
 
-export const notifInstanceById = (id: string) =>
+export const notifInstanceById = (id: string, token: string) =>
   axios.create({
     baseURL: `${backendAPIUrl}/notification/${id}`,
     headers: {
       accept: '*/*',
       'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
     },
   })
 
-export const userClassMemberInstance = axios.create({
-  baseURL: `${backendAPIUrl}/user_class_member`,
-  headers: {
-    accept: '*/*',
-    'Content-Type': 'application/json',
-  },
-})
+export const userClassMemberInstance = (token: string) =>
+  axios.create({
+    baseURL: `${backendAPIUrl}/user_class_member`,
+    headers: {
+      accept: '*/*',
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+    },
+  })
 
-export const userClassMemberInstanceById = (id: string) =>
+export const userClassMemberInstanceById = (id: string, token: string) =>
   axios.create({
     baseURL: `${backendAPIUrl}/user_class_member/${id}`,
     headers: {
       accept: '*/*',
       'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
     },
   })
 
-export const articleInstance = axios.create({
-  baseURL: `${backendAPIUrl}/article`,
-  headers: {
-    accept: '*/*',
-    'Content-Type': 'application/json',
-  },
-})
+export const articleInstance = (token: string) =>
+  axios.create({
+    baseURL: `${backendAPIUrl}/article`,
+    headers: {
+      accept: '*/*',
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+    },
+  })
 
-export const articleInstanceById = (id: string) =>
+export const articleInstanceById = (id: string, token: string) =>
   axios.create({
     baseURL: `${backendAPIUrl}/article/${id}`,
     headers: {
       accept: '*/*',
       'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
     },
   })

@@ -3,7 +3,7 @@ import ClassTitle from '../atoms/ClassTitle'
 
 export default function ClassCard() {
   return (
-    <div className="z-10 cursor-pointer w-64 h-64 rounded-xl border-2 border-accent p-4 bg-primary hover:shadow-secondary hover:shadow-lg transition ease-in-out">
+    <div className="z-10 cursor-pointer w-64 h-64 rounded-xl border-2 border-accent p-4 hover:scale-105 bg-primary hover:shadow-secondary hover:shadow-lg transition ease-in-out">
       <div className="flex flex-col space-y-3">
         <div className="h-1/4 flex flex-col space-y-3">
           <ClassTitle subject="Introduction to Algorithm" />
