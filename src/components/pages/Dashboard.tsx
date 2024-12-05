@@ -63,6 +63,8 @@ function Dashboard() {
             onSuccess: (response) => {
               const msg = response.data.message
               console.log(msg)
+              setShowClassOptions(false)
+              setCreateClassModal(false)
             },
             onError: (err) => {
               console.error('error create user class member', err)
