@@ -49,7 +49,7 @@ const RegisterForm: React.FC = () => {
       <Form className="flex flex-col space-y-3">
         <AuthTitle title="Register now to chase your dreams" />
         <Input
-          name="username"
+          name="userName"
           type="text"
           label="Username"
           placeholder="Please enter a valid username"
