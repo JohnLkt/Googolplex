@@ -30,12 +30,14 @@ const ArticleEditor: React.FC = () => {
       {() => (
         <Form className=" p-4 bg-white">
           {/* Title Input */}
-          <Input
-            name="title"
-            type="text"
-            label="Title"
-            placeholder="Enter article title"
-          />
+          <div>
+            <Input
+              name="title"
+              type="text"
+              label="Title"
+              placeholder="Enter article title"
+            />
+          </div>
 
           {/* Article Content */}
           <RichTextEditor

@@ -22,19 +22,18 @@ const RichTextEditor = ({ name, className, label }: RichTextEditorProps) => {
   }, [quill])
 
   return (
-    <>
-      <label htmlFor={name} className="block text-sm font-medium text-primary">
-        {label}
-      </label>
+    <div className="mb-4">
+      <div className="block text-sm font-medium text-primary mb-2">{label}</div>
       <div
         onClick={() => {
           quill?.focus()
         }}
         className="hover:cursor-text"
+        id={name}
       >
         <div ref={quillRef} className={className}></div>
       </div>
-    </>
+    </div>
   )
 }
 
