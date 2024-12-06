@@ -53,7 +53,7 @@ const useQueryFetchClass = (
 
 export const useFetchClass = () => {
   const { authState } = useAuthContext()
-  const { data, isLoading, isError } = useQueryFetchClass(
+  const { data, isLoading, isError, refetch } = useQueryFetchClass(
     authState.accessToken,
     authState.userId!
   )
@@ -65,5 +65,5 @@ export const useFetchClass = () => {
     }
   }, [data])
 
-  return { classes, isLoading, isError }
+  return { classes, isLoading, isError, refetch }
 }
