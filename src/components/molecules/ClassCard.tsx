@@ -1,19 +1,23 @@
 import ClassTeacher from '../atoms/ClassTeacher'
 import ClassTitle from '../atoms/ClassTitle'
 
-export default function ClassCard() {
+interface ClassCardProps {
+  subject: string
+  description: string
+  // may be incomplete
+}
+
+export default function ClassCard({ subject, description }: ClassCardProps) {
   return (
     <div className="z-10 cursor-pointer w-64 h-64 rounded-xl p-4 hover:scale-105 bg-gradient-to-br from-primary from-40% to-secondary hover:shadow-secondary hover:shadow-lg transition ease-in-out">
       <div className="flex flex-col space-y-3">
         <div className="h-1/4 flex flex-col space-y-3">
-          <ClassTitle subject="Introduction to Algorithm" />
+          <ClassTitle subject={subject} />
           <ClassTeacher teacherName="Michael Angelo Chandra" />
         </div>
         <div className="h-3/4">
           <div className="text-sm font-plusJakarta font-light text-accent">
-            This is a class description. I made this class to teach some random
-            idiots about algorithm. It is my duty as someone educated to spread
-            algorithm literacy throughout Indonesia.
+            {description}
           </div>
         </div>
       </div>
