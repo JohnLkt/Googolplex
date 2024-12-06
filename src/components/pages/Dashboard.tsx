@@ -39,6 +39,7 @@ function Dashboard() {
   // add class, join class
   const [showClassOptions, setShowClassOptions] = useState(false)
   const [createClassModal, setCreateClassModal] = useState(false)
+  const [joinClassModal, setJoinClassModal] = useState(false)
 
   // useform
   const { register, handleSubmit } = useForm<FormCreateClass>()
@@ -135,12 +136,21 @@ function Dashboard() {
           {showClassOptions && (
             <div className="animate-fadeIn font-plusJakarta absolute z-20 bg-accent right-20 top-2 w-64 rounded-lg overflow-hidden">
               <button
-                onClick={() => setCreateClassModal(!createClassModal)}
+                onClick={() => {
+                  setCreateClassModal(!createClassModal)
+                  setShowClassOptions(false)
+                }}
                 className="hover:bg-slate-300 p-4 text-sm font-bold w-full text-left"
               >
                 Create class
               </button>
-              <button className="hover:bg-slate-300 p-4 text-sm font-bold w-full text-left">
+              <button
+                onClick={() => {
+                  setJoinClassModal(!joinClassModal)
+                  setShowClassOptions(false)
+                }}
+                className="hover:bg-slate-300 p-4 text-sm font-bold w-full text-left"
+              >
                 Join class
               </button>
             </div>
@@ -184,6 +194,35 @@ function Dashboard() {
                   </button>
                 </div>
               </form>
+            </div>
+          )}
+          {joinClassModal && (
+            <div className="animate-fadeModal z-20 fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 p-3 bg-accent shadow-md rounded-lg overflow-hidden">
+              <div
+                onSubmit={handleSubmit(onSubmit)}
+                className="flex flex-col space-y-3 justify-center items-center"
+              >
+                <div className="text-lg font-bold font-plusJakarta text-primary">
+                  Join class
+                </div>
+                <div className="flex flex-row space-x-3 items-center font-plusJakarta">
+                  <button
+                    type="submit"
+                    className="p-3 text-sm font-medium bg-primary text-accent"
+                  >
+                    Create
+                  </button>
+                  <button
+                    className="p-3 text-sm font-medium bg-secondary"
+                    onClick={() => {
+                      setJoinClassModal(false)
+                      setShowClassOptions(false)
+                    }}
+                  >
+                    Cancel
+                  </button>
+                </div>
+              </div>
             </div>
           )}
           <Sidebar />

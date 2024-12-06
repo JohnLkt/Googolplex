@@ -61,7 +61,7 @@ export interface Notification {
 }
 
 export interface Class {
-  id?: string
+  id: string
   class_code: string
   subject: string
   description: string
@@ -78,7 +78,13 @@ export interface UserClassMember {
   user_id: string
 
   // class: Class
-  // user: User
+  user: User // based on swagger, this has one-to-one relation to user
+}
+
+export interface FormCreateUserClassMember {
+  userId: string
+  classId: string
+  isTeacher: boolean
 }
 
 export interface Article {

@@ -1,16 +1,11 @@
 import { useMutation, UseMutationResult } from '@tanstack/react-query'
 import {
+  FormCreateUserClassMember,
   GenericResponse,
   UserClassMember,
 } from '../../interfaces/GrandInterface'
 import { AxiosResponse } from 'axios'
 import { userClassMemberInstance } from '../axiosConfig'
-
-interface FormCreateUserClassMember {
-  userId: string
-  classId: string
-  isTeacher: boolean
-}
 
 type UserClassMemberResponse = GenericResponse<UserClassMember>
 
