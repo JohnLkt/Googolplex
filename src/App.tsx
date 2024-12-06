@@ -5,6 +5,7 @@ import Dashboard from './components/pages/Dashboard'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { AuthProvider } from './contexts/AuthContext'
 import { SidebarProvider } from './contexts/SidebarContext'
+import CreateArticle from './components/pages/CreateArticle'
 
 function App() {
   const queryClient = new QueryClient()
@@ -20,6 +21,7 @@ function App() {
             {/* Protected by Auth */}
             <Route element={<ProtectedRoutes />}>
               <Route path="/dashboard" element={<Dashboard />} />
+              <Route path="/add/article" element={<CreateArticle />} />
             </Route>
           </Routes>
         </QueryClientProvider>
