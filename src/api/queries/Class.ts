@@ -7,18 +7,19 @@ import {
   GenericResponse,
 } from '../../interfaces/GrandInterface'
 
-type CreateClassResponse = GenericResponse<Class>
+// reusable for all CRUD class
+type ClassResponse = GenericResponse<Class>
 
 export const useCreateClass = (
   token: string | null
 ): UseMutationResult<
-  AxiosResponse<CreateClassResponse>,
+  AxiosResponse<ClassResponse>,
   unknown,
   FormCreateClass
 > => {
   return useMutation({
     mutationFn: ({ classSubject, classDesc }: FormCreateClass) => {
-      return classInstance(token ?? '').post<CreateClassResponse>('', {
+      return classInstance(token ?? '').post<ClassResponse>('', {
         subject: classSubject,
         description: classDesc,
       })

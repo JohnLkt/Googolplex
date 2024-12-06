@@ -53,8 +53,8 @@ function Dashboard() {
 
     createClass(data, {
       onSuccess: (response) => {
-        const msg = response.data.message
-        console.log(msg)
+        const data = response.data
+        console.log(data)
         const classId = response.data.data.id
         const userId = authState.userId
 

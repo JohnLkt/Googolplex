@@ -67,6 +67,7 @@ export interface Class {
   description: string
   created_at: string
   updated_at: string
+  user_class_member?: UserClassMember[]
 }
 
 export interface UserClassMember {
