@@ -8,6 +8,7 @@ import ParticlesBackground from '../molecules/Particles'
 
 function Landing() {
   const [authMode, setAuthMode] = useState(false)
+
   return (
     <div className="font-plusJakarta z-10">
       <ParticlesBackground />
@@ -16,7 +17,7 @@ function Landing() {
           <div className="flex flex-col py-4 w-2/3">
             <LandingTitle
               title="Manage your educational pursuit with Googolplex"
-              textColor="text-accent mb-8 max-mobile:mb-4"
+              textColor="text-accent mb-4 max-mobile:mb-4"
             />
             <ActionDarkButton actionText={'Get Started'}></ActionDarkButton>
           </div>
@@ -25,7 +26,7 @@ function Landing() {
           <div className="w-3/5 py-4 z-20">
             <LandingTitle
               title="Find out how Googolplex helps you achieve your dreams"
-              textColor="text-primary mb-8 max-mobile:mb-4"
+              textColor="text-primary mb-4 max-mobile:mb-4"
             />
             {authMode ? <RegisterForm /> : <LoginForm />}
 
@@ -47,7 +48,6 @@ function Landing() {
           </div>
         </CenteredContainer>
       </div>
-      <div>Footer div</div>
     </div>
   )
 }
