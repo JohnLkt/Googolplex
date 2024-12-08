@@ -14,7 +14,7 @@ export default function ClassGrid({ classType }: ClassGridProps) {
     console.log('class type: ', classType)
   }, [classType])
 
-  if (isLoading) return <div className=""></div>
+  if (isLoading) return <div className="text-3xl text-white">Loading...</div>
 
   return (
     <div className="py-6 flex flex-wrap gap-8">

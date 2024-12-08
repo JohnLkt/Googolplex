@@ -47,14 +47,14 @@ const ParticlesBackground = () => {
           distance: 150,
           color: '#ffffff',
           opacity: 0.5,
-          width: 1,
+          width: 1.3,
         },
         move: {
           direction: MoveDirection.none,
           enable: true,
           outModes: OutMode.bounce,
           random: false,
-          speed: 2,
+          speed: 1,
           straight: false,
         },
         number: {
@@ -73,7 +73,7 @@ const ParticlesBackground = () => {
       },
       detectRetina: true,
     }),
-    [] // Dependencies array ensures the memoized object doesn't change
+    []
   )
 
   return <Particles options={particlesOptions} />

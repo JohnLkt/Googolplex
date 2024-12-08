@@ -9,7 +9,7 @@ export default function Sidebar() {
       onMouseEnter={() => setSidebarWiden(true)}
       onMouseLeave={() => setSidebarWiden(false)}
       className={`z-20 transition-all duration-300 ${
-        sidebarWiden ? 'w-1/5 max-mobile:w-1/3' : 'w-16'
+        sidebarWiden ? 'w-1/5 max-mobile:w-[240px]' : 'w-16'
       } bg-primary p-4 border-r-2 border-accent overflow-auto`}
     >
       <div className="flex flex-col space-y-6">
