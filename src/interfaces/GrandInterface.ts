@@ -88,6 +88,10 @@ export interface FormCreateUserClassMember {
   isTeacher: boolean
 }
 
+export interface JoinClassByCode {
+  classCode: string
+}
+
 export interface Article {
   id?: string
   title: string

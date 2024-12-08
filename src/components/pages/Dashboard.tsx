@@ -16,6 +16,7 @@ import Sidebar from '../organisms/Sidebar'
 import { useSidebar } from '../../hooks/useSidebar'
 import { useState } from 'react'
 import { CreateClassForm } from '../organisms/CreateClassForm'
+import JoinClassForm from '../organisms/JoinClassForm'
 
 library.add(
   faCheckSquare,
@@ -123,30 +124,12 @@ function Dashboard() {
             />
           )}
           {joinClassModal && (
-            <div className="animate-fadeModal z-20 fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 p-3 bg-accent shadow-md rounded-lg overflow-hidden">
-              <div className="flex flex-col space-y-3 justify-center items-center">
-                <div className="text-lg font-bold font-plusJakarta text-primary">
-                  Join class
-                </div>
-                <div className="flex flex-row space-x-3 items-center font-plusJakarta">
-                  <button
-                    type="submit"
-                    className="p-3 text-sm font-medium bg-primary text-accent"
-                  >
-                    Create
-                  </button>
-                  <button
-                    className="p-3 text-sm font-medium bg-secondary"
-                    onClick={() => {
-                      setJoinClassModal(false)
-                      setShowClassOptions(false)
-                    }}
-                  >
-                    Cancel
-                  </button>
-                </div>
-              </div>
-            </div>
+            <JoinClassForm
+              joinClassModal={joinClassModal}
+              showClassOptions={showClassOptions}
+              setJoinClassModal={() => setJoinClassModal(false)}
+              setShowClassOptions={() => setShowClassOptions(false)}
+            />
           )}
           <Sidebar />
 
