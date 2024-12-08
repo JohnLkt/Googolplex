@@ -107,3 +107,13 @@ export const articleInstanceById = (id: string, token: string) =>
       Authorization: `Bearer ${token}`,
     },
   })
+
+export const postInstance = (token: string) =>
+  axios.create({
+    baseURL: `${backendAPIUrl}/post`,
+    headers: {
+      accept: '*/*',
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+    },
+  })

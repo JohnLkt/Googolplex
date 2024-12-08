@@ -3,6 +3,10 @@ import { Formik, Form } from 'formik'
 import * as Yup from 'yup'
 import Input from '../molecules/Input'
 import RichTextEditor from '../molecules/RichTextEditor'
+import { useCreateArticle } from '../../api/queries/Article'
+import { useAuthContext } from '../../contexts/AuthContext'
+import { useParams } from 'react-router'
+import { useCreatePost } from '../../api/queries/Post'
 
 const ArticleSchema = Yup.object().shape({
   title: Yup.string().required('Title is required'),
@@ -10,9 +14,39 @@ const ArticleSchema = Yup.object().shape({
 })
 
 const ArticleEditor: React.FC = () => {
-  const handleSubmit = (values: { title: string; content: string }) => {
-    console.log({ ...values })
-    alert('Article saved!')
+  const { authState } = useAuthContext()
+  const { classId } = useParams()
+  const { mutate: createArticle } = useCreateArticle(authState.accessToken)
+  const { mutate: createArticlePost } = useCreatePost(
+    authState.accessToken,
+    'article'
+  )
+
+  const handleSubmit = (data: { title: string; content: string }) => {
+    createArticle(data, {
+      onSuccess: (response) => {
+        console.log('success create article', response.data)
+
+        createArticlePost(
+          {
+            class_id: classId!,
+            article_id: response.data.data.id,
+          },
+          {
+            onSuccess: (response) => {
+              console.log('success create post', response.data)
+              // redir to class detail
+            },
+            onError: (err) => {
+              console.log('error create post', err)
+            },
+          }
+        )
+      },
+      onError: (err) => {
+        console.log('error create article', err)
+      },
+    })
   }
 
   return (
@@ -28,7 +62,7 @@ const ArticleEditor: React.FC = () => {
       }}
     >
       {() => (
-        <Form className=" p-4 bg-white">
+        <Form>
           {/* Title Input */}
           <div>
             <Input

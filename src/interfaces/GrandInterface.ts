@@ -92,7 +92,12 @@ export interface Article {
   id?: string
   title: string
   content: string
-  post: Post
+  post?: Post
+}
+
+export interface FormCreateArticle {
+  title: string
+  content: string
 }
 
 export interface Assignment {
@@ -104,15 +109,21 @@ export interface Assignment {
 }
 
 export interface Post {
-  id?: string
+  id: string
   created_at: string
   updated_at: string
-  article: Article
-  assignment?: Assignment
+  article: Article | null
+  assignment: Assignment | null
   class: Class
-  article_id: string
-  class_id: string
+  article_id: string | null
+  class_id: string | null
   assignment_id: string
+}
+
+export interface CreatePost {
+  article_id?: string
+  assignment_id?: string
+  class_id: string
 }
 export interface ChildrenProps {
   children?: React.ReactNode | React.ReactElement
