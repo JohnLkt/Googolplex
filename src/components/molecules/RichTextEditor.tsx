@@ -1,31 +1,68 @@
 import { useFormikContext } from 'formik'
-import { useEffect } from 'react'
-import { useQuill } from 'react-quilljs'
+import ReactQuill from 'react-quill'
+import 'react-quill/dist/quill.snow.css' // Import the Quill Snow theme styles
 
 interface RichTextEditorProps {
   name: string
-  className: string
-  label: string
+  className?: string
+  label?: string
 }
 
-const RichTextEditor = ({ name, className }: RichTextEditorProps) => {
-  const { quill, quillRef } = useQuill()
-  const formik = useFormikContext()
+interface FormValues {
+  [key: string]: string // You can replace this with a more specific type if needed
+}
 
-  useEffect(() => {
-    if (quill) {
-      quill.on('text-change', () => {
-        formik.setFieldValue(name, quillRef.current.firstChild.innerHTML)
-      })
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [quill])
+const RichTextEditor = ({ name, className = '' }: RichTextEditorProps) => {
+  const { values, setFieldValue } = useFormikContext<FormValues>()
+
+  const handleChange = (content: string) => {
+    setFieldValue(name, content)
+  }
+
+  const modules = {
+    toolbar: [
+      ['bold', 'italic', 'underline', 'strike'],
+      [{ align: [] }],
+      [{ list: 'ordered' }, { list: 'bullet' }],
+      [{ indent: '-1' }, { indent: '+1' }],
+      [{ size: ['small', false, 'large', 'huge'] }],
+      [{ header: [1, 2, 3, 4, 5, 6, false] }],
+      ['link', 'image', 'video'],
+      [{ color: [] }, { background: [] }],
+      ['clean'],
+    ],
+    clipboard: {
+      matchVisual: false,
+    },
+  }
+
+  const formats = [
+    'bold',
+    'italic',
+    'underline',
+    'strike',
+    'align',
+    'list',
+    'indent',
+    'size',
+    'header',
+    'link',
+    'image',
+    'video',
+    'color',
+    'background',
+  ]
 
   return (
-    <div className="mb-4">
-      <div className="hover:cursor-text bg-accent rounded-md" id={name}>
-        <div ref={quillRef} className={className}></div>
-      </div>
+    <div className="mb-4 bg-accent">
+      <ReactQuill
+        value={values[name] || ''}
+        onChange={handleChange}
+        theme="snow"
+        modules={modules}
+        formats={formats}
+        className={`hover:cursor-text ${className}`}
+      />
     </div>
   )
 }
