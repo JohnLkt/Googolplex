@@ -1,4 +1,4 @@
-import { useEffect, useMemo } from 'react'
+import React, { useEffect, useMemo } from 'react'
 import Particles, { initParticlesEngine } from '@tsparticles/react'
 import { loadSlim } from '@tsparticles/slim' // For a lightweight bundle
 import { MoveDirection, OutMode } from '@tsparticles/engine'
@@ -79,4 +79,4 @@ const ParticlesBackground = () => {
   return <Particles options={particlesOptions} />
 }
 
-export default ParticlesBackground
+export default React.memo(ParticlesBackground)

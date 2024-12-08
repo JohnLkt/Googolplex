@@ -21,7 +21,7 @@ function App() {
             {/* Protected by Auth */}
             <Route element={<ProtectedRoutes />}>
               <Route path="/dashboard" element={<Dashboard />} />
-              <Route path="/add/article" element={<CreateArticle />} />
+              <Route path="/add/article/:classId" element={<CreateArticle />} />
             </Route>
           </Routes>
         </QueryClientProvider>
