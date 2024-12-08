@@ -62,7 +62,7 @@ const ArticleEditor: React.FC = () => {
       }}
     >
       {() => (
-        <Form className="bg-primary z-10">
+        <Form className="bg-primary z-10 w-[48rem] p-4">
           {/* Title Input */}
           <div>
             <Input name="title" type="text" placeholder="Enter article title" />

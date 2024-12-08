@@ -6,6 +6,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { AuthProvider } from './contexts/AuthContext'
 import { SidebarProvider } from './contexts/SidebarContext'
 import CreateArticle from './components/pages/CreateArticle'
+import Post from './components/pages/Post'
 
 function App() {
   const queryClient = new QueryClient()
@@ -22,6 +23,7 @@ function App() {
             <Route element={<ProtectedRoutes />}>
               <Route path="/dashboard" element={<Dashboard />} />
               <Route path="/add/article/:classId" element={<CreateArticle />} />
+              <Route path="/post/:postId" element={<Post />} />
             </Route>
           </Routes>
         </QueryClientProvider>
