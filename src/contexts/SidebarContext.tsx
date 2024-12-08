@@ -13,8 +13,6 @@ export const SidebarProvider = ({ children }: { children: ReactNode }) => {
   const [sidebarItemSelected, setSidebarItemSelected] = useState('Home')
   const [sidebarWiden, setSidebarWiden] = useState(false)
 
-  console.log(sidebarWiden)
-
   return (
     <SidebarContext.Provider
       value={{

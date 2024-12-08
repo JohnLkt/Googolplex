@@ -6,7 +6,7 @@ import { Field, FieldProps, useFormikContext } from 'formik'
 interface InputProps {
   name: string
   type: string
-  label: string
+  label?: string
   placeholder?: string
   helper?: string
   onBlur?: (e: React.FocusEvent<HTMLInputElement>, value: string) => void
@@ -23,9 +23,15 @@ const Input: React.FC<InputProps> = ({
 
   return (
     <div className="mb-3">
-      <label htmlFor={name} className="block text-sm font-medium text-primary">
-        {label}
-      </label>
+      {label && (
+        <label
+          htmlFor={name}
+          className="block text-sm font-medium text-primary"
+        >
+          {label}
+        </label>
+      )}
+
       <Field name={name} className="relative">
         {({ field, meta }: FieldProps) => (
           <>

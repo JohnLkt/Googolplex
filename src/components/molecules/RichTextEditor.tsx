@@ -8,7 +8,7 @@ interface RichTextEditorProps {
   label: string
 }
 
-const RichTextEditor = ({ name, className, label }: RichTextEditorProps) => {
+const RichTextEditor = ({ name, className }: RichTextEditorProps) => {
   const { quill, quillRef } = useQuill()
   const formik = useFormikContext()
 
@@ -23,14 +23,7 @@ const RichTextEditor = ({ name, className, label }: RichTextEditorProps) => {
 
   return (
     <div className="mb-4">
-      <div className="block text-sm font-medium text-primary mb-2">{label}</div>
-      <div
-        onClick={() => {
-          quill?.focus()
-        }}
-        className="hover:cursor-text"
-        id={name}
-      >
+      <div className="hover:cursor-text bg-accent rounded-md" id={name}>
         <div ref={quillRef} className={className}></div>
       </div>
     </div>
