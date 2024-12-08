@@ -6,6 +6,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { AuthProvider } from './contexts/AuthContext'
 import { SidebarProvider } from './contexts/SidebarContext'
 import CreateArticle from './components/pages/CreateArticle'
+import Post from './components/pages/Post'
 import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 
@@ -25,6 +26,7 @@ function App() {
             <Route element={<ProtectedRoutes />}>
               <Route path="/dashboard" element={<Dashboard />} />
               <Route path="/add/article/:classId" element={<CreateArticle />} />
+              <Route path="/post/:postId" element={<Post />} />
             </Route>
           </Routes>
         </QueryClientProvider>
