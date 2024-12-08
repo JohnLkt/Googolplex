@@ -8,8 +8,6 @@ interface ClassGridProps {
 
 export default function ClassGrid({ classType }: ClassGridProps) {
   const { classes, isLoading } = useFetchClass()
-  console.log('CLASSES FETCHED: ', typeof classes?.data)
-  console.log('CLASSES FETCHED: ', classes?.data)
   useEffect(() => {
     console.log('class type: ', classType)
   }, [classType])

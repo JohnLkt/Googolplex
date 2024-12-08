@@ -39,6 +39,16 @@ export const classInstanceByUserId = (token: string, userId: string) =>
     },
   })
 
+export const classInstanceByClassCode = (token: string, classCode: string) =>
+  axios.create({
+    baseURL: `${backendAPIUrl}/class/code/${classCode}`,
+    headers: {
+      accept: '*/*',
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+    },
+  })
+
 export const classInstanceById = (id: string) =>
   axios.create({
     baseURL: `${backendAPIUrl}/class/${id}`,
