@@ -21,7 +21,12 @@ export default function ClassGrid({ classType }: ClassGridProps) {
         //   <div className="">{c.subject}</div>
         //   <div className="">{c.description}</div>
         // </div>
-        <ClassCard key={i} subject={c.subject} description={c.description} />
+        <ClassCard
+          key={i}
+          subject={c.subject}
+          description={c.description}
+          classCode={c.class_code}
+        />
       ))}
       {/* {classes && (
         // classes.data.map((class) => (

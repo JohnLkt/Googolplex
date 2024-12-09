@@ -16,7 +16,7 @@ import {
   GenericResponse,
 } from '../../interfaces/GrandInterface'
 import { useAuthContext } from '../../contexts/AuthContext'
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { ReusableToast } from '../../components/organisms/ReusableToast'
 import { useCreateUserClassMember } from './UserClassMember'
 
@@ -106,19 +106,16 @@ export const findClassByClassCode = (
 export function useHandleClassByClassCode() {
   const { authState } = useAuthContext()
   const [classCode, setClassCode] = useState('')
-  const { data, isLoading, isError, refetch } = useQueryClassByClassCode(
+  const { data, isLoading, isError } = useQueryClassByClassCode(
     authState.accessToken,
     classCode
   )
   const { mutate: createUserClassMember } = useCreateUserClassMember(
     authState.accessToken
   )
-  function handleClassCodeChange(classCode: string) {
-    setClassCode(classCode)
-  }
   const { refetch: refetchClass } = useFetchClass()
 
-  function handleJoinClass() {
+  const handleJoinClass = useCallback(() => {
     createUserClassMember(
       { classId: data!.data.id, isTeacher: false, userId: authState.userId! },
       {
@@ -134,19 +131,26 @@ export function useHandleClassByClassCode() {
         },
       }
     )
-  }
+  }, [createUserClassMember, data, authState.userId, refetchClass]) // Add all dependencies used in the function
 
   useEffect(() => {
     if (classCode.length > 0) {
-      refetch()
       if (isLoading) {
-        ReusableToast('Loading.. please wait')
-      }
-      if (isError) {
+        console.log('still loading')
+        ReusableToast('Searching for class.. please wait')
+      } else if (isError) {
+        console.log('query not found error', data?.message)
         ReusableToast('Class is not found')
+      } else {
+        console.log('class code query found!', data?.message)
+        handleJoinClass()
       }
     }
-  }, [classCode, isLoading, isError])
+  }, [classCode, data, isLoading, isError, handleJoinClass])
 
-  return { handleJoinClass, handleClassCodeChange, isLoading, isError }
+  return {
+    data,
+    setClassCode,
+    handleJoinClass,
+  }
 }

@@ -1,8 +1,5 @@
 import { SubmitHandler, useForm } from 'react-hook-form'
-import {
-  useFetchClass,
-  useHandleClassByClassCode,
-} from '../../api/queries/Class'
+import { useHandleClassByClassCode } from '../../api/queries/Class'
 import { JoinClassByCode } from '../../interfaces/GrandInterface'
 
 interface JoinClassFormProps {
@@ -18,18 +15,16 @@ export default function JoinClassForm({
 }: JoinClassFormProps) {
   const { register, handleSubmit } = useForm<JoinClassByCode>()
   const submit = useHandleClassByClassCode()
-  const { refetch } = useFetchClass()
 
   const onSubmit: SubmitHandler<JoinClassByCode> = (data) => {
     // console.log('data class code: ', data.classCode)
-    console.log(data)
-
     if (data && data.classCode.length > 0) {
-      submit.handleClassCodeChange(data.classCode)
-      submit.handleJoinClass()
-      setShowClassOptions(false)
-      setJoinClassModal(false)
-      refetch()
+      submit.setClassCode(data.classCode)
+      if (submit.data && submit.data.message.length > 0) {
+        setShowClassOptions(false)
+        setJoinClassModal(false)
+        submit.handleJoinClass()
+      }
     }
   }
 
