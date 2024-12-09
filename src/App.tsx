@@ -9,6 +9,7 @@ import CreateArticle from './components/pages/CreateArticle'
 import Post from './components/pages/Post'
 import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
+import CreateAssignment from './components/pages/CreateAssignment'
 
 function App() {
   const queryClient = new QueryClient()
@@ -26,6 +27,10 @@ function App() {
             <Route element={<ProtectedRoutes />}>
               <Route path="/dashboard" element={<Dashboard />} />
               <Route path="/add/article/:classId" element={<CreateArticle />} />
+              <Route
+                path="/add/assignment/:classId"
+                element={<CreateAssignment />}
+              />
               <Route path="/post/:postId" element={<Post />} />
             </Route>
           </Routes>
