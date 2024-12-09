@@ -1,12 +1,7 @@
-import React, { useState } from 'react'
 import { Formik, Form } from 'formik'
 import * as Yup from 'yup'
 import Input from '../molecules/Input'
 import RichTextEditor from '../molecules/RichTextEditor'
-import { useCreateArticle } from '../../api/queries/Article'
-import { useAuthContext } from '../../contexts/AuthContext'
-import { useParams } from 'react-router'
-import { useCreatePost } from '../../api/queries/Post'
 
 const AssignmentSchema = Yup.object().shape({
   title: Yup.string().required('Title is required'),
@@ -15,8 +10,8 @@ const AssignmentSchema = Yup.object().shape({
 })
 
 const AssignmentEditor: React.FC = () => {
-  const { authState } = useAuthContext()
-  const { classId } = useParams()
+  // const { authState } = useAuthContext()
+  // const { classId } = useParams()
 
   const handleSubmit = (data: {
     title: string
