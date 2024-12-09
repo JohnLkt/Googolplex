@@ -27,6 +27,7 @@ const AssignmentEditor: React.FC = () => {
         title: '',
         content: '',
         due_date: '',
+        assignment_file_upload: '',
       }}
       validationSchema={AssignmentSchema}
       onSubmit={(values, { setSubmitting }) => {
@@ -58,6 +59,14 @@ const AssignmentEditor: React.FC = () => {
               name="due_date"
               type="datetime-local"
               placeholder="Enter assignment due date"
+            />
+          </div>
+
+          <div>
+            <Input
+              name="assignment_file_upload"
+              type="file"
+              placeholder="input file"
             />
           </div>
 
