@@ -10,20 +10,22 @@ interface JoinClassFormProps {
 }
 
 export default function JoinClassForm({
+  joinClassModal,
+  showClassOptions,
   setShowClassOptions,
   setJoinClassModal,
 }: JoinClassFormProps) {
   const { register, handleSubmit } = useForm<JoinClassByCode>()
-  const submit = useHandleClassByClassCode()
+  const submit = useHandleClassByClassCode({ setJoinClassModal })
 
   const onSubmit: SubmitHandler<JoinClassByCode> = (data) => {
     // console.log('data class code: ', data.classCode)
     if (data && data.classCode.length > 0) {
       submit.setClassCode(data.classCode)
       if (submit.data && submit.data.message.length > 0) {
-        setShowClassOptions(false)
-        setJoinClassModal(false)
-        submit.handleJoinClass()
+        // submit.handleJoinClass()
+        setShowClassOptions(!showClassOptions)
+        setJoinClassModal(!joinClassModal)
       }
     }
   }

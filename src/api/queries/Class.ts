@@ -103,7 +103,10 @@ export const findClassByClassCode = (
   console.log('class code: ', classCode)
 }
 
-export function useHandleClassByClassCode() {
+interface handleClassByClassCode {
+  setJoinClassModal: (e: boolean) => void
+}
+export function useHandleClassByClassCode(prop: handleClassByClassCode) {
   const { authState } = useAuthContext()
   const [classCode, setClassCode] = useState('')
   const { data, isLoading, isError } = useQueryClassByClassCode(
@@ -124,6 +127,7 @@ export function useHandleClassByClassCode() {
           console.log(msg)
           ReusableToast('You successfully joined a class')
           refetchClass()
+          prop.setJoinClassModal(false)
         },
         onError: (err) => {
           console.error('error create user class member', err)
@@ -131,7 +135,7 @@ export function useHandleClassByClassCode() {
         },
       }
     )
-  }, [createUserClassMember, data, authState.userId, refetchClass]) // Add all dependencies used in the function
+  }, [createUserClassMember, data, authState.userId, refetchClass, prop]) // Add all dependencies used in the function
 
   useEffect(() => {
     if (classCode.length > 0) {
@@ -141,12 +145,13 @@ export function useHandleClassByClassCode() {
       } else if (isError) {
         console.log('query not found error', data?.message)
         ReusableToast('Class is not found')
+        prop.setJoinClassModal(false)
       } else {
         console.log('class code query found!', data?.message)
         handleJoinClass()
       }
     }
-  }, [classCode, data, isLoading, isError, handleJoinClass])
+  }, [classCode, data, isLoading, isError, handleJoinClass, prop])
 
   return {
     data,
