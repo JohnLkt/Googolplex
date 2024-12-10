@@ -2,23 +2,85 @@ import { Formik, Form } from 'formik'
 import * as Yup from 'yup'
 import Input from '../molecules/Input'
 import RichTextEditor from '../molecules/RichTextEditor'
+import { useAuthContext } from '../../contexts/AuthContext'
+import { useParams } from 'react-router'
+import { useCreatePost } from '../../api/queries/Post'
+import {
+  useCreateAssignment,
+  useUploadFileAssignment,
+} from '../../api/queries/Assignment'
 
 const AssignmentSchema = Yup.object().shape({
   title: Yup.string().required('Title is required'),
   content: Yup.string().required('Content is required'),
   due_date: Yup.string().required('Due date is required'),
+  assignment_file_upload: Yup.mixed().required('File is required'),
 })
 
 const AssignmentEditor: React.FC = () => {
-  // const { authState } = useAuthContext()
-  // const { classId } = useParams()
+  const { authState } = useAuthContext()
+  const { classId } = useParams()
+
+  const { mutate: createAssignment } = useCreateAssignment(
+    authState.accessToken
+  )
+  const { mutate: createAssignmentPost } = useCreatePost(
+    authState.accessToken,
+    'assignment'
+  )
+  const { mutate: uploadFileAssignment } = useUploadFileAssignment(
+    authState.accessToken
+  )
 
   const handleSubmit = (data: {
     title: string
     content: string
     due_date: string
+    assignment_file_upload: File | null
   }) => {
     console.log(data)
+    createAssignment(data, {
+      onSuccess: (response) => {
+        console.log('success create assignment', response.data)
+        console.log(response.data.data.id!, 'test')
+
+        const assignmentId = response.data.data.id!
+
+        uploadFileAssignment(
+          {
+            assignment_id: response.data.data.id!,
+            file: data.assignment_file_upload!,
+          },
+          {
+            onSuccess: (response) => {
+              console.log('success upload file', response.data)
+
+              createAssignmentPost(
+                {
+                  class_id: classId!,
+                  assignment_id: assignmentId,
+                },
+                {
+                  onSuccess: (response) => {
+                    console.log('success create post', response.data)
+                    // redir to class detail
+                  },
+                  onError: (err) => {
+                    console.log('error create post', err)
+                  },
+                }
+              )
+            },
+            onError: (err) => {
+              console.log('error upload file', err)
+            },
+          }
+        )
+      },
+      onError: (err) => {
+        console.log('error create assignment', err)
+      },
+    })
   }
 
   return (
@@ -27,7 +89,7 @@ const AssignmentEditor: React.FC = () => {
         title: '',
         content: '',
         due_date: '',
-        assignment_file_upload: '',
+        assignment_file_upload: null,
       }}
       validationSchema={AssignmentSchema}
       onSubmit={(values, { setSubmitting }) => {
