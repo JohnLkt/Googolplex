@@ -8,6 +8,7 @@ import { AxiosResponse } from 'axios'
 import {
   classInstance,
   classInstanceByClassCode,
+  classInstanceByClassId,
   classInstanceByUserId,
 } from '../axiosConfig'
 import {
@@ -20,7 +21,7 @@ import { useCallback, useEffect, useState } from 'react'
 import { ReusableToast } from '../../components/organisms/ReusableToast'
 import { useCreateUserClassMember } from './UserClassMember'
 
-type ClassResponse = GenericResponse<Class> // usable for create class, join class by code
+type ClassResponse = GenericResponse<Class> // usable for create class, join class by code, fetch class by id, fetch class by user id, fetch class by class code
 type ClassFetchResponse = GenericResponse<Class[]>
 
 export const useCreateClass = (
@@ -158,4 +159,39 @@ export function useHandleClassByClassCode(prop: handleClassByClassCode) {
     setClassCode,
     handleJoinClass,
   }
+}
+
+// fetch class by id
+
+const fetchClassByClassId = async (token: string, classId: string) => {
+  const response = await classInstanceByClassId(token, classId).get('')
+  return response.data
+}
+
+const useQueryClassByClassId = (
+  token: string | null,
+  classId: string
+): UseQueryResult<ClassResponse> => {
+  return useQuery<ClassResponse>({
+    queryKey: ['class_id', classId],
+    queryFn: () => fetchClassByClassId(token!, classId),
+    enabled: !!token,
+  })
+}
+
+export const useFetchClassByClassId = (classId: string) => {
+  const [classDetail, setClassDetail] = useState<ClassResponse>()
+  const { authState } = useAuthContext()
+  const { data, isLoading, isError } = useQueryClassByClassId(
+    authState.accessToken,
+    classId
+  )
+
+  useEffect(() => {
+    if (data) {
+      setClassDetail(data)
+    }
+  }, [data])
+
+  return { classDetail, isLoading, isError }
 }

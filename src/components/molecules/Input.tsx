@@ -19,7 +19,7 @@ const Input: React.FC<InputProps> = ({ name, type, label, placeholder }) => {
       {label && (
         <label
           htmlFor={name}
-          className="block text-sm font-medium text-white mb-1" // Change label text color to white
+          className="block text-sm font-medium text-primary mb-1" // Change label text color to white
         >
           {label}
         </label>
