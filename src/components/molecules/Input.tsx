@@ -61,7 +61,12 @@ const Input: React.FC<InputProps> = ({ name, type, label, placeholder }) => {
                     : placeholder
                 }
                 onBlur={(e) => {
-                  const finalValue = e.target.value.trim()
+                  let finalValue = e.target.value.trim()
+
+                  if (type === 'datetime-local') {
+                    finalValue = new Date(finalValue).toISOString()
+                  }
+
                   setFieldValue(name, finalValue)
                 }}
               />
