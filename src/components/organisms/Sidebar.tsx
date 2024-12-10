@@ -1,8 +1,10 @@
+import { useNavigate } from 'react-router'
 import { useSidebar } from '../../hooks/useSidebar'
 import SidebarItem from '../molecules/SidebarItem'
 
 export default function Sidebar() {
   const { setSidebarItemSelected, sidebarWiden, setSidebarWiden } = useSidebar()
+  const navigate = useNavigate()
   return (
     <div
       id="sidebar"
@@ -19,6 +21,7 @@ export default function Sidebar() {
           handleClick={() => {
             setSidebarWiden(!sidebarWiden)
             setSidebarItemSelected('Home')
+            navigate('/dashboard')
           }}
           iconItem="home-alt"
         />

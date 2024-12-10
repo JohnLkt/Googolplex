@@ -99,6 +99,16 @@ export const userClassMemberInstanceById = (id: string, token: string) =>
     },
   })
 
+export const userClassMemberInstanceByClassCode = (token: string) =>
+  axios.create({
+    baseURL: `${backendAPIUrl}/user_class_member/join_class`,
+    headers: {
+      accept: '*/*',
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+    },
+  })
+
 export const articleInstance = (token: string) =>
   axios.create({
     baseURL: `${backendAPIUrl}/article`,

@@ -10,7 +10,6 @@ import {
   faPlus,
   faHomeAlt,
 } from '@fortawesome/free-solid-svg-icons'
-import ParticlesBackground from '../molecules/Particles'
 import ClassGrid from '../organisms/ClassGrid'
 import Sidebar from '../organisms/Sidebar'
 import { useSidebar } from '../../hooks/useSidebar'
@@ -135,7 +134,7 @@ function Dashboard() {
 
           {/* Content Area */}
           <div
-            className={`overflow-y-auto ${sidebarWiden ? 'w-4/5' : 'flex-1'} bg-primary p-6`}
+            className={`overflow-y-auto ${sidebarWiden ? 'w-4/5' : 'flex-1'}  p-6`}
           >
             <div className="flex flex-col">
               <div className="text-xl font-plusJakarta font-medium text-accent">
@@ -152,7 +151,7 @@ function Dashboard() {
           </div>
         </div>
       </div>
-      <ParticlesBackground />
+      {/* <ParticlesBackground /> */}
     </div>
   )
 }

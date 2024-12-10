@@ -1,5 +1,5 @@
 interface ClassTeacherProps {
-  teacherName: string
+  teacherName: string | undefined
 }
 
 export default function ClassTeacher({ teacherName }: ClassTeacherProps) {

@@ -16,27 +16,7 @@ export default function ClassGrid({ classType }: ClassGridProps) {
 
   return (
     <div className="py-6 flex flex-wrap gap-8">
-      {classes?.data.map((c, i) => (
-        // <div className="">
-        //   <div className="">{c.subject}</div>
-        //   <div className="">{c.description}</div>
-        // </div>
-        <ClassCard
-          key={i}
-          classId={c.id}
-          subject={c.subject}
-          description={c.description}
-          classCode={c.class_code}
-        />
-      ))}
-      {/* {classes && (
-        // classes.data.map((class) => (
-        //   <div>{class}</div>
-        // ))
-        <div className="">{
-          classes.data.map(class => ())
-        }</div>
-      )} */}
+      {classes?.data.map((c) => <ClassCard key={c.id} {...c} />)}
     </div>
   )
 }

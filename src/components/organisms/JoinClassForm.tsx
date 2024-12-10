@@ -1,6 +1,9 @@
 import { SubmitHandler, useForm } from 'react-hook-form'
-import { useHandleClassByClassCode } from '../../api/queries/Class'
 import { JoinClassByCode } from '../../interfaces/GrandInterface'
+import { ReusableToast } from './ReusableToast'
+import { useCreateUserClassMemberByClassCode } from '../../api/queries/UserClassMember'
+import { useAuthContext } from '../../contexts/AuthContext'
+import { useFetchClass } from '../../api/queries/Class'
 
 interface JoinClassFormProps {
   showClassOptions: boolean
@@ -15,19 +18,32 @@ export default function JoinClassForm({
   setShowClassOptions,
   setJoinClassModal,
 }: JoinClassFormProps) {
+  const { authState } = useAuthContext()
   const { register, handleSubmit } = useForm<JoinClassByCode>()
-  const submit = useHandleClassByClassCode({ setJoinClassModal })
+  const { mutate: joinByCode } = useCreateUserClassMemberByClassCode(
+    authState.accessToken
+  )
+  const { refetch } = useFetchClass()
 
   const onSubmit: SubmitHandler<JoinClassByCode> = (data) => {
-    // console.log('data class code: ', data.classCode)
-    if (data && data.classCode.length > 0) {
-      submit.setClassCode(data.classCode)
-      if (submit.data && submit.data.message.length > 0) {
-        // submit.handleJoinClass()
-        setShowClassOptions(!showClassOptions)
-        setJoinClassModal(!joinClassModal)
+    console.log('data class code: ', data.classCode)
+
+    joinByCode(
+      { classCode: data.classCode, isTeacher: false, userId: authState.userId },
+      {
+        onSuccess: (response) => {
+          const msg = response.data.message
+          console.log(msg)
+          ReusableToast(msg)
+          setShowClassOptions(!showClassOptions)
+          setJoinClassModal(!joinClassModal)
+          refetch()
+        },
+        onError: () => {
+          ReusableToast('Error while joining class')
+        },
       }
-    }
+    )
   }
 
   return (

@@ -17,7 +17,7 @@ import {
   GenericResponse,
 } from '../../interfaces/GrandInterface'
 import { useAuthContext } from '../../contexts/AuthContext'
-import { useCallback, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { ReusableToast } from '../../components/organisms/ReusableToast'
 import { useCreateUserClassMember } from './UserClassMember'
 
@@ -119,7 +119,8 @@ export function useHandleClassByClassCode(prop: handleClassByClassCode) {
   )
   const { refetch: refetchClass } = useFetchClass()
 
-  const handleJoinClass = useCallback(() => {
+  const handleJoinClass = () => {
+    console.log('handle join class kepanggil')
     createUserClassMember(
       { classId: data!.data.id, isTeacher: false, userId: authState.userId! },
       {
@@ -127,7 +128,7 @@ export function useHandleClassByClassCode(prop: handleClassByClassCode) {
           const msg = response.data.message
           console.log(msg)
           ReusableToast('You successfully joined a class')
-          refetchClass()
+          // refetchClass()
           prop.setJoinClassModal(false)
         },
         onError: (err) => {
@@ -136,7 +137,7 @@ export function useHandleClassByClassCode(prop: handleClassByClassCode) {
         },
       }
     )
-  }, [createUserClassMember, data, authState.userId, refetchClass, prop]) // Add all dependencies used in the function
+  }
 
   useEffect(() => {
     if (classCode.length > 0) {
@@ -148,16 +149,17 @@ export function useHandleClassByClassCode(prop: handleClassByClassCode) {
         ReusableToast('Class is not found')
         prop.setJoinClassModal(false)
       } else {
-        console.log('class code query found!', data?.message)
-        handleJoinClass()
+        console.log('class code query found! msg: ', data?.message)
+        // handleJoinClass()
       }
     }
-  }, [classCode, data, isLoading, isError, handleJoinClass, prop])
+  }, [classCode, data, isLoading, isError, prop])
 
   return {
     data,
     setClassCode,
     handleJoinClass,
+    refetchClass,
   }
 }
 

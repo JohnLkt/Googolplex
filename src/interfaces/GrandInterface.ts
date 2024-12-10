@@ -87,6 +87,11 @@ export interface FormCreateUserClassMember {
   classId: string
   isTeacher: boolean
 }
+export interface FormCreateUserClassMemberByCode {
+  userId: string | null
+  classCode: string
+  isTeacher: boolean
+}
 
 export interface JoinClassByCode {
   classCode: string

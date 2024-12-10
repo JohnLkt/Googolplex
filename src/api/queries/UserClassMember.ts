@@ -1,11 +1,15 @@
 import { useMutation, UseMutationResult } from '@tanstack/react-query'
 import {
   FormCreateUserClassMember,
+  FormCreateUserClassMemberByCode,
   GenericResponse,
   UserClassMember,
 } from '../../interfaces/GrandInterface'
 import { AxiosResponse } from 'axios'
-import { userClassMemberInstance } from '../axiosConfig'
+import {
+  userClassMemberInstance,
+  userClassMemberInstanceByClassCode,
+} from '../axiosConfig'
 
 type UserClassMemberResponse = GenericResponse<UserClassMember>
 
@@ -26,6 +30,30 @@ export const useCreateUserClassMember = (
           is_teacher: isTeacher,
         }
       )
+    },
+  })
+}
+
+export const useCreateUserClassMemberByClassCode = (
+  token: string | null
+): UseMutationResult<
+  AxiosResponse<UserClassMemberResponse>,
+  unknown,
+  FormCreateUserClassMemberByCode
+> => {
+  return useMutation({
+    mutationFn: ({
+      userId,
+      classCode,
+      isTeacher,
+    }: FormCreateUserClassMemberByCode) => {
+      return userClassMemberInstanceByClassCode(
+        token ?? ''
+      ).post<UserClassMemberResponse>('', {
+        user_id: userId,
+        class_code: classCode,
+        is_teacher: isTeacher,
+      })
     },
   })
 }

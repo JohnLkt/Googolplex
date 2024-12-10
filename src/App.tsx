@@ -11,6 +11,7 @@ import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import CreateAssignment from './components/pages/CreateAssignment'
 import ClassDetail from './components/pages/ClassDetail'
+import ParticlesBackground from './components/molecules/Particles'
 
 function App() {
   const queryClient = new QueryClient()
@@ -18,12 +19,15 @@ function App() {
   return (
     <AuthProvider>
       <SidebarProvider>
+        <ParticlesBackground />
         <ToastContainer className="font-plusJakarta font-bold text-primary" />
         <QueryClientProvider client={queryClient}>
           <Routes>
             {/* Public Routes */}
             <Route path="/" element={<Landing />} />
-
+            {/* uncomment and comment this route later */}
+            {/* <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/class-detail/:classId" element={<ClassDetail />} /> */}
             {/* Protected by Auth */}
             <Route element={<ProtectedRoutes />}>
               <Route path="/dashboard" element={<Dashboard />} />

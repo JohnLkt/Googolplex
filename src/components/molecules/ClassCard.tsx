@@ -16,7 +16,12 @@ export default function ClassCard({ ...classProp }: Class) {
       <div className="flex flex-col space-y-3">
         <div className="h-1/4 flex flex-col space-y-3">
           <ClassTitle subject={classProp.subject} />
-          <ClassTeacher teacherName="TBD" />
+          {/* <ClassTeacher
+            teacherName={
+              classProp.user_class_member!.find((member) => member.is_teacher)
+                ?.user.name
+            }
+          /> */}
           <ClassTeacher teacherName={classProp.class_code} />
           <ClassTitle subject={classProp.id} />
         </div>
