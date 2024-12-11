@@ -1,5 +1,7 @@
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Post } from '../../interfaces/GrandInterface'
 import { format } from 'date-fns'
+import { faFolderOpen, faNewspaper } from '@fortawesome/free-solid-svg-icons'
 
 function formatDate(date: string) {
   return format(new Date(date), 'MMMM dd, yyyy hh:mm a')
@@ -10,21 +12,32 @@ const PostCard = (prop: Post) => {
 
   return (
     <div className="z-10 cursor-pointer rounded-xl p-4 bg-gradient-to-br from-primary from-40% to-secondary hover:shadow-secondary hover:shadow-lg hover:scale-95 transition ease-in-out">
-      {article && (
+      {article ? (
         <div className="mb-4">
-          <h2 className="text-lg font-bold">{article.title}</h2>
-          <p className="text-sm text-accent">{article.content}</p>
+          <div className="flex items-center gap-2 mb-2">
+            <FontAwesomeIcon
+              icon={faFolderOpen}
+              className="text-secondary text-xl animate-bounce"
+            />
+            <div className="text-lg font-bold text-white">Article</div>
+          </div>
+          <div className="text-sm">{article.title}</div>
+          <div className="text-sm">{article.content}</div>
         </div>
-      )}
-      {assignment && (
+      ) : (
         <div>
-          <h2 className="text-lg font-bold">{assignment.title}</h2>
-          <p className="text-sm text-accent">{assignment.content}</p>
-          {assignment.due_date && (
-            <p className="text-sm text-accent mt-2">
-              <strong>Due Date:</strong> {formatDate(assignment.due_date)}
-            </p>
-          )}
+          <div className="flex items-center gap-2 mb-2">
+            <FontAwesomeIcon
+              icon={faNewspaper}
+              className="text-secondary text-xl animate-bounce"
+            />
+            <div className="text-lg font-bold text-white">Assignment</div>
+          </div>
+          <div className="text-sm">{assignment!.title}</div>
+          <div className="text-sm">{assignment!.content}</div>
+          <div className="text-sm mt-2">
+            <strong>Due Date:</strong> {formatDate(assignment!.due_date)}
+          </div>
         </div>
       )}
     </div>
