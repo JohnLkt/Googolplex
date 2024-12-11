@@ -26,6 +26,15 @@ export default function Sidebar() {
           iconItem="home-alt"
         />
         <SidebarItem
+          sidebarTitle="To-dos"
+          sidebarWiden={sidebarWiden}
+          handleClick={() => {
+            setSidebarWiden(!sidebarWiden)
+            setSidebarItemSelected('Todos')
+          }}
+          iconItem="tasks"
+        />
+        <SidebarItem
           sidebarTitle="Class Enrolled"
           sidebarWiden={sidebarWiden}
           handleClick={() => {

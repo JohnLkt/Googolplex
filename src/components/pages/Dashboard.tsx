@@ -9,6 +9,7 @@ import {
   faPeopleGroup,
   faPlus,
   faHomeAlt,
+  faTasks,
 } from '@fortawesome/free-solid-svg-icons'
 import ClassGrid from '../organisms/ClassGrid'
 import Sidebar from '../organisms/Sidebar'
@@ -24,7 +25,8 @@ library.add(
   faHome,
   faPeopleGroup,
   faPlus,
-  faHomeAlt
+  faHomeAlt,
+  faTasks
 )
 
 function Dashboard() {
@@ -144,6 +146,8 @@ function Dashboard() {
                 <ClassGrid classType="enrolled" />
               ) : sidebarItemSelected == 'Class Teaching' ? (
                 <ClassGrid classType="teaching" />
+              ) : sidebarItemSelected == 'Todos' ? (
+                <div className="text-2xl text-accent font-bold">To-dos</div>
               ) : (
                 <ClassGrid classType="all" />
               )}

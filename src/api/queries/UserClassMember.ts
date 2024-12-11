@@ -1,4 +1,9 @@
-import { useMutation, UseMutationResult } from '@tanstack/react-query'
+import {
+  useMutation,
+  UseMutationResult,
+  useQuery,
+  UseQueryResult,
+} from '@tanstack/react-query'
 import {
   FormCreateUserClassMember,
   FormCreateUserClassMemberByCode,
@@ -7,11 +12,15 @@ import {
 } from '../../interfaces/GrandInterface'
 import { AxiosResponse } from 'axios'
 import {
+  userClassMemberByClassIdInstance,
   userClassMemberInstance,
   userClassMemberInstanceByClassCode,
 } from '../axiosConfig'
+import { useAuthContext } from '../../contexts/AuthContext'
+import { useEffect, useState } from 'react'
 
 type UserClassMemberResponse = GenericResponse<UserClassMember>
+type UserClassMemberFetchResponse = GenericResponse<UserClassMember[]>
 
 export const useCreateUserClassMember = (
   token: string | null
@@ -56,4 +65,40 @@ export const useCreateUserClassMemberByClassCode = (
       })
     },
   })
+}
+
+// fetch all students and teachers
+
+const fetchClassMemberByClassId = async (token: string, classId: string) => {
+  const response = await userClassMemberByClassIdInstance(token, classId).get(
+    ''
+  )
+  return response.data
+}
+
+const useQueryFetchClassMemberByClassId = (
+  token: string | null,
+  classId: string
+): UseQueryResult<UserClassMemberFetchResponse> => {
+  return useQuery<UserClassMemberFetchResponse>({
+    queryKey: ['class', classId],
+    queryFn: () => fetchClassMemberByClassId(token!, classId),
+    enabled: !!token,
+  })
+}
+
+export const useFetchClassMemberByClassId = (classId: string) => {
+  const { authState } = useAuthContext()
+  const { data, isLoading, isError, refetch } =
+    useQueryFetchClassMemberByClassId(authState.accessToken, classId)
+
+  const [members, setMembers] = useState<UserClassMemberFetchResponse>()
+
+  useEffect(() => {
+    if (data) {
+      setMembers(data)
+    }
+  }, [data])
+
+  return { members, isLoading, isError, refetch }
 }

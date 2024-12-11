@@ -1,6 +1,6 @@
-import { useLocation } from 'react-router'
+import { useLocation, useNavigate } from 'react-router'
+import { useState } from 'react'
 import { Class } from '../../interfaces/GrandInterface'
-import { useAuthContext } from '../../contexts/AuthContext'
 import { useSidebar } from '../../hooks/useSidebar'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { library } from '@fortawesome/fontawesome-svg-core'
@@ -16,6 +16,9 @@ import {
   faMinus,
 } from '@fortawesome/free-solid-svg-icons'
 import Sidebar from '../organisms/Sidebar'
+import UserClassMemberList from '../organisms/UserClassMemberList'
+import Feeds from '../organisms/Feeds'
+import Assignments from '../organisms/Assignments'
 
 library.add(
   faCheckSquare,
@@ -30,13 +33,17 @@ library.add(
 )
 
 export default function ClassDetail() {
-  const { authState } = useAuthContext()
+  // const { authState } = useAuthContext()
 
   const { sidebarWiden, setSidebarWiden } = useSidebar()
   // const [showProfileOptions, setShowProfileOptions] = useState(false)
 
   const classProps = useLocation()
   const { ...classProp } = classProps.state as Class
+  const navigate = useNavigate()
+
+  const [contentShown, setContentShown] = useState('Feeds')
+
   return (
     <div className="w-full h-screen overflow-hidden">
       <div className="flex flex-col bg-primary h-full">
@@ -45,12 +52,15 @@ export default function ClassDetail() {
             <button onClick={() => setSidebarWiden(!sidebarWiden)}>
               <FontAwesomeIcon icon="bars" className="text-accent text-xl" />
             </button>
-            <div className="font-plusJakarta font-bold text-2xl text-accent">
+            <div
+              onClick={() => navigate('/dashboard')}
+              className="cursor-pointer font-plusJakarta font-bold text-2xl text-accent"
+            >
               Googolplex
             </div>
             <FontAwesomeIcon icon="minus" className="text-accent text-xl" />
             <div className="font-plusJakarta font-bold text-2xl text-accent">
-              {classProp.subject} {classProp.class_code}
+              {classProp.subject}
             </div>
           </div>
           <div className="flex flex-row space-x-4 items-center">
@@ -75,13 +85,22 @@ export default function ClassDetail() {
           <div className="flex flex-col w-screen">
             <div className="flex gap-3 bg-primary p-6 border-b-2 border-accent sticky top-10 z-30">
               <div className="flex-1 flex flex-row space-x-4 items-center">
-                <div className="font-plusJakarta font-medium text-lg text-accent">
+                <div
+                  onClick={() => setContentShown('Feeds')}
+                  className="cursor-pointer font-plusJakarta font-medium text-lg text-accent px-2 py-1 hover:underline hover:underline-offset-1"
+                >
                   Feeds
                 </div>
-                <div className="font-plusJakarta font-medium text-lg text-accent">
+                <div
+                  onClick={() => setContentShown('Assignments')}
+                  className="cursor-pointer font-plusJakarta font-medium text-lg text-accent hover:underline hover:underline-offset-1"
+                >
                   Assignments
                 </div>
-                <div className="font-plusJakarta font-medium text-lg text-accent">
+                <div
+                  onClick={() => setContentShown('Members')}
+                  className="cursor-pointer font-plusJakarta font-medium text-lg text-accent hover:underline hover:underline-offset-1"
+                >
                   Members
                 </div>
               </div>
@@ -91,7 +110,15 @@ export default function ClassDetail() {
             >
               <div className="flex flex-col">
                 <div className="text-xl font-plusJakarta font-medium text-accent">
-                  Welcome, {authState!.username}
+                  {contentShown == 'Feeds' ? (
+                    <Feeds />
+                  ) : contentShown == 'Assignments' ? (
+                    <Assignments />
+                  ) : contentShown == 'Members' ? (
+                    <UserClassMemberList />
+                  ) : (
+                    <Feeds />
+                  )}
                 </div>
               </div>
             </div>
