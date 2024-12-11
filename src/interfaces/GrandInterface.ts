@@ -114,7 +114,19 @@ export interface Assignment {
   title: string
   content: string
   due_date: string
+  assignment_file?: [string]
   post: Post
+}
+
+export interface FormCreateAssignment {
+  title: string
+  content: string
+  due_date: string
+}
+
+export interface ArticleResponse {
+  assignment_id: string
+  assignment_file_upload: File
 }
 
 export interface Post {

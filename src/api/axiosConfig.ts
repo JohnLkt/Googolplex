@@ -142,6 +142,24 @@ export const articleInstanceById = (id: string, token: string) =>
     },
   })
 
+export const assignmentInstance = (token: string) =>
+  axios.create({
+    baseURL: `${backendAPIUrl}/assignment`,
+    headers: {
+      accept: '*/*',
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+    },
+  })
+
+export const assignmentFileInstance = (token: string) =>
+  axios.create({
+    baseURL: `${backendAPIUrl}/assignment_file`,
+    headers: {
+      accept: '*/*',
+      Authorization: `Bearer ${token}`,
+    },
+  })
 export const postInstance = (token: string) =>
   axios.create({
     baseURL: `${backendAPIUrl}/post`,
