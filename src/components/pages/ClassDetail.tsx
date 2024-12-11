@@ -115,7 +115,7 @@ export default function ClassDetail() {
                   ) : contentShown == 'Assignments' ? (
                     <Assignments />
                   ) : contentShown == 'Members' ? (
-                    <UserClassMemberList />
+                    <UserClassMemberList {...classProp} />
                   ) : (
                     <Feeds />
                   )}

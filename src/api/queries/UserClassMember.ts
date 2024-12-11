@@ -82,13 +82,20 @@ const useQueryFetchClassMemberByClassId = (
 ): UseQueryResult<UserClassMemberFetchResponse> => {
   return useQuery<UserClassMemberFetchResponse>({
     queryKey: ['class', classId],
-    queryFn: () => fetchClassMemberByClassId(token!, classId),
+    queryFn: async () => {
+      if (!token) {
+        // throw new Error('No token provided')
+        console.log('token not provided')
+      }
+      return fetchClassMemberByClassId(classId, token!)
+    },
     enabled: !!token,
   })
 }
 
 export const useFetchClassMemberByClassId = (classId: string) => {
   const { authState } = useAuthContext()
+  // console.log('access token: ', authState.accessToken)
   const { data, isLoading, isError, refetch } =
     useQueryFetchClassMemberByClassId(authState.accessToken, classId)
 
@@ -97,8 +104,9 @@ export const useFetchClassMemberByClassId = (classId: string) => {
   useEffect(() => {
     if (data) {
       setMembers(data)
+      console.log('token: ', authState.accessToken)
     }
-  }, [data])
+  }, [data, authState])
 
   return { members, isLoading, isError, refetch }
 }
