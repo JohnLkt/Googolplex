@@ -179,3 +179,13 @@ export const postById = (postId: string, token: string) =>
       Authorization: `Bearer ${token}`,
     },
   })
+
+export const postByClassId = (token: string, classId: string) =>
+  axios.create({
+    baseURL: `${backendAPIUrl}/post/class/${classId}`,
+    headers: {
+      accept: '*/*',
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+    },
+  })
