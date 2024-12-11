@@ -31,6 +31,7 @@ export default function Sidebar() {
           handleClick={() => {
             setSidebarWiden(!sidebarWiden)
             setSidebarItemSelected('Todos')
+            navigate('/dashboard')
           }}
           iconItem="tasks"
         />
@@ -40,6 +41,7 @@ export default function Sidebar() {
           handleClick={() => {
             setSidebarWiden(!sidebarWiden)
             setSidebarItemSelected('Class Enrolled')
+            navigate('/dashboard')
           }}
           iconItem="graduation-cap"
         />
@@ -49,6 +51,7 @@ export default function Sidebar() {
           handleClick={() => {
             setSidebarWiden(!sidebarWiden)
             setSidebarItemSelected('Class Teaching')
+            navigate('/dashboard')
           }}
           iconItem="people-group"
         />
