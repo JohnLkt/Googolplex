@@ -30,7 +30,7 @@ const ParticlesBackground = () => {
         },
         modes: {
           push: {
-            quantity: 4,
+            quantity: 0,
           },
           grab: {
             distance: 300,
@@ -44,7 +44,7 @@ const ParticlesBackground = () => {
         color: { value: '#ffffff' },
         links: {
           enable: true,
-          distance: 150,
+          distance: 200,
           color: '#ffffff',
           opacity: 0.5,
           width: 1.3,
