@@ -105,6 +105,8 @@ export default function ClassDetail() {
                 </div>
               </div>
             </div>
+
+            {/* Content Area */}
             <div
               className={`overflow-y-auto ${sidebarWiden ? 'w-4/5' : 'flex-1'}  p-6`}
             >
