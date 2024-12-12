@@ -5,7 +5,6 @@ interface ArticleListProps {
   articles: Article[]
 }
 export default function ArticleList({ articles }: ArticleListProps) {
-  console.log(articles)
   return (
     <div className="w-full flex flex-col gap-3 p-6">
       {articles &&

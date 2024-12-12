@@ -1,5 +1,5 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { Article, Assignment, Post } from '../../interfaces/GrandInterface'
+import { Article, Assignment } from '../../interfaces/GrandInterface'
 import { format } from 'date-fns'
 import { faFolderOpen, faNewspaper } from '@fortawesome/free-solid-svg-icons'
 import { useNavigate, useParams } from 'react-router'
@@ -16,8 +16,6 @@ interface PostCardProps {
 const PostCard = ({ article, assignment }: PostCardProps) => {
   const navigate = useNavigate()
   const { classId } = useParams()
-
-  console.log(article)
 
   return (
     <div

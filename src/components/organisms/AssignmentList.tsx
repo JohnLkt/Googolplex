@@ -6,7 +6,6 @@ interface AssignmentListProps {
 }
 
 export default function AssignmentList({ assignments }: AssignmentListProps) {
-  console.log(assignments)
   return (
     <div className="w-full flex flex-col gap-3 p-6">
       {assignments &&
