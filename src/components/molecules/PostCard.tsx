@@ -21,8 +21,8 @@ const PostCard = (prop: Post) => {
             />
             <div className="text-lg font-bold text-white">Article</div>
           </div>
-          <div className="text-sm">{article.title}</div>
-          <div className="text-sm">{article.content}</div>
+          <div className="text-sm">{article?.title}</div>
+          <div className="text-sm">{article?.content}</div>
         </div>
       ) : (
         <div>
@@ -33,10 +33,11 @@ const PostCard = (prop: Post) => {
             />
             <div className="text-lg font-bold text-white">Assignment</div>
           </div>
-          <div className="text-sm">{assignment!.title}</div>
-          <div className="text-sm">{assignment!.content}</div>
+          <div className="text-sm">{assignment?.title}</div>
+          <div className="text-sm">{assignment?.content}</div>
           <div className="text-sm mt-2">
-            <strong>Due Date:</strong> {formatDate(assignment!.due_date)}
+            <strong>Due Date:</strong>{' '}
+            {assignment?.due_date && formatDate(assignment!.due_date)}
           </div>
         </div>
       )}

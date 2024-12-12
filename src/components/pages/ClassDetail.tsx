@@ -1,6 +1,5 @@
-import { useLocation, useNavigate } from 'react-router'
+import { useNavigate, useParams } from 'react-router'
 import { useState } from 'react'
-import { Class } from '../../interfaces/GrandInterface'
 import { useSidebar } from '../../hooks/useSidebar'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { library } from '@fortawesome/fontawesome-svg-core'
@@ -19,6 +18,8 @@ import Sidebar from '../organisms/Sidebar'
 import UserClassMemberList from '../organisms/UserClassMemberList'
 import Feeds from '../organisms/Feeds'
 import Assignments from '../organisms/Assignments'
+import { useQueryClassByClassId } from '../../api/queries/Class'
+import { useAuthContext } from '../../contexts/AuthContext'
 
 library.add(
   faCheckSquare,
@@ -33,13 +34,17 @@ library.add(
 )
 
 export default function ClassDetail() {
-  // const { authState } = useAuthContext()
-
+  const { authState } = useAuthContext()
   const { sidebarWiden, setSidebarWiden } = useSidebar()
   // const [showProfileOptions, setShowProfileOptions] = useState(false)
 
-  const classProps = useLocation()
-  const { ...classProp } = classProps.state as Class
+  const { classId } = useParams()
+  const { data: classData } = useQueryClassByClassId(
+    authState.accessToken,
+    classId,
+    { enabled: !!authState.accessToken && !!classId }
+  )
+  const classProp = classData?.data
   const navigate = useNavigate()
 
   const [contentShown, setContentShown] = useState('Feeds')
@@ -60,7 +65,7 @@ export default function ClassDetail() {
             </div>
             <FontAwesomeIcon icon="minus" className="text-accent text-xl" />
             <div className="font-plusJakarta font-bold text-2xl text-accent">
-              {classProp.subject}
+              {classProp?.subject}
             </div>
           </div>
           <div className="flex flex-row space-x-4 items-center">
@@ -83,7 +88,7 @@ export default function ClassDetail() {
         <div className="h-full flex flex-row relative">
           <Sidebar />
           <div className="flex flex-col w-screen">
-            <div className="flex gap-3 bg-primary p-6 border-b-2 border-accent sticky top-10 z-30">
+            <div className="flex bg-primary p-6 border-b-2 border-accent sticky top-10 z-30">
               <div className="flex-1 flex flex-row space-x-4 items-center">
                 <div
                   onClick={() => setContentShown('Feeds')}
@@ -104,6 +109,24 @@ export default function ClassDetail() {
                   Members
                 </div>
               </div>
+              <div className="flex items-center gap-4 cursor-pointer font-plusJakarta font-medium text-lg text-accent ">
+                <div
+                  className="hover:underline hover:underline-offset-1"
+                  onClick={() => {
+                    navigate('add/assignment/')
+                  }}
+                >
+                  Add Assignment
+                </div>
+                <div
+                  className="hover:underline hover:underline-offset-1"
+                  onClick={() => {
+                    navigate('add/article/')
+                  }}
+                >
+                  Add Article
+                </div>
+              </div>
             </div>
 
             {/* Content Area */}
@@ -117,7 +140,7 @@ export default function ClassDetail() {
                   ) : contentShown == 'Assignments' ? (
                     <Assignments />
                   ) : contentShown == 'Members' ? (
-                    <UserClassMemberList {...classProp} />
+                    classProp && <UserClassMemberList {...classProp} />
                   ) : (
                     <Feeds />
                   )}

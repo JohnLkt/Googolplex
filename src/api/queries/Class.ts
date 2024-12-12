@@ -87,12 +87,13 @@ export const fetchClassByClassCode = async (
 
 export const useQueryClassByClassCode = (
   token: string | null,
-  classCode: string
+  classCode: string,
+  options?: object
 ): UseQueryResult<ClassResponse> => {
   return useQuery<ClassResponse>({
     queryKey: ['class', classCode],
     queryFn: () => fetchClassByClassCode(token!, classCode),
-    enabled: !!token,
+    ...options,
   })
 }
 
@@ -170,30 +171,19 @@ const fetchClassByClassId = async (token: string, classId: string) => {
   return response.data
 }
 
-const useQueryClassByClassId = (
+export const useQueryClassByClassId = (
   token: string | null,
-  classId: string
+  classId: string | undefined,
+  options?: object
 ): UseQueryResult<ClassResponse> => {
   return useQuery<ClassResponse>({
     queryKey: ['class_id', classId],
-    queryFn: () => fetchClassByClassId(token!, classId),
-    enabled: !!token,
+    queryFn: () => {
+      if (!token || !classId) {
+        throw new Error('Token and classId must be provided')
+      }
+      return fetchClassByClassId(token, classId)
+    },
+    ...options,
   })
-}
-
-export const useFetchClassByClassId = (classId: string) => {
-  const [classDetail, setClassDetail] = useState<ClassResponse>()
-  const { authState } = useAuthContext()
-  const { data, isLoading, isError } = useQueryClassByClassId(
-    authState.accessToken,
-    classId
-  )
-
-  useEffect(() => {
-    if (data) {
-      setClassDetail(data)
-    }
-  }, [data])
-
-  return { classDetail, isLoading, isError }
 }
