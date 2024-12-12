@@ -129,29 +129,11 @@ export default function ClassDetail() {
               >
                 Members
               </div>
-              {/* <div className="flex items-center gap-4 cursor-pointer font-plusJakarta font-medium text-lg text-accent whitespace-nowrap">
-                <div
-                  className="hover:underline hover:underline-offset-1 text-nowrap"
-                  onClick={() => {
-                    navigate('add/assignment/')
-                  }}
-                >
-                  Add Assignment
-                </div>
-                <div
-                  className="hover:underline hover:underline-offset-1 text-nowrap"
-                  onClick={() => {
-                    navigate('add/article/')
-                  }}
-                >
-                  Add Article
-                </div>
-              </div> */}
             </div>
 
             <div className="h-[calc(100%-80px)] w-full overflow-y-auto">
               <div className="h-full text-xl font-plusJakarta font-medium text-accent">
-                {contentShown == 'ArticleList'
+                {contentShown == 'Articles'
                   ? articles && <ArticleList articles={articles} />
                   : contentShown == 'Assignments'
                     ? assignments && (
