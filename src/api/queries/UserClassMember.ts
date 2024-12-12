@@ -81,7 +81,7 @@ const useQueryFetchClassMemberByClassId = (
   classId: string
 ): UseQueryResult<UserClassMemberFetchResponse> => {
   return useQuery<UserClassMemberFetchResponse>({
-    queryKey: ['class', classId],
+    queryKey: ['userClassMember', classId],
     queryFn: async () => {
       if (!token) {
         // throw new Error('No token provided')

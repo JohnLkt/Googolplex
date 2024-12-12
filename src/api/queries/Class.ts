@@ -51,7 +51,7 @@ const useQueryFetchClass = (
   userId: string
 ): UseQueryResult<ClassFetchResponse> => {
   return useQuery<ClassFetchResponse>({
-    queryKey: ['class', userId],
+    queryKey: ['getClass', userId],
     queryFn: () => fetchClass(token!, userId),
     enabled: !!token,
   })
@@ -91,7 +91,7 @@ export const useQueryClassByClassCode = (
   options?: object
 ): UseQueryResult<ClassResponse> => {
   return useQuery<ClassResponse>({
-    queryKey: ['class', classCode],
+    queryKey: ['classByCode', classCode],
     queryFn: () => fetchClassByClassCode(token!, classCode),
     ...options,
   })
@@ -177,7 +177,7 @@ export const useQueryClassByClassId = (
   options?: object
 ): UseQueryResult<ClassResponse> => {
   return useQuery<ClassResponse>({
-    queryKey: ['class_id', classId],
+    queryKey: ['classById', classId],
     queryFn: () => {
       if (!token || !classId) {
         throw new Error('Token and classId must be provided')
