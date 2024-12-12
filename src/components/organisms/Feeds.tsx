@@ -10,7 +10,7 @@ export default function Feeds() {
     return <div className="text-3xl text-white">Loading...</div>
 
   return (
-    <div className="grid gap-3 h-full overflow-y-auto">
+    <div className="w-full flex flex-col gap-3 p-6 ">
       {test.data?.data.map((p, i) => <PostCard {...p} key={i} />)}
     </div>
   )

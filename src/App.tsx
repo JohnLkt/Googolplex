@@ -40,7 +40,10 @@ function App() {
                 path="/class-detail/:classId/add/assignment/"
                 element={<CreateAssignment />}
               />
-              <Route path="/post/:postId" element={<Post />} />
+              <Route
+                path="/class-detail/:classId/post/:postId"
+                element={<Post />}
+              />
             </Route>
           </Routes>
         </QueryClientProvider>
