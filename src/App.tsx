@@ -32,9 +32,12 @@ function App() {
             <Route element={<ProtectedRoutes />}>
               <Route path="/dashboard" element={<Dashboard />} />
               <Route path="/class-detail/:classId" element={<ClassDetail />} />
-              <Route path="/add/article/:classId" element={<CreateArticle />} />
               <Route
-                path="/add/assignment/:classId"
+                path="/class-detail/:classId/add/article/"
+                element={<CreateArticle />}
+              />
+              <Route
+                path="/class-detail/:classId/add/assignment/"
                 element={<CreateAssignment />}
               />
               <Route path="/post/:postId" element={<Post />} />

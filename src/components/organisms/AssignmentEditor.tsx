@@ -3,7 +3,7 @@ import * as Yup from 'yup'
 import Input from '../molecules/Input'
 import RichTextEditor from '../molecules/RichTextEditor'
 import { useAuthContext } from '../../contexts/AuthContext'
-import { useParams } from 'react-router'
+import { useNavigate, useParams } from 'react-router'
 import { useCreatePost } from '../../api/queries/Post'
 import {
   useCreateAssignment,
@@ -20,6 +20,7 @@ const AssignmentSchema = Yup.object().shape({
 const AssignmentEditor: React.FC = () => {
   const { authState } = useAuthContext()
   const { classId } = useParams()
+  const navigate = useNavigate()
 
   const { mutate: createAssignment } = useCreateAssignment(
     authState.accessToken
@@ -64,6 +65,7 @@ const AssignmentEditor: React.FC = () => {
                   onSuccess: (response) => {
                     console.log('success create post', response.data)
                     // redir to class detail
+                    navigate(`/class-detail/${classId}`)
                   },
                   onError: (err) => {
                     console.log('error create post', err)

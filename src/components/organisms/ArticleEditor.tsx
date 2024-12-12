@@ -5,7 +5,7 @@ import Input from '../molecules/Input'
 import RichTextEditor from '../molecules/RichTextEditor'
 import { useCreateArticle } from '../../api/queries/Article'
 import { useAuthContext } from '../../contexts/AuthContext'
-import { useParams } from 'react-router'
+import { useNavigate, useParams } from 'react-router'
 import { useCreatePost } from '../../api/queries/Post'
 
 const ArticleSchema = Yup.object().shape({
@@ -16,6 +16,7 @@ const ArticleSchema = Yup.object().shape({
 const ArticleEditor: React.FC = () => {
   const { authState } = useAuthContext()
   const { classId } = useParams()
+  const navigate = useNavigate()
   const { mutate: createArticle } = useCreateArticle(authState.accessToken)
   const { mutate: createArticlePost } = useCreatePost(
     authState.accessToken,
@@ -36,6 +37,7 @@ const ArticleEditor: React.FC = () => {
             onSuccess: (response) => {
               console.log('success create post', response.data)
               // redir to class detail
+              navigate(`/class-detail/${classId}`)
             },
             onError: (err) => {
               console.log('error create post', err)
