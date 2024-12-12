@@ -1,17 +1,31 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { Post } from '../../interfaces/GrandInterface'
+import { Article, Assignment } from '../../interfaces/GrandInterface'
 import { format } from 'date-fns'
 import { faFolderOpen, faNewspaper } from '@fortawesome/free-solid-svg-icons'
+import { useNavigate, useParams } from 'react-router'
 
 function formatDate(date: string) {
   return format(new Date(date), 'MMMM dd, yyyy hh:mm a')
 }
 
-const PostCard = (prop: Post) => {
-  const { article, assignment } = prop
+interface PostCardProps {
+  article?: Article
+  assignment?: Assignment
+}
+
+const PostCard = ({ article, assignment }: PostCardProps) => {
+  const navigate = useNavigate()
+  const { classId } = useParams()
 
   return (
-    <div className="z-10 cursor-pointer rounded-xl p-4 bg-gradient-to-br from-primary from-40% to-secondary hover:shadow-secondary hover:shadow-lg hover:scale-95 transition ease-in-out">
+    <div
+      className="z-10 cursor-pointer rounded-xl p-4 bg-gradient-to-br from-primary from-40% to-secondary hover:shadow-secondary hover:shadow-lg hover:scale-95 transition ease-in-out"
+      onClick={() => {
+        navigate(
+          `/class-detail/${classId}/post/${article ? article.id : assignment?.id}`
+        )
+      }}
+    >
       {article ? (
         <div className="mb-4">
           <div className="flex items-center gap-2 mb-2">

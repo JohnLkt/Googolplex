@@ -11,7 +11,6 @@ import {
   CreatePost,
   GenericResponse,
 } from '../../interfaces/GrandInterface'
-import { useAuthContext } from '../../contexts/AuthContext'
 
 // reusable for all CRUD class
 type getPostResponse = GenericResponse<Post>
@@ -39,7 +38,7 @@ export const useCreatePost = (
 
 export const useGetPost = (postId: string, token: string, options?: object) => {
   return useQuery({
-    queryKey: ['post', postId],
+    queryKey: ['getPost', postId],
     queryFn: () => postById(postId, token).get<getPostResponse>(''),
     ...options,
   })
@@ -48,17 +47,19 @@ export const useGetPost = (postId: string, token: string, options?: object) => {
 const fetchPostByClassId = async (token: string, classId: string) => {
   return (await postByClassId(token, classId).get('')).data
 }
-const useQueryFetchPostByClassId = (
+export const useQueryFetchPostByClassId = (
   token: string | null,
-  classId: string
+  classId: string | undefined,
+  options?: object
 ): UseQueryResult<getPostListResponse> => {
-  return useQuery({
-    queryKey: ['class', classId],
-    queryFn: () => fetchPostByClassId(token!, classId),
-    enabled: !!token,
+  return useQuery<getPostListResponse>({
+    queryKey: ['postByClassId', classId],
+    queryFn: () => {
+      if (!token || !classId) {
+        throw new Error('Token and classId must be provided')
+      }
+      return fetchPostByClassId(token, classId)
+    },
+    ...options,
   })
-}
-export const useFetchPostByClassId = (classId: string) => {
-  const { authState } = useAuthContext()
-  return useQueryFetchPostByClassId(authState.accessToken!, classId)
 }
