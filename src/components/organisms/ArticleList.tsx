@@ -12,10 +12,10 @@ export default function ArticleList({ articles }: ArticleListProps) {
     <div className="w-full flex flex-col gap-3 p-6">
       <div
         onClick={() => {
-          navigate('add/assignment/')
+          navigate('add/article/')
         }}
       >
-        <ActionLightButton actionText="Add Assignment" />
+        <ActionLightButton actionText="Add Article" />
       </div>
       {articles &&
         articles.map((article, i) => <PostCard article={article} key={i} />)}

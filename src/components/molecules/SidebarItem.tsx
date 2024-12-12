@@ -17,7 +17,7 @@ export default function SidebarItem({
   return (
     <div
       onClick={handleClick}
-      className="cursor-pointer flex flex-row gap-3 items-center"
+      className="cursor-pointer flex flex-row space-x-3 items-center"
     >
       <div className="w-8 flex justify-center">
         <FontAwesomeIcon icon={iconItem} className="text-accent text-xl" />

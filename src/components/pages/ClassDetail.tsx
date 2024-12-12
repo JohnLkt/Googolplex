@@ -71,7 +71,7 @@ export default function ClassDetail() {
       .map((item) => item.assignment as Assignment)
 
   return (
-    <div className="w-full h-screen overflow-hidden">
+    <div className="w-full h-screen overflow-hidden font-plusJakarta">
       <div className="flex flex-col bg-primary h-full">
         <div className="flex gap-3 bg-primary px-6 border-b-2 border-accent sticky top-0 z-30">
           <div className="flex flex-row h-20 space-x-4 items-center font-bold text-2xl max-mobile:text-lg text-accent line-clamp-1 text-ellipsis">
@@ -112,10 +112,10 @@ export default function ClassDetail() {
           <div className="h-full w-full">
             <div className="px-6 flex max-mobile:justify-around items-center bg-primary h-20 border-b-2 border-accent sticky z-30 overflow-x-auto gap-4">
               <div
-                onClick={() => setContentShown('ArticleList')}
+                onClick={() => setContentShown('Feeds')}
                 className="cursor-pointer font-plusJakarta font-medium text-lg text-accent hover:underline hover:underline-offset-1"
               >
-                ArticleList
+                Feeds
               </div>
               <div
                 onClick={() => setContentShown('Assignments')}
@@ -133,7 +133,7 @@ export default function ClassDetail() {
 
             <div className="h-[calc(100%-80px)] w-full overflow-y-auto">
               <div className="h-full text-xl font-plusJakarta font-medium text-accent">
-                {contentShown == 'Articles'
+                {contentShown == 'Feeds'
                   ? articles && <ArticleList articles={articles} />
                   : contentShown == 'Assignments'
                     ? assignments && (
