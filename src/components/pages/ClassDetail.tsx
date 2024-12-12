@@ -65,7 +65,7 @@ export default function ClassDetail() {
             </div>
             <FontAwesomeIcon icon="minus" className="text-accent text-xl" />
             <div className="font-plusJakarta font-bold text-2xl text-accent">
-              {/* {classProp.subject} */}
+              {classProp?.subject}
             </div>
           </div>
           <div className="flex flex-row space-x-4 items-center">
