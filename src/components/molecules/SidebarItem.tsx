@@ -19,7 +19,9 @@ export default function SidebarItem({
       onClick={handleClick}
       className="cursor-pointer flex flex-row gap-3 items-center"
     >
-      <FontAwesomeIcon icon={iconItem} className="text-accent text-xl" />
+      <div className="w-8 flex justify-center">
+        <FontAwesomeIcon icon={iconItem} className="text-accent text-xl" />
+      </div>
       <div className="hover:underline text-nowrap font-plusJakarta text-sm font-medium text-accent p-1">
         {sidebarWiden ? sidebarTitle : ''}
       </div>

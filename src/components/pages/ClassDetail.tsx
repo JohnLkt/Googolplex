@@ -53,18 +53,18 @@ export default function ClassDetail() {
     <div className="w-full h-screen overflow-hidden">
       <div className="flex flex-col bg-primary h-full">
         <div className="flex gap-3 bg-primary p-6 border-b-2 border-accent sticky top-0 z-30">
-          <div className="flex-1 flex flex-row space-x-4 items-center">
+          <div className="flex-1 flex flex-row space-x-4 items-center font-bold text-2xl max-mobile:text-lg text-accent line-clamp-1 text-ellipsis">
             <button onClick={() => setSidebarWiden(!sidebarWiden)}>
-              <FontAwesomeIcon icon="bars" className="text-accent text-xl" />
+              <FontAwesomeIcon icon="bars" className="" />
             </button>
             <div
               onClick={() => navigate('/dashboard')}
-              className="cursor-pointer font-plusJakarta font-bold text-2xl text-accent"
+              className="cursor-pointer font-plusJakarta"
             >
               Googolplex
             </div>
-            <FontAwesomeIcon icon="minus" className="text-accent text-xl" />
-            <div className="font-plusJakarta font-bold text-2xl text-accent">
+            <FontAwesomeIcon icon="minus" />
+            <div className="font-plusJakarts text-ellipsis">
               {classProp?.subject}
             </div>
           </div>
@@ -85,14 +85,14 @@ export default function ClassDetail() {
           </div>
         </div>
 
-        <div className="h-full flex flex-row relative">
+        <div className="h-full w-screen flex flex-row relative">
           <Sidebar />
-          <div className="flex flex-col w-screen">
-            <div className="flex bg-primary p-6 border-b-2 border-accent sticky top-10 z-30">
-              <div className="flex-1 flex flex-row space-x-4 items-center">
+          <div className="flex flex-col w-full">
+            <div className="flex bg-primary p-6 border-b-2 border-accent sticky top-10 z-30 overflow-x-auto gap-4">
+              <div className="flex-1 gap-4 flex flex-row items-center whitespace-nowrap">
                 <div
                   onClick={() => setContentShown('Feeds')}
-                  className="cursor-pointer font-plusJakarta font-medium text-lg text-accent px-2 py-1 hover:underline hover:underline-offset-1"
+                  className="cursor-pointer font-plusJakarta font-medium text-lg text-accent hover:underline hover:underline-offset-1"
                 >
                   Feeds
                 </div>
@@ -109,9 +109,9 @@ export default function ClassDetail() {
                   Members
                 </div>
               </div>
-              <div className="flex items-center gap-4 cursor-pointer font-plusJakarta font-medium text-lg text-accent ">
+              <div className="flex items-center gap-4 cursor-pointer font-plusJakarta font-medium text-lg text-accent whitespace-nowrap">
                 <div
-                  className="hover:underline hover:underline-offset-1"
+                  className="hover:underline hover:underline-offset-1 text-nowrap"
                   onClick={() => {
                     navigate('add/assignment/')
                   }}
@@ -119,7 +119,7 @@ export default function ClassDetail() {
                   Add Assignment
                 </div>
                 <div
-                  className="hover:underline hover:underline-offset-1"
+                  className="hover:underline hover:underline-offset-1 text-nowrap"
                   onClick={() => {
                     navigate('add/article/')
                   }}
@@ -130,9 +130,7 @@ export default function ClassDetail() {
             </div>
 
             {/* Content Area */}
-            <div
-              className={`overflow-y-auto ${sidebarWiden ? 'w-4/5' : 'flex-1'}  p-6`}
-            >
+            <div className={`overflow-y-auto p-6`}>
               <div className="flex flex-col">
                 <div className="text-xl font-plusJakarta font-medium text-accent">
                   {contentShown == 'Feeds' ? (
