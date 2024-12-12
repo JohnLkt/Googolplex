@@ -11,7 +11,7 @@ export default function ClassCard({ ...classProp }: Class) {
   return (
     <div
       onClick={() => handleNavClassDetail(classProp.id)}
-      className="z-10 cursor-pointer w-64 h-64 rounded-xl p-4 hover:scale-105 bg-gradient-to-br from-primary from-40% to-secondary hover:shadow-secondary hover:shadow-lg transition ease-in-out"
+      className="z-10 cursor-pointer w-64 max-mobile:w-full h-64 rounded-xl p-4 hover:scale-105 bg-gradient-to-br from-primary from-40% to-secondary hover:shadow-secondary hover:shadow-lg transition ease-in-out"
     >
       <div className="flex flex-col space-y-3">
         <div className="h-1/4 flex flex-col space-y-3">
