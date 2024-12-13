@@ -1,15 +1,20 @@
+import { useNavigate } from 'react-router'
 import {
   useDeleteUserClassMemberById,
+  useFetchClassMemberByClassId,
   useFetchClassMemberByTokenAndClassId,
+  useLeaveUserClassMemberById,
   useUpdateUserClassMemberById,
 } from '../../api/queries/UserClassMember'
 import { useAuthContext } from '../../contexts/AuthContext'
 import { UserClassMember } from '../../interfaces/GrandInterface'
 import ActionCustomkButton from '../atoms/ActionCustomButton'
+import { ReusableToast } from '../organisms/ReusableToast'
 
 interface ClassMemberTeacherActionInterface {
   each: UserClassMember
   currentUser?: UserClassMember
+  onClick?: () => void
 }
 
 function RemoveMemberButton(prop: ClassMemberTeacherActionInterface) {
@@ -21,7 +26,12 @@ function RemoveMemberButton(prop: ClassMemberTeacherActionInterface) {
     return <></>
   }
 
-  return <ActionCustomkButton onClick={() => {}} actionText="Remove Member" />
+  // each is teacher
+  if (prop.each.is_teacher) return <></>
+
+  return (
+    <ActionCustomkButton onClick={prop.onClick!} actionText="Remove Member" />
+  )
 }
 
 function GrantRoleButton(prop: ClassMemberTeacherActionInterface) {
@@ -31,7 +41,7 @@ function GrantRoleButton(prop: ClassMemberTeacherActionInterface) {
   // each is teacher
   if (prop.each.is_teacher) return <></>
 
-  return <ActionCustomkButton onClick={() => {}} actionText="Grant Role" />
+  return <ActionCustomkButton onClick={prop.onClick!} actionText="Grant Role" />
 }
 
 function RevokeRoleButton(prop: ClassMemberTeacherActionInterface) {
@@ -46,7 +56,9 @@ function RevokeRoleButton(prop: ClassMemberTeacherActionInterface) {
     return <></>
   }
 
-  return <ActionCustomkButton onClick={() => {}} actionText="Revoke Role" />
+  return (
+    <ActionCustomkButton onClick={prop.onClick!} actionText="Revoke Role" />
+  )
 }
 
 function LeaveClassButton(prop: ClassMemberTeacherActionInterface) {
@@ -54,11 +66,16 @@ function LeaveClassButton(prop: ClassMemberTeacherActionInterface) {
   if (!(prop.currentUser?.user_id === prop.each.user_id)) {
     return <></>
   }
-  return <ActionCustomkButton onClick={() => {}} actionText="Leave Class" />
+  return (
+    <ActionCustomkButton onClick={prop.onClick!} actionText="Leave Class" />
+  )
 }
 
 export default function ClassMemberTeacherAction(prop: UserClassMember) {
   const { authState } = useAuthContext()
+  const { refetch } = useFetchClassMemberByClassId(prop.class_id)
+  const navigate = useNavigate()
+
   const currentUserStatus = useFetchClassMemberByTokenAndClassId(
     authState.accessToken,
     authState.userId,
@@ -72,17 +89,96 @@ export default function ClassMemberTeacherAction(prop: UserClassMember) {
     authState.accessToken,
     prop.id
   )
+  const { mutate: leaveUserClassMember } = useLeaveUserClassMemberById(
+    authState.accessToken,
+    prop.id
+  )
 
-  function handleRemoveMember() {}
+  // function for handle remove member
+  function handleRemoveMember() {
+    deleteUserClassMember(undefined, {
+      onSuccess: (response) => {
+        ReusableToast(`success remove ${response.data.data.user.name}`)
+        refetch()
+      },
+      onError: (error) => {
+        console.error('Error deleting user class member:', error)
+        ReusableToast(`error remove member : ${error}`)
+      },
+    })
+  }
+
+  // function for handle update role
+  function handleUpdateRole(isTeacher: boolean) {
+    updateUserClassMember(
+      {
+        isTeacher: isTeacher,
+      },
+      {
+        onSuccess: (response) => {
+          if (isTeacher) {
+            ReusableToast(
+              `success grant role ${response.data.data.user.name} as teacher`
+            )
+          } else {
+            ReusableToast(
+              `success revoke role ${response.data.data.user.name} as teacher`
+            )
+          }
+          refetch()
+        },
+        onError: (error) => {
+          console.error('Error deleting user class member:', error)
+          ReusableToast(`error remove member : ${error}`)
+        },
+      }
+    )
+  }
+
+  function handleLeaveClass() {
+    leaveUserClassMember(undefined, {
+      onSuccess: () => {
+        ReusableToast(`success leave class`)
+        refetch()
+        navigate('/dashboard')
+      },
+      onError: (error) => {
+        console.error('Error leave class:', error)
+        ReusableToast(`error leave class : ${error}`)
+      },
+    })
+  }
+
+  console.log(prop)
 
   if (currentUserStatus.isLoading) return <div className=""></div>
 
   return (
     <div className="grid gap-3 justify-end">
-      <GrantRoleButton each={prop} currentUser={currentUserStatus.data} />
-      <RevokeRoleButton each={prop} currentUser={currentUserStatus.data} />
-      <RemoveMemberButton each={prop} currentUser={currentUserStatus.data} />
-      <LeaveClassButton each={prop} currentUser={currentUserStatus.data} />
+      <GrantRoleButton
+        onClick={() => {
+          handleUpdateRole(true)
+        }}
+        each={prop}
+        currentUser={currentUserStatus.data}
+      />
+      <RevokeRoleButton
+        onClick={() => {
+          handleUpdateRole(false)
+        }}
+        each={prop}
+        currentUser={currentUserStatus.data}
+      />
+      <RemoveMemberButton
+        onClick={handleRemoveMember}
+        each={prop}
+        currentUser={currentUserStatus.data}
+      />
+      <LeaveClassButton
+        onClick={handleLeaveClass}
+        each={prop}
+        currentUser={currentUserStatus.data}
+      />
     </div>
   )
 }

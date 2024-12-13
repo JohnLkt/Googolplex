@@ -18,6 +18,7 @@ import {
   userClassMemberInstance,
   userClassMemberInstanceByClassCode,
   userClassMemberInstanceById,
+  userLeaveClassMemberInstanceById,
 } from '../axiosConfig'
 import { useAuthContext } from '../../contexts/AuthContext'
 import { useEffect, useState } from 'react'
@@ -46,14 +47,24 @@ export const useCreateUserClassMember = (
   })
 }
 
+export const useLeaveUserClassMemberById = (
+  token: string | null,
+  userClassMemberId: string
+): UseMutationResult<AxiosResponse<UserClassMemberResponse>, unknown> => {
+  return useMutation({
+    mutationFn: () => {
+      return userLeaveClassMemberInstanceById(
+        userClassMemberId,
+        token ?? ''
+      ).delete<UserClassMemberResponse>('', {})
+    },
+  })
+}
+
 export const useDeleteUserClassMemberById = (
   token: string | null,
   userClassMemberId: string
-): UseMutationResult<
-  AxiosResponse<UserClassMemberResponse>,
-  unknown,
-  FormCreateUserClassMember
-> => {
+): UseMutationResult<AxiosResponse<UserClassMemberResponse>, unknown> => {
   return useMutation({
     mutationFn: () => {
       return userClassMemberInstanceById(
