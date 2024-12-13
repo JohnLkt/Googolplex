@@ -95,7 +95,12 @@ const AssignmentEditor: React.FC = () => {
       }}
       validationSchema={AssignmentSchema}
       onSubmit={(values, { setSubmitting }) => {
-        handleSubmit({ ...values })
+        handleSubmit({
+          due_date: new Date(values.due_date).toISOString(),
+          assignment_file_upload: values.assignment_file_upload,
+          content: values.content,
+          title: values.title,
+        })
         setSubmitting(false)
       }}
     >

@@ -48,7 +48,7 @@ export const useCreateUserClassMember = (
 
 export const useDeleteUserClassMemberById = (
   token: string | null,
-  userClassMemberId: string | null
+  userClassMemberId: string
 ): UseMutationResult<
   AxiosResponse<UserClassMemberResponse>,
   unknown,
@@ -57,7 +57,7 @@ export const useDeleteUserClassMemberById = (
   return useMutation({
     mutationFn: () => {
       return userClassMemberInstanceById(
-        userClassMemberId!,
+        userClassMemberId,
         token ?? ''
       ).delete<UserClassMemberResponse>('', {})
     },
