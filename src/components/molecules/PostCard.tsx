@@ -37,8 +37,13 @@ const PostCard = ({ article, assignment }: PostCardProps) => {
             />
             <div className="text-lg font-bold text-white">Article</div>
           </div>
-          <div className="text-sm">{article?.title}</div>
-          <div className="text-sm">{article?.content}</div>
+          <div className="text-base font-bold">{article?.title}</div>
+          <div
+            dangerouslySetInnerHTML={{
+              __html: article!.content.toString(),
+            }}
+            className="text-base"
+          ></div>
         </div>
       ) : (
         <div>
@@ -49,9 +54,14 @@ const PostCard = ({ article, assignment }: PostCardProps) => {
             />
             <div className="text-lg font-bold text-white">Assignment</div>
           </div>
-          <div className="text-sm">{assignment?.title}</div>
-          <div className="text-sm">{assignment?.content}</div>
-          <div className="text-sm mt-2">
+          <div className="text-base font-bold">{assignment?.title}</div>
+          <div
+            dangerouslySetInnerHTML={{
+              __html: assignment!.content.toString(),
+            }}
+            className="text-base"
+          ></div>
+          <div className="text-base mt-2">
             <strong>Due Date:</strong>{' '}
             {assignment?.due_date && formatDate(assignment!.due_date)}
           </div>

@@ -34,17 +34,17 @@ const ArticleDetail = () => {
   const { authState } = useAuthContext()
   const { classId, articleId } = useParams()
   const navigate = useNavigate()
-  console.log('article id: ', articleId)
   // call useQueryArticleById here
   const { data: classData } = useQueryClassByClassId(
     authState.accessToken,
     classId,
     { enabled: !!authState.accessToken && !!classId }
   )
-  const { data: article } = useQueryFetchArticleById(
+  const { data: article, isLoading } = useQueryFetchArticleById(
     authState.accessToken,
     articleId!
   )
+  if (isLoading) return <div className="bg-primary"></div>
   return (
     <div className="w-full min-h-screen bg-primary overflow-hidden">
       <div className="flex flex-col h-full space-y-3">
@@ -81,9 +81,12 @@ const ArticleDetail = () => {
               <div className="text-2xl font-bold text-accent">
                 {article?.data.title}
               </div>
-              <div className="text-base font-normal text-accent">
-                {article?.data.content}
-              </div>
+              <div
+                dangerouslySetInnerHTML={{
+                  __html: article!.data.content.toString(),
+                }}
+                className="text-base font-normal text-accent"
+              ></div>
             </div>
           </div>
           <div className="text-accent bg-primary z-10 text-base font-medium w-1/2 max-mobile:w-full p-4 border-2 border-accent">
