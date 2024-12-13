@@ -56,7 +56,10 @@ const ArticleDetail = () => {
                 className="text-accent text-xl"
               />
             </button>
-            <div className="font-plusJakarta font-bold text-2xl text-accent">
+            <div
+              onClick={() => navigate('/dashboard')}
+              className="font-plusJakarta font-bold text-2xl text-accent"
+            >
               Googolplex
             </div>
             <FontAwesomeIcon

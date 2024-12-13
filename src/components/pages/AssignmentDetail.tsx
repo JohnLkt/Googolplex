@@ -57,7 +57,10 @@ const AssignmentDetail = () => {
                 className="text-accent text-xl"
               />
             </button>
-            <div className="font-plusJakarta line-clamp-1 text-ellipsis max-mobile:text-lg font-bold text-2xl text-accent">
+            <div
+              onClick={() => navigate('/dashboard')}
+              className="font-plusJakarta line-clamp-1 text-ellipsis max-mobile:text-lg font-bold text-2xl text-accent"
+            >
               Googolplex
             </div>
             <FontAwesomeIcon
