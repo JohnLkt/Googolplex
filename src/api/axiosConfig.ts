@@ -99,6 +99,16 @@ export const userClassMemberInstanceById = (id: string, token: string) =>
     },
   })
 
+export const userLeaveClassMemberInstanceById = (id: string, token: string) =>
+  axios.create({
+    baseURL: `${backendAPIUrl}/user_class_member/leave/${id}`,
+    headers: {
+      accept: '*/*',
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+    },
+  })
+
 export const userClassMemberByClassIdInstance = (
   classId: string,
   token: string
