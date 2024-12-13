@@ -7,6 +7,7 @@ import {
 import {
   FormCreateUserClassMember,
   FormCreateUserClassMemberByCode,
+  FormUpdateUserClassMember,
   GenericResponse,
   UserClassMember,
 } from '../../interfaces/GrandInterface'
@@ -16,6 +17,7 @@ import {
   userClassMemberByUserIdAndClassIdInstance,
   userClassMemberInstance,
   userClassMemberInstanceByClassCode,
+  userClassMemberInstanceById,
 } from '../axiosConfig'
 import { useAuthContext } from '../../contexts/AuthContext'
 import { useEffect, useState } from 'react'
@@ -40,6 +42,44 @@ export const useCreateUserClassMember = (
           is_teacher: isTeacher,
         }
       )
+    },
+  })
+}
+
+export const useDeleteUserClassMemberById = (
+  token: string | null,
+  userClassMemberId: string | null
+): UseMutationResult<
+  AxiosResponse<UserClassMemberResponse>,
+  unknown,
+  FormCreateUserClassMember
+> => {
+  return useMutation({
+    mutationFn: () => {
+      return userClassMemberInstanceById(
+        userClassMemberId!,
+        token ?? ''
+      ).delete<UserClassMemberResponse>('', {})
+    },
+  })
+}
+
+export const useUpdateUserClassMemberById = (
+  token: string | null,
+  userClassMemberId: string
+): UseMutationResult<
+  AxiosResponse<UserClassMemberResponse>,
+  unknown,
+  FormUpdateUserClassMember
+> => {
+  return useMutation({
+    mutationFn: ({ isTeacher }: FormUpdateUserClassMember) => {
+      return userClassMemberInstanceById(
+        userClassMemberId,
+        token ?? ''
+      ).patch<UserClassMemberResponse>('', {
+        is_teacher: isTeacher,
+      })
     },
   })
 }
@@ -138,14 +178,13 @@ const useQueryFetchClassMemberByUserIdAndClassId = (
   })
 }
 
-export const useFetchClassMemberByTokenAndClassId = (classId: string) => {
-  const { authState } = useAuthContext()
+export const useFetchClassMemberByTokenAndClassId = (
+  token: string | null,
+  userId: string | null,
+  classId: string
+) => {
   const { data, isLoading, isError, refetch } =
-    useQueryFetchClassMemberByUserIdAndClassId(
-      authState.accessToken,
-      authState.userId,
-      classId
-    )
+    useQueryFetchClassMemberByUserIdAndClassId(token, userId, classId)
 
   return { data: data?.data, isLoading, isError, refetch }
 }
