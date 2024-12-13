@@ -106,7 +106,7 @@ export interface Article {
   id?: string
   title: string
   content: string
-  post?: Post
+  post: Post
 }
 
 export interface FormCreateArticle {

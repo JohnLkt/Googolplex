@@ -1,13 +1,18 @@
-import { useMutation, UseMutationResult } from '@tanstack/react-query'
+import {
+  useMutation,
+  UseMutationResult,
+  useQuery,
+  UseQueryResult,
+} from '@tanstack/react-query'
 import { AxiosResponse } from 'axios'
-import { articleInstance } from '../axiosConfig'
+import { articleInstance, articleInstanceById } from '../axiosConfig'
 import {
   Article,
   FormCreateArticle,
   GenericResponse,
 } from '../../interfaces/GrandInterface'
 
-// reusable for all CRUD class
+// reusable for all CRUD article
 type ArticleResponse = GenericResponse<Article>
 
 export const useCreateArticle = (
@@ -24,5 +29,22 @@ export const useCreateArticle = (
         content,
       })
     },
+  })
+}
+
+// fetch article by id
+const fetchArticleById = async (token: string, articleId: string) => {
+  const response = await articleInstanceById(articleId, token).get('')
+  return response.data
+}
+
+export const useQueryFetchArticleById = (
+  token: string | null,
+  articleId: string
+): UseQueryResult<ArticleResponse> => {
+  return useQuery<ArticleResponse>({
+    queryKey: ['getArticle', articleId],
+    queryFn: () => fetchArticleById(token!, articleId),
+    enabled: !!token,
   })
 }

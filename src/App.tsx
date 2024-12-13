@@ -6,12 +6,13 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { AuthProvider } from './contexts/AuthContext'
 import { SidebarProvider } from './contexts/SidebarContext'
 import CreateArticle from './components/pages/CreateArticle'
-import Post from './components/pages/Post'
 import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import CreateAssignment from './components/pages/CreateAssignment'
 import ClassDetail from './components/pages/ClassDetail'
 import ParticlesBackground from './components/molecules/Particles'
+import ArticleDetail from './components/pages/ArticleDetail'
+import AssignmentDetail from './components/pages/AssignmentDetail'
 
 function App() {
   const queryClient = new QueryClient()
@@ -41,8 +42,12 @@ function App() {
                 element={<CreateAssignment />}
               />
               <Route
-                path="/class-detail/:classId/post/:postId"
-                element={<Post />}
+                path="/class-detail/:classId/article/:articleId"
+                element={<ArticleDetail />}
+              />
+              <Route
+                path="/class-detail/:classId/assignment/:assignmentId"
+                element={<AssignmentDetail />}
               />
             </Route>
           </Routes>

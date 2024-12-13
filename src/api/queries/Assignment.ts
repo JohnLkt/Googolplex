@@ -1,6 +1,15 @@
-import { useMutation, UseMutationResult } from '@tanstack/react-query'
+import {
+  useMutation,
+  UseMutationResult,
+  useQuery,
+  UseQueryResult,
+} from '@tanstack/react-query'
 import { AxiosResponse } from 'axios'
-import { assignmentFileInstance, assignmentInstance } from '../axiosConfig'
+import {
+  assignmentFileInstance,
+  assignmentInstance,
+  assignmentInstanceById,
+} from '../axiosConfig'
 import {
   Assignment,
   FormCreateAssignment,
@@ -66,5 +75,22 @@ export const useUploadFileAssignment = (
         formData
       )
     },
+  })
+}
+
+// fetch assignment by id
+const fetchAssignmentById = async (token: string, assignmentId: string) => {
+  const response = await assignmentInstanceById(assignmentId, token).get('')
+  return response.data
+}
+
+export const useQueryFetchAssignmentById = (
+  token: string | null,
+  assignmentId: string
+): UseQueryResult<AssignmentResponse> => {
+  return useQuery<AssignmentResponse>({
+    queryKey: ['getAssignment', assignmentId],
+    queryFn: () => fetchAssignmentById(token!, assignmentId),
+    enabled: !!token,
   })
 }

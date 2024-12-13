@@ -176,6 +176,16 @@ export const assignmentInstance = (token: string) =>
     },
   })
 
+export const assignmentInstanceById = (articleId: string, token: string) =>
+  axios.create({
+    baseURL: `${backendAPIUrl}/assignment/${articleId}`,
+    headers: {
+      accept: '*/*',
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+    },
+  })
+
 export const assignmentFileInstance = (token: string) =>
   axios.create({
     baseURL: `${backendAPIUrl}/assignment_file`,
