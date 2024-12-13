@@ -87,6 +87,11 @@ export interface FormCreateUserClassMember {
   classId: string
   isTeacher: boolean
 }
+export interface FormUpdateUserClassMember {
+  userId?: string
+  classId?: string
+  isTeacher?: boolean
+}
 export interface FormCreateUserClassMemberByCode {
   userId: string | null
   classCode: string
