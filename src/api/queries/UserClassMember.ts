@@ -13,6 +13,7 @@ import {
 import { AxiosResponse } from 'axios'
 import {
   userClassMemberByClassIdInstance,
+  userClassMemberByUserIdAndClassIdInstance,
   userClassMemberInstance,
   userClassMemberInstanceByClassCode,
 } from '../axiosConfig'
@@ -68,7 +69,6 @@ export const useCreateUserClassMemberByClassCode = (
 }
 
 // fetch all students and teachers
-
 const fetchClassMemberByClassId = async (token: string, classId: string) => {
   const response = await userClassMemberByClassIdInstance(token, classId).get(
     ''
@@ -104,9 +104,48 @@ export const useFetchClassMemberByClassId = (classId: string) => {
   useEffect(() => {
     if (data) {
       setMembers(data)
-      console.log('token: ', authState.accessToken)
     }
   }, [data, authState])
 
   return { members, isLoading, isError, refetch }
+}
+
+// fetch all students and teachers
+const fetchClassMemberByUserIdAndClassId = async (
+  token: string,
+  userId: string,
+  classId: string
+) => {
+  const response = await userClassMemberByUserIdAndClassIdInstance(
+    token,
+    userId,
+    classId
+  ).get('')
+  return response.data
+}
+
+const useQueryFetchClassMemberByUserIdAndClassId = (
+  token: string | null,
+  userId: string | null,
+  classId: string
+): UseQueryResult<UserClassMemberResponse> => {
+  return useQuery<UserClassMemberResponse>({
+    queryKey: ['UserClassMemberByUserIdAndClassId', classId, userId],
+    queryFn: async () => {
+      return fetchClassMemberByUserIdAndClassId(token!, userId!, classId)
+    },
+    enabled: !!token,
+  })
+}
+
+export const useFetchClassMemberByTokenAndClassId = (classId: string) => {
+  const { authState } = useAuthContext()
+  const { data, isLoading, isError, refetch } =
+    useQueryFetchClassMemberByUserIdAndClassId(
+      authState.accessToken,
+      authState.userId,
+      classId
+    )
+
+  return { data: data?.data, isLoading, isError, refetch }
 }
