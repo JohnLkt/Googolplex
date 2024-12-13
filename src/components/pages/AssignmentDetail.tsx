@@ -16,7 +16,6 @@ import {
 } from '@fortawesome/free-solid-svg-icons'
 import { useQueryClassByClassId } from '../../api/queries/Class'
 import { useQueryFetchAssignmentById } from '../../api/queries/Assignment'
-import { format } from 'date-fns'
 
 library.add(
   faCheckSquare,
