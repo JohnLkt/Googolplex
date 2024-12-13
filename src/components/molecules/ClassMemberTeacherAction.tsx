@@ -1,6 +1,7 @@
 import {
-  // useDeleteUserClassMemberById,
+  useDeleteUserClassMemberById,
   useFetchClassMemberByTokenAndClassId,
+  useUpdateUserClassMemberById,
 } from '../../api/queries/UserClassMember'
 import { useAuthContext } from '../../contexts/AuthContext'
 import { UserClassMember } from '../../interfaces/GrandInterface'
@@ -63,12 +64,18 @@ export default function ClassMemberTeacherAction(prop: UserClassMember) {
     authState.userId,
     prop.class_id
   )
-  if (currentUserStatus.isLoading) <div className=""></div>
+  const { mutate: deleteUserClassMember } = useDeleteUserClassMemberById(
+    authState.accessToken,
+    prop.id
+  )
+  const { mutate: updateUserClassMember } = useUpdateUserClassMemberById(
+    authState.accessToken,
+    prop.id
+  )
 
-  // const { mutate: deleteUserClassMember } = useDeleteUserClassMemberById(
-  //   authState.accessToken,
-  //   currentUserStatus!.data!.id!
-  // )
+  function handleRemoveMember() {}
+
+  if (currentUserStatus.isLoading) return <div className=""></div>
 
   return (
     <div className="grid gap-3 justify-end">
