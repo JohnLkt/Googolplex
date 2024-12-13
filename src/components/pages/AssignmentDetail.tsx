@@ -109,8 +109,4 @@ const AssignmentDetail = () => {
   )
 }
 
-function formatDate(date: string | undefined) {
-  return format(new Date(date!), 'MMMM dd, yyyy hh:mm a')
-}
-
 export default AssignmentDetail
