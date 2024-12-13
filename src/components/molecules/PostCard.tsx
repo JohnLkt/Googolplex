@@ -19,11 +19,13 @@ const PostCard = ({ article, assignment }: PostCardProps) => {
 
   return (
     <div
-      className="z-10 cursor-pointer rounded-xl p-4 bg-gradient-to-br from-primary from-40% to-secondary hover:shadow-secondary hover:shadow-lg hover:scale-95 transition ease-in-out"
+      className="z-10 cursor-pointer rounded-xl p-4 bg-gradient-to-br from-primary from-40% to-secondary hover:shadow-secondary hover:shadow-lg transition ease-in-out"
       onClick={() => {
-        navigate(
-          `/class-detail/${classId}/post/${article ? article.id : assignment?.id}`
-        )
+        if (article) {
+          navigate(`/class-detail/${classId}/article/${article.id}`)
+        } else {
+          navigate(`/class-detail/${classId}/assignment/${assignment?.id}`)
+        }
       }}
     >
       {article ? (

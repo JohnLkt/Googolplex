@@ -49,7 +49,7 @@ export default function ClassDetail() {
   const classProp = classData?.data
   const navigate = useNavigate()
 
-  const [contentShown, setContentShown] = useState('ArticleList')
+  const [contentShown, setContentShown] = useState('Feeds')
   const { data: rawPosts } = useQueryFetchPostByClassId(
     authState.accessToken,
     classId,
@@ -57,6 +57,7 @@ export default function ClassDetail() {
   )
 
   const posts = rawPosts?.data
+  console.log('posts di class detail: ', posts)
 
   const articles: Article[] | undefined =
     posts &&
@@ -85,24 +86,9 @@ export default function ClassDetail() {
               Googolplex
             </div>
             <FontAwesomeIcon icon="minus" />
-            <div className="font-plusJakarts text-ellipsis">
+            <div className="font-plusJakarta font-medium">
               {classProp?.subject}
             </div>
-          </div>
-          <div className="flex flex-row space-x-4 items-center">
-            {/* <button
-              onClick={() => {
-                setShowProfileOptions(!showProfileOptions)
-                if (showClassOptions) setShowClassOptions(false)
-              }}
-            >
-              <img
-                src={authState.profilePicture || ''}
-                alt={'Profile Picture'}
-                width={'32px'}
-                height={'32px'}
-              />
-            </button> */}
           </div>
         </div>
 
@@ -113,19 +99,19 @@ export default function ClassDetail() {
             <div className="px-6 flex max-mobile:justify-around items-center bg-primary h-20 border-b-2 border-accent sticky z-30 overflow-x-auto gap-4">
               <div
                 onClick={() => setContentShown('Feeds')}
-                className="cursor-pointer font-plusJakarta font-medium text-lg text-accent hover:underline hover:underline-offset-1"
+                className={`cursor-pointer font-plusJakarta ${contentShown == 'Feeds' ? 'font-bold' : 'font-medium'} text-lg text-accent hover:underline`}
               >
                 Feeds
               </div>
               <div
                 onClick={() => setContentShown('Assignments')}
-                className="cursor-pointer font-plusJakarta font-medium text-lg text-accent hover:underline hover:underline-offset-1"
+                className={`cursor-pointer font-plusJakarta ${contentShown == 'Assignments' ? 'font-bold' : 'font-medium'} text-lg text-accent hover:underline`}
               >
                 Assignments
               </div>
               <div
                 onClick={() => setContentShown('Members')}
-                className="cursor-pointer font-plusJakarta font-medium text-lg text-accent hover:underline hover:underline-offset-1"
+                className={`cursor-pointer font-plusJakarta ${contentShown == 'Members' ? 'font-bold' : 'font-medium'} text-lg text-accent hover:underline`}
               >
                 Members
               </div>
