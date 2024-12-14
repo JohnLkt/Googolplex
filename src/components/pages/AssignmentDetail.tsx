@@ -44,7 +44,6 @@ const AssignmentDetail = () => {
     authState.accessToken,
     assignmentId!
   )
-  if (isLoading) return <></>
   return (
     <div className="w-full min-h-screen bg-primary overflow-hidden">
       <div className="flex flex-col h-full space-y-3">
@@ -74,7 +73,7 @@ const AssignmentDetail = () => {
               icon="minus"
             />
             <div className="font-plusJakarta text-2xl text-accent font-medium max-mobile:hidden max-tablet:hidden">
-              {assignment?.data.title}
+              {!isLoading && assignment?.data.title}
             </div>
           </div>
         </div>
@@ -82,13 +81,15 @@ const AssignmentDetail = () => {
           <div className="w-1/2 max-mobile:w-full p-4 border-2 border-accent overflow-y-auto bg-primary z-10">
             <div className="flex flex-col gap-4">
               <div className="text-2xl font-bold text-accent">
-                {assignment?.data.title}
+                {!isLoading && assignment?.data.title}
               </div>
               {/* <div className="text-base font-bold text-accent">
                 {formatDate(assignment!.data!.due_date)}
               </div> */}
               <div
-                dangerouslySetInnerHTML={{ __html: assignment!.data?.content }}
+                dangerouslySetInnerHTML={{
+                  __html: !isLoading && assignment!.data?.content,
+                }}
                 className="text-base font-normal text-accent"
               ></div>
             </div>
