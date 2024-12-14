@@ -14,6 +14,7 @@ import {
   faArrowLeft,
   faMinus,
   faDownload,
+  faFileUpload,
 } from '@fortawesome/free-solid-svg-icons'
 import { useQueryClassByClassId } from '../../api/queries/Class'
 import { useQueryFetchAssignmentById } from '../../api/queries/Assignment'
@@ -29,7 +30,8 @@ library.add(
   faTasks,
   faArrowLeft,
   faMinus,
-  faDownload
+  faDownload,
+  faFileUpload
 )
 
 const AssignmentDetail = () => {
@@ -107,6 +109,16 @@ const AssignmentDetail = () => {
             <div className="flex-1">Download Assignment File</div>
             <FontAwesomeIcon
               icon="download"
+              className="flex-none text-accent text-xl"
+            />
+          </div>
+          <div
+            onClick={() => {}}
+            className="flex items-center cursor-pointer text-accent bg-primary z-10 text-base font-medium w-1/2 max-mobile:w-full p-4 border-2 border-accent"
+          >
+            <div className="flex-1">Upload your answer here</div>
+            <FontAwesomeIcon
+              icon="file-upload"
               className="flex-none text-accent text-xl"
             />
           </div>

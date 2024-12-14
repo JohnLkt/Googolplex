@@ -194,6 +194,7 @@ export const assignmentFileInstance = (token: string) =>
       Authorization: `Bearer ${token}`,
     },
   })
+
 export const postInstance = (token: string) =>
   axios.create({
     baseURL: `${backendAPIUrl}/post`,
