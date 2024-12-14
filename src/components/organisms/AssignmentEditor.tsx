@@ -10,6 +10,7 @@ import {
   useUploadFileAssignment,
 } from '../../api/queries/Assignment'
 import { useFetchManyTodoByUserId } from '../../api/queries/UserAssignmentTodo'
+import { ReusableToast } from './ReusableToast'
 
 const AssignmentSchema = Yup.object().shape({
   title: Yup.string().required('Title is required'),
@@ -65,7 +66,9 @@ const AssignmentEditor: React.FC = () => {
                 },
                 {
                   onSuccess: (response) => {
-                    console.log('success create post', response.data)
+                    ReusableToast(`success create new post`)
+                    console.log(response.data.data)
+
                     // redir to class detail
                     navigate(`/class-detail/${classId}`)
                     refetch()

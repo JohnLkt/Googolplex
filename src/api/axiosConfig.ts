@@ -259,7 +259,7 @@ export const userAssignmentTodoByUserId = (token: string, userId: string) =>
     },
   })
 
-export const userAssignmentTodoByUserAndAssignmentId = (
+export const userAssignmentTodoByUserIdAndAssignmentId = (
   token: string,
   userId: string,
   assignmentId: string
@@ -269,6 +269,27 @@ export const userAssignmentTodoByUserAndAssignmentId = (
     headers: {
       accept: '*/*',
       'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+    },
+  })
+
+// USER_TODO_ANSWER
+export const userTodoAnswerInterface = (token: string) =>
+  axios.create({
+    baseURL: `${backendAPIUrl}/user_todo_answer`,
+    headers: {
+      accept: '*/*',
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+    },
+  })
+
+// ANSWER_FILE
+export const answerFileInstance = (token: string) =>
+  axios.create({
+    baseURL: `${backendAPIUrl}/answer_file`,
+    headers: {
+      accept: '*/*',
       Authorization: `Bearer ${token}`,
     },
   })

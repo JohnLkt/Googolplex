@@ -20,11 +20,7 @@ const TodoCard = (prop: UserAssignmentTodo) => {
   return (
     <div
       onClick={handleAssignmentDetail}
-      className={`grid gap-3 items-center z-10 cursor-pointer rounded-xl p-4 bg-gradient-to-br ${
-        prop.is_finish
-          ? 'from-gray-500 to-gray-700'
-          : 'from-primary from-40% to-secondary'
-      } hover:shadow-secondary hover:shadow-lg transition ease-in-out`}
+      className={`grid gap-3 items-center z-10 cursor-pointer rounded-xl p-4 bg-gradient-to-br from-primary from-40% to-secondary hover:shadow-secondary hover:shadow-lg transition ease-in-out`}
     >
       <div className="flex items-center justify-between mb-2">
         <div className="flex items-center gap-2">

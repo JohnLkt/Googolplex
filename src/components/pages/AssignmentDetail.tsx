@@ -26,6 +26,7 @@ import {
 } from '../../api/queries/Comment'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { CommentCard } from '../organisms/CommentCard'
+import CreateUserTodoAnswer from '../organisms/CreateUserTodoAnswer'
 
 library.add(
   faCheckSquare,
@@ -163,7 +164,7 @@ const AssignmentDetail = () => {
               />
             </div>
           )}
-          <div
+          {/* <div
             onClick={() => {}}
             className="flex items-center cursor-pointer text-accent bg-primary z-10 text-base font-medium w-1/2 max-mobile:w-full p-4 border-2 border-accent"
           >
@@ -172,7 +173,10 @@ const AssignmentDetail = () => {
               icon="file-upload"
               className="flex-none text-accent text-xl"
             />
-          </div>
+          </div> */}
+
+          <CreateUserTodoAnswer />
+
           <div className="text-accent bg-primary z-10 text-base font-medium w-1/2 max-mobile:w-full p-4 border-2 border-accent">
             <form
               onSubmit={handleSubmit(submitComment)}
