@@ -70,7 +70,7 @@ export default function CreateUserTodoAnswer() {
         setSubmitting(false)
       }}
     >
-      <Form className="bg-primary z-10 w-[48rem] p-4">
+      <Form className=" bg-primary z-10 text-base font-medium w-1/2 max-mobile:w-full p-4 border-2 border-accent">
         <RichTextEditor
           name="answer"
           className="w-full mb-4 min-h-64"
