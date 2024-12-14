@@ -13,6 +13,7 @@ import {
   faTasks,
   faArrowLeft,
   faMinus,
+  faDownload,
 } from '@fortawesome/free-solid-svg-icons'
 import { useQueryClassByClassId } from '../../api/queries/Class'
 import { useQueryFetchAssignmentById } from '../../api/queries/Assignment'
@@ -27,7 +28,8 @@ library.add(
   faHomeAlt,
   faTasks,
   faArrowLeft,
-  faMinus
+  faMinus,
+  faDownload
 )
 
 const AssignmentDetail = () => {
@@ -73,7 +75,7 @@ const AssignmentDetail = () => {
               icon="minus"
             />
             <div className="font-plusJakarta text-2xl text-accent font-medium max-mobile:hidden max-tablet:hidden">
-              {!isLoading && assignment?.data.title}
+              {isLoading ? 'Loading..' : assignment?.data.title}
             </div>
           </div>
         </div>
@@ -81,24 +83,32 @@ const AssignmentDetail = () => {
           <div className="w-1/2 max-mobile:w-full p-4 border-2 border-accent overflow-y-auto bg-primary z-10">
             <div className="flex flex-col gap-4">
               <div className="text-2xl font-bold text-accent">
-                {!isLoading && assignment?.data.title}
+                {isLoading ? 'Loading..' : assignment?.data.title}
               </div>
               {/* <div className="text-base font-bold text-accent">
                 {formatDate(assignment!.data!.due_date)}
               </div> */}
               <div
                 dangerouslySetInnerHTML={{
-                  __html: !isLoading && assignment!.data?.content,
+                  __html: isLoading ? 'Loading..' : assignment!.data?.content,
                 }}
                 className="text-base font-normal text-accent"
               ></div>
             </div>
           </div>
           <div
-            onClick={() => {}}
-            className="cursor-pointer text-accent bg-primary z-10 text-base font-medium w-1/2 max-mobile:w-full p-4 border-2 border-accent"
+            onClick={() => {
+              window.open(
+                `https://ecos.joheee.com/googolplex${assignment?.data.assignment_file?.path}`
+              )
+            }}
+            className="flex items-center cursor-pointer text-accent bg-primary z-10 text-base font-medium w-1/2 max-mobile:w-full p-4 border-2 border-accent"
           >
-            <div>Download Assignment File</div>
+            <div className="flex-1">Download Assignment File</div>
+            <FontAwesomeIcon
+              icon="download"
+              className="flex-none text-accent text-xl"
+            />
           </div>
           <div className="text-accent bg-primary z-10 text-base font-medium w-1/2 max-mobile:w-full p-4 border-2 border-accent">
             <div>Add Comment</div>
