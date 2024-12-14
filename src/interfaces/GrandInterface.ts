@@ -183,3 +183,15 @@ export interface ChildrenProps {
 export interface ChildrenPropsWithClassName extends ChildrenProps {
   className?: string
 }
+
+// comment
+export interface CommentResponse {
+  id: string
+  created_at: string
+  updated_at: string
+  comment: string
+  user_id: string
+  post_id: string
+  post: Post
+  user: User
+}

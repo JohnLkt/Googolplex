@@ -225,6 +225,30 @@ export const postByClassId = (token: string, classId: string) =>
     },
   })
 
+// COMMENT
+export const userPostCommentInterface = (token: string) =>
+  axios.create({
+    baseURL: `${backendAPIUrl}/user_post_comment`,
+    headers: {
+      accept: '*/*',
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+    },
+  })
+
+export const userGetCommentByPostIdInterface = (
+  token: string,
+  postId: string
+) =>
+  axios.create({
+    baseURL: `${backendAPIUrl}/user_post_comment/post/${postId}`,
+    headers: {
+      accept: '*/*',
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+    },
+  })
+
 export const userAssignmentTodoByUserId = (token: string, userId: string) =>
   axios.create({
     baseURL: `${backendAPIUrl}/user_assignment_todo/user/${userId}`,
