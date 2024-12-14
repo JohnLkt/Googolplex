@@ -27,7 +27,7 @@ export default function ClassGrid({ classType }: ClassGridProps) {
 
   return (
     <div className="py-6 flex flex-wrap gap-8">
-      {classes?.data && authState.userId ? ( // Check for missing data
+      {classes?.data && authState.userId ? (
         classType === 'enrolled' ? (
           classes.data
             .filter(
@@ -49,8 +49,7 @@ export default function ClassGrid({ classType }: ClassGridProps) {
           classes.data.map((c) => <ClassCard key={c.id} {...c} />)
         )
       ) : (
-        // Handle missing data
-        <p>Loading data...</p> // Or display a more appropriate message
+        <p>Loading data...</p>
       )}
     </div>
   )

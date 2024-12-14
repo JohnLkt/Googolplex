@@ -17,6 +17,11 @@ import {
 import { useQueryFetchArticleById } from '../../api/queries/Article'
 import { useQueryClassByClassId } from '../../api/queries/Class'
 import { SubmitHandler, useForm } from 'react-hook-form'
+import {
+  useQueryFetchCommentsByPostId,
+  useSubmitComment,
+} from '../../api/queries/Comment'
+import { ReusableToast } from '../organisms/ReusableToast'
 
 library.add(
   faCheckSquare,
@@ -31,7 +36,9 @@ library.add(
   faMinus
 )
 
-interface FormSubmitComment {
+export interface FormSubmitComment {
+  userId: string
+  postId: string
   comment: string
 }
 
@@ -52,12 +59,38 @@ const ArticleDetail = () => {
 
   // useform, form submit comments
   const { register, handleSubmit } = useForm<FormSubmitComment>()
-
+  const { mutate: createComment } = useSubmitComment(authState.accessToken)
+  const {
+    data: comments,
+    isLoading: commentLoading,
+    refetch: refetchComments,
+  } = useQueryFetchCommentsByPostId(
+    authState.accessToken,
+    article?.data.post.id
+  )
   const submitComment: SubmitHandler<FormSubmitComment> = (data) => {
     console.log('data comment: ', data.comment)
     console.log('user id: ', authState.userId)
-    // console.log('post id: ', article?.data.post.id)
-    // butuh koneksi ke post dari article buat dapet post_id
+    console.log('post id: ', article?.data.post.id)
+
+    createComment(
+      {
+        userId: authState.userId!.toString(),
+        postId: article!.data.post.id.toString(),
+        comment: data.comment,
+      },
+      {
+        onSuccess: (response) => {
+          const msg = response.data.message
+          console.log(msg)
+          ReusableToast('Successful commenting')
+          refetchComments()
+        },
+        onError: (err) => {
+          console.log('error commenting', err)
+        },
+      }
+    )
   }
 
   return (
@@ -132,9 +165,17 @@ const ArticleDetail = () => {
               </div>
             </form>
           </div>
-          <CommentCard author="Mike" comment="Waduh pak" />
-          <CommentCard author="John" comment="Mank bole pak?" />
-          <CommentCard author="Johe" comment="Skip dulu deh pak" />
+          {commentLoading ? (
+            <div>Loading...</div>
+          ) : (
+            comments &&
+            comments.data.map((comment) => (
+              <CommentCard
+                author={comment.user.name}
+                comment={comment.comment}
+              />
+            ))
+          )}
         </div>
       </div>
     </div>

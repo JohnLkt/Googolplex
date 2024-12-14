@@ -224,3 +224,27 @@ export const postByClassId = (token: string, classId: string) =>
       Authorization: `Bearer ${token}`,
     },
   })
+
+// COMMENT
+export const userPostCommentInterface = (token: string) =>
+  axios.create({
+    baseURL: `${backendAPIUrl}/user_post_comment`,
+    headers: {
+      accept: '*/*',
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+    },
+  })
+
+export const userGetCommentByPostIdInterface = (
+  token: string,
+  postId: string
+) =>
+  axios.create({
+    baseURL: `${backendAPIUrl}/user_post_comment/post/${postId}`,
+    headers: {
+      accept: '*/*',
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+    },
+  })
