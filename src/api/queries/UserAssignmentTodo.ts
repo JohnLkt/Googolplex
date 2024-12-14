@@ -3,7 +3,10 @@ import {
   GenericResponse,
   UserAssignmentTodo,
 } from '../../interfaces/GrandInterface'
-import { userAssignmentTodoByUserId } from '../axiosConfig'
+import {
+  userAssignmentTodoByUserId,
+  userAssignmentTodoByUserIdAndAssignmentId,
+} from '../axiosConfig'
 import { useAuthContext } from '../../contexts/AuthContext'
 import { useEffect, useState } from 'react'
 
@@ -34,6 +37,47 @@ export function useFetchManyTodoByUserId() {
     authState!.userId!
   )
   const [todo, setTodo] = useState<ManyUserAssignmentTodoResponse>()
+  useEffect(() => {
+    if (data) setTodo(data)
+  }, [authState, data])
+  return { todo, isLoading, isError, refetch }
+}
+
+// FETCH ALL TODO BY USER ID AND ASSIGNMENT ID
+async function fetchManyTodoByUserIdAndAssignmentId(
+  token: string,
+  userId: string,
+  assignmentId: string
+) {
+  const res = await userAssignmentTodoByUserIdAndAssignmentId(
+    token,
+    userId,
+    assignmentId
+  ).get('')
+  return res.data
+}
+function useQueryFetchManyTodoByUserIdAndAssignmentId(
+  token: string,
+  userId: string,
+  assignmentId: string
+): UseQueryResult<OneUserAssignmentTodoResponse> {
+  return useQuery<OneUserAssignmentTodoResponse>({
+    queryKey: ['fetchManyTodoByUserIdAndAssignmentId', userId],
+    queryFn: async () => {
+      return fetchManyTodoByUserIdAndAssignmentId(token, userId, assignmentId)
+    },
+    enabled: !!token,
+  })
+}
+export function useFetchManyTodoByUserIdAndAssignmentId(assignmentId: string) {
+  const { authState } = useAuthContext()
+  const { data, isLoading, isError, refetch } =
+    useQueryFetchManyTodoByUserIdAndAssignmentId(
+      authState!.accessToken!,
+      authState!.userId!,
+      assignmentId
+    )
+  const [todo, setTodo] = useState<OneUserAssignmentTodoResponse>()
   useEffect(() => {
     if (data) setTodo(data)
   }, [authState, data])

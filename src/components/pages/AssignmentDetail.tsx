@@ -18,6 +18,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons'
 import { useQueryClassByClassId } from '../../api/queries/Class'
 import { useQueryFetchAssignmentById } from '../../api/queries/Assignment'
+import CreateUserTodoAnswer from '../organisms/CreateUserTodoAnswer'
 
 library.add(
   faCheckSquare,
@@ -34,7 +35,7 @@ library.add(
   faFileUpload
 )
 
-const AssignmentDetail = () => {
+const AssignmentDetail: React.FC = () => {
   const { authState } = useAuthContext()
   const { classId, assignmentId } = useParams()
   const navigate = useNavigate()
@@ -48,11 +49,13 @@ const AssignmentDetail = () => {
     authState.accessToken,
     assignmentId!
   )
+
   return (
     <div className="w-full min-h-screen bg-primary overflow-hidden">
       <div className="flex flex-col h-full space-y-3">
         <div className="flex gap-3 bg-primary p-6 border-b-2 border-accent sticky top-0 z-30">
           <div className="flex-1 flex flex-row space-x-4 items-center ">
+            t
             <button onClick={() => navigate(`/class-detail/${classId}`)}>
               <FontAwesomeIcon
                 icon="arrow-left"
@@ -112,7 +115,8 @@ const AssignmentDetail = () => {
               className="flex-none text-accent text-xl"
             />
           </div>
-          <div
+
+          {/* <div
             onClick={() => {}}
             className="flex items-center cursor-pointer text-accent bg-primary z-10 text-base font-medium w-1/2 max-mobile:w-full p-4 border-2 border-accent"
           >
@@ -124,7 +128,9 @@ const AssignmentDetail = () => {
           </div>
           <div className="text-accent bg-primary z-10 text-base font-medium w-1/2 max-mobile:w-full p-4 border-2 border-accent">
             <div>Add Comment</div>
-          </div>
+          </div> */}
+
+          <CreateUserTodoAnswer />
         </div>
       </div>
     </div>

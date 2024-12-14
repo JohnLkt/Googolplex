@@ -23,6 +23,11 @@ export interface RegisterCredentials {
   password: string
 }
 
+export interface FormCreateUserTodoAnswer {
+  userAssignmentTodoId: string
+  answer: string
+}
+
 export interface FormCreateClass {
   classSubject: string
   classDesc: string
@@ -94,6 +99,17 @@ export interface UserAssignmentTodo {
   assignment_id: string
   user: User
   assignment: Assignment
+}
+
+export interface UserTodoAnswer {
+  id: string
+  created_at: string
+  updated_at: string
+  answer: string
+
+  user_assignment_todo_id: string
+  user_assignment_todo: UserAssignmentTodo
+  answer_file?: AssignmentFile
 }
 
 export interface FormCreateUserClassMember {
