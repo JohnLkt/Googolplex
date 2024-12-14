@@ -9,6 +9,7 @@ import {
   useCreateAssignment,
   useUploadFileAssignment,
 } from '../../api/queries/Assignment'
+import { useFetchManyTodoByUserId } from '../../api/queries/UserAssignmentTodo'
 
 const AssignmentSchema = Yup.object().shape({
   title: Yup.string().required('Title is required'),
@@ -21,6 +22,7 @@ const AssignmentEditor: React.FC = () => {
   const { authState } = useAuthContext()
   const { classId } = useParams()
   const navigate = useNavigate()
+  const { refetch } = useFetchManyTodoByUserId()
 
   const { mutate: createAssignment } = useCreateAssignment(
     authState.accessToken
@@ -66,6 +68,7 @@ const AssignmentEditor: React.FC = () => {
                     console.log('success create post', response.data)
                     // redir to class detail
                     navigate(`/class-detail/${classId}`)
+                    refetch()
                   },
                   onError: (err) => {
                     console.log('error create post', err)
