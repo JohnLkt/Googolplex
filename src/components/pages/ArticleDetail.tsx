@@ -22,6 +22,7 @@ import {
   useSubmitComment,
 } from '../../api/queries/Comment'
 import { ReusableToast } from '../organisms/ReusableToast'
+import { CommentCard } from '../organisms/CommentCard'
 
 library.add(
   faCheckSquare,
@@ -85,6 +86,7 @@ const ArticleDetail = () => {
           console.log(msg)
           ReusableToast('Successful commenting')
           refetchComments()
+          data.comment = ''
         },
         onError: (err) => {
           console.log('error commenting', err)
@@ -106,7 +108,7 @@ const ArticleDetail = () => {
             </button>
             <div
               onClick={() => navigate('/dashboard')}
-              className="font-plusJakarta font-bold text-2xl text-accent"
+              className="font-plusJakarta line-clamp-1 text-ellipsis max-mobile:text-lg font-bold text-2xl text-accent"
             >
               Googolplex
             </div>
@@ -169,32 +171,14 @@ const ArticleDetail = () => {
             <div>Loading...</div>
           ) : (
             comments &&
-            comments.data.map((comment) => (
+            comments.data.map((comment, i) => (
               <CommentCard
+                key={i}
                 author={comment.user.name}
                 comment={comment.comment}
               />
             ))
           )}
-        </div>
-      </div>
-    </div>
-  )
-}
-
-interface CommentCardProps {
-  author: string
-  comment: string
-}
-const CommentCard = ({ ...commentProp }: CommentCardProps) => {
-  return (
-    <div className="text-accent bg-primary z-10 text-base font-medium w-1/2 max-mobile:w-full p-4 border-2 border-accent">
-      <div className="flex flex-col space-y-3">
-        <div className="text-base text-accent font-bold">
-          {commentProp.author}
-        </div>
-        <div className="text-base text-accent font-normal">
-          {commentProp.comment}
         </div>
       </div>
     </div>

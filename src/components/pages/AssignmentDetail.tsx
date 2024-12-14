@@ -18,6 +18,14 @@ import {
 } from '@fortawesome/free-solid-svg-icons'
 import { useQueryClassByClassId } from '../../api/queries/Class'
 import { useQueryFetchAssignmentById } from '../../api/queries/Assignment'
+import { FormSubmitComment } from './ArticleDetail'
+import { ReusableToast } from '../organisms/ReusableToast'
+import {
+  useQueryFetchCommentsByPostId,
+  useSubmitComment,
+} from '../../api/queries/Comment'
+import { SubmitHandler, useForm } from 'react-hook-form'
+import { CommentCard } from '../organisms/CommentCard'
 import CreateUserTodoAnswer from '../organisms/CreateUserTodoAnswer'
 
 library.add(
@@ -35,7 +43,7 @@ library.add(
   faFileUpload
 )
 
-const AssignmentDetail: React.FC = () => {
+const AssignmentDetail = () => {
   const { authState } = useAuthContext()
   const { classId, assignmentId } = useParams()
   const navigate = useNavigate()
@@ -50,12 +58,51 @@ const AssignmentDetail: React.FC = () => {
     assignmentId!
   )
 
+  // useform, form submit comments
+  const { register, handleSubmit } = useForm<FormSubmitComment>()
+  const { mutate: createComment } = useSubmitComment(authState.accessToken)
+  const {
+    data: comments,
+    isLoading: commentLoading,
+    refetch: refetchComments,
+  } = useQueryFetchCommentsByPostId(
+    authState.accessToken,
+    assignment?.data?.post.id
+  )
+  const submitComment: SubmitHandler<FormSubmitComment> = (data) => {
+    console.log('data comment: ', data.comment)
+    console.log('user id: ', authState.userId)
+    console.log('post id: ', assignment?.data.post.id)
+
+    // assignment's post id belom ada
+    if (!assignment) {
+      return
+    }
+    createComment(
+      {
+        userId: authState.userId!.toString(),
+        postId: assignment.data.post.id.toString(),
+        comment: data.comment,
+      },
+      {
+        onSuccess: (response) => {
+          const msg = response.data.message
+          console.log(msg)
+          ReusableToast('Successful commenting')
+          refetchComments()
+          data.comment = ''
+        },
+        onError: (err) => {
+          console.log('error commenting', err)
+        },
+      }
+    )
+  }
   return (
     <div className="w-full min-h-screen bg-primary overflow-hidden">
       <div className="flex flex-col h-full space-y-3">
         <div className="flex gap-3 bg-primary p-6 border-b-2 border-accent sticky top-0 z-30">
           <div className="flex-1 flex flex-row space-x-4 items-center ">
-            t
             <button onClick={() => navigate(`/class-detail/${classId}`)}>
               <FontAwesomeIcon
                 icon="arrow-left"
@@ -101,21 +148,22 @@ const AssignmentDetail: React.FC = () => {
               ></div>
             </div>
           </div>
-          <div
-            onClick={() => {
-              window.open(
-                `https://ecos.joheee.com/googolplex${assignment?.data.assignment_file?.path}`
-              )
-            }}
-            className="flex items-center cursor-pointer text-accent bg-primary z-10 text-base font-medium w-1/2 max-mobile:w-full p-4 border-2 border-accent"
-          >
-            <div className="flex-1">Download Assignment File</div>
-            <FontAwesomeIcon
-              icon="download"
-              className="flex-none text-accent text-xl"
-            />
-          </div>
-
+          {assignment && assignment.data && assignment.data.assignment_file && (
+            <div
+              onClick={() => {
+                window.open(
+                  `https://ecos.joheee.com/googolplex${assignment?.data.assignment_file?.path}`
+                )
+              }}
+              className="flex items-center cursor-pointer text-accent bg-primary z-10 text-base font-medium w-1/2 max-mobile:w-full p-4 border-2 border-accent"
+            >
+              <div className="flex-1">Download Assignment File </div>
+              <FontAwesomeIcon
+                icon="download"
+                className="flex-none text-accent text-xl"
+              />
+            </div>
+          )}
           {/* <div
             onClick={() => {}}
             className="flex items-center cursor-pointer text-accent bg-primary z-10 text-base font-medium w-1/2 max-mobile:w-full p-4 border-2 border-accent"
@@ -125,12 +173,45 @@ const AssignmentDetail: React.FC = () => {
               icon="file-upload"
               className="flex-none text-accent text-xl"
             />
-          </div>
-          <div className="text-accent bg-primary z-10 text-base font-medium w-1/2 max-mobile:w-full p-4 border-2 border-accent">
-            <div>Add Comment</div>
           </div> */}
 
           <CreateUserTodoAnswer />
+
+          <div className="text-accent bg-primary z-10 text-base font-medium w-1/2 max-mobile:w-full p-4 border-2 border-accent">
+            <form
+              onSubmit={handleSubmit(submitComment)}
+              className="flex flex-col space-y-4"
+            >
+              <div className="font-medium text-accent">Add comment(s)</div>
+
+              <div className="flex flex-row space-x-3">
+                <input
+                  {...register('comment')}
+                  className="p-3 text-sm text-primary w-4/5"
+                  type="text"
+                  placeholder="Add comment here"
+                />
+                <button
+                  type="submit"
+                  className="p-3 w-1/5 border-2 border-accent"
+                >
+                  Add
+                </button>
+              </div>
+            </form>
+          </div>
+          {commentLoading ? (
+            <div>Loading...</div>
+          ) : (
+            comments &&
+            comments.data.map((comment, i) => (
+              <CommentCard
+                key={i}
+                author={comment.user.name}
+                comment={comment.comment}
+              />
+            ))
+          )}
         </div>
       </div>
     </div>
