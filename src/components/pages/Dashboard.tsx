@@ -137,7 +137,7 @@ function Dashboard() {
 
           {/* Content Area */}
           <div
-            className={`overflow-y-auto ${sidebarWiden ? 'w-4/5' : 'flex-1'}  p-6`}
+            className={`h-[calc(100%-80px)] overflow-y-auto ${sidebarWiden ? 'w-4/5' : 'flex-1'}  p-6`}
           >
             <div className="flex flex-col">
               <div className="text-xl font-plusJakarta font-medium text-accent">
