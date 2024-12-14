@@ -248,3 +248,13 @@ export const userGetCommentByPostIdInterface = (
       Authorization: `Bearer ${token}`,
     },
   })
+
+export const userAssignmentTodoByUserId = (token: string, userId: string) =>
+  axios.create({
+    baseURL: `${backendAPIUrl}/user_assignment_todo/user/${userId}`,
+    headers: {
+      accept: '*/*',
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+    },
+  })

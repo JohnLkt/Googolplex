@@ -82,6 +82,19 @@ export interface UserClassMember {
   user: User // based on swagger, this has one-to-one relation to user
 }
 
+export interface UserAssignmentTodo {
+  id: string
+  created_at: string
+  updated_at: string
+  score: number
+  is_finish: boolean
+
+  user_id: string
+  assignment_id: string
+  user: User
+  assignment: Assignment
+}
+
 export interface FormCreateUserClassMember {
   userId: string
   classId: string
