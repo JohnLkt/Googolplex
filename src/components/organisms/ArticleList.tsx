@@ -11,6 +11,7 @@ export default function ArticleList({ articles }: ArticleListProps) {
   return (
     <div className="w-full flex flex-col gap-3 p-6">
       <div
+        className="w-fit"
         onClick={() => {
           navigate('add/article/')
         }}
