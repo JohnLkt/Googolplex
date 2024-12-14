@@ -12,6 +12,7 @@ export default function AssignmentList({ assignments }: AssignmentListProps) {
   return (
     <div className="w-full flex flex-col gap-3 p-6">
       <div
+        className="w-fit"
         onClick={() => {
           navigate('add/assignment/')
         }}

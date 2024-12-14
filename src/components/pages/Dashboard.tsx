@@ -17,6 +17,7 @@ import { useSidebar } from '../../hooks/useSidebar'
 import { useState } from 'react'
 import { CreateClassForm } from '../organisms/CreateClassForm'
 import JoinClassForm from '../organisms/JoinClassForm'
+import TodoList from '../organisms/TodoList'
 
 library.add(
   faCheckSquare,
@@ -147,7 +148,7 @@ function Dashboard() {
               ) : sidebarItemSelected == 'Class Teaching' ? (
                 <ClassGrid classType="teaching" />
               ) : sidebarItemSelected == 'Todos' ? (
-                <div className="text-2xl text-accent font-bold">To-dos</div>
+                <TodoList />
               ) : (
                 <ClassGrid classType="all" />
               )}
