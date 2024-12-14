@@ -164,16 +164,16 @@ const AssignmentDetail = () => {
               />
             </div>
           )}
-          {/* <div
+          <div
             onClick={() => {}}
             className="flex items-center cursor-pointer text-accent bg-primary z-10 text-base font-medium w-1/2 max-mobile:w-full p-4 border-2 border-accent"
           >
-            <div className="flex-1">Upload your answer here</div>
+            <div className="flex-1">Download your answer here</div>
             <FontAwesomeIcon
               icon="file-upload"
               className="flex-none text-accent text-xl"
             />
-          </div> */}
+          </div>
 
           <CreateUserTodoAnswer />
 
