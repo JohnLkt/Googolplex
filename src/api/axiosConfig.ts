@@ -258,3 +258,17 @@ export const userAssignmentTodoByUserId = (token: string, userId: string) =>
       Authorization: `Bearer ${token}`,
     },
   })
+
+export const userAssignmentTodoByUserAndAssignmentId = (
+  token: string,
+  userId: string,
+  assignmentId: string
+) =>
+  axios.create({
+    baseURL: `${backendAPIUrl}/user_assignment_todo/user/assignment/${userId}/${assignmentId}`,
+    headers: {
+      accept: '*/*',
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+    },
+  })

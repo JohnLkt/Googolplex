@@ -147,20 +147,22 @@ const AssignmentDetail = () => {
               ></div>
             </div>
           </div>
-          <div
-            onClick={() => {
-              window.open(
-                `https://ecos.joheee.com/googolplex${assignment?.data.assignment_file?.path}`
-              )
-            }}
-            className="flex items-center cursor-pointer text-accent bg-primary z-10 text-base font-medium w-1/2 max-mobile:w-full p-4 border-2 border-accent"
-          >
-            <div className="flex-1">Download Assignment File</div>
-            <FontAwesomeIcon
-              icon="download"
-              className="flex-none text-accent text-xl"
-            />
-          </div>
+          {assignment && assignment.data && assignment.data.assignment_file && (
+            <div
+              onClick={() => {
+                window.open(
+                  `https://ecos.joheee.com/googolplex${assignment?.data.assignment_file?.path}`
+                )
+              }}
+              className="flex items-center cursor-pointer text-accent bg-primary z-10 text-base font-medium w-1/2 max-mobile:w-full p-4 border-2 border-accent"
+            >
+              <div className="flex-1">Download Assignment File </div>
+              <FontAwesomeIcon
+                icon="download"
+                className="flex-none text-accent text-xl"
+              />
+            </div>
+          )}
           <div
             onClick={() => {}}
             className="flex items-center cursor-pointer text-accent bg-primary z-10 text-base font-medium w-1/2 max-mobile:w-full p-4 border-2 border-accent"
