@@ -32,9 +32,8 @@ export default function JoinClassForm({
       { classCode: data.classCode, isTeacher: false, userId: authState.userId },
       {
         onSuccess: (response) => {
-          const msg = response.data.message
-          console.log(msg)
-          ReusableToast(msg)
+          const msg = response.data
+          ReusableToast(`success join class ${msg.data.class.subject}`)
           setShowClassOptions(!showClassOptions)
           setJoinClassModal(!joinClassModal)
           refetch()

@@ -77,6 +77,7 @@ export interface UserClassMember {
   updated_at: string
   class_id: string
   user_id: string
+  class: Class
 
   // class: Class
   user: User // based on swagger, this has one-to-one relation to user
