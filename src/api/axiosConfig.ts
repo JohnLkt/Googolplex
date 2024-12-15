@@ -308,6 +308,20 @@ export const assignmentAnswersInstance = (
     },
   })
 
+export const assignmentAnswersUserInstance = (
+  token: string,
+  userId: string,
+  assignmentId: string
+) =>
+  axios.create({
+    baseURL: `${backendAPIUrl}/user_todo_answer/user/assignment/${userId}/${assignmentId}`,
+    headers: {
+      accept: '*/*',
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+    },
+  })
+
 export const userAssignmentTodoById = (
   token: string,
   userAssignmentTodoId: string

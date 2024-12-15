@@ -29,6 +29,8 @@ import { CommentCard } from '../organisms/CommentCard'
 import CreateUserTodoAnswer from '../organisms/CreateUserTodoAnswer'
 import ActionLightButton from '../atoms/ActionLightButton'
 import AuthTeacherWrapper from '../molecules/AuthTeacherWrapper'
+import AuthStudentWrapper from '../molecules/AuthStudentWrapper'
+import { useGetTodoAnswersByUserIdAssignmentId } from '../../api/queries/UserTodoAnswer'
 
 library.add(
   faCheckSquare,
@@ -48,6 +50,12 @@ library.add(
 const AssignmentDetail = () => {
   const { authState } = useAuthContext()
   const { classId, assignmentId } = useParams()
+  const answer = useGetTodoAnswersByUserIdAssignmentId(
+    authState.accessToken,
+    authState.userId,
+    assignmentId
+  )
+  console.log(answer.data?.data)
   const navigate = useNavigate()
   // call useQueryArticleById here
   const { data: classData } = useQueryClassByClassId(
@@ -100,6 +108,9 @@ const AssignmentDetail = () => {
       }
     )
   }
+
+  if (answer.isLoading) return <div className=""></div>
+
   return (
     <div className="w-full min-h-screen bg-primary overflow-hidden">
       <div className="flex flex-col h-full space-y-3">
@@ -178,18 +189,26 @@ const AssignmentDetail = () => {
               />
             </div>
           )}
-          <div
-            onClick={() => {}}
-            className="flex items-center cursor-pointer text-accent bg-primary z-10 text-base font-medium w-1/2 max-mobile:w-full p-4 border-2 border-accent"
-          >
-            <div className="flex-1">Download your answer here</div>
-            <FontAwesomeIcon
-              icon="file-upload"
-              className="flex-none text-accent text-xl"
-            />
-          </div>
-
-          <CreateUserTodoAnswer />
+          <AuthStudentWrapper>
+            {answer.data?.data === null ? (
+              <CreateUserTodoAnswer />
+            ) : (
+              <div
+                onClick={() => {
+                  window.open(
+                    `https://ecos.joheee.com/googolplex${answer?.data?.data.answer_file?.path}`
+                  )
+                }}
+                className="flex items-center cursor-pointer text-accent bg-primary z-10 text-base font-medium w-1/2 max-mobile:w-full p-4 border-2 border-accent"
+              >
+                <div className="flex-1">Download your answer here</div>
+                <FontAwesomeIcon
+                  icon="file-upload"
+                  className="flex-none text-accent text-xl"
+                />
+              </div>
+            )}
+          </AuthStudentWrapper>
 
           <div className="text-accent bg-primary z-10 text-base font-medium w-1/2 max-mobile:w-full p-4 border-2 border-accent">
             <form

@@ -12,6 +12,7 @@ import {
 import { AxiosResponse } from 'axios'
 import {
   assignmentAnswersInstance,
+  assignmentAnswersUserInstance,
   userTodoAnswerInterface,
 } from '../axiosConfig'
 
@@ -48,7 +49,6 @@ const fetchTodoAsnwersByAssignmentId = async (
 ) => {
   return (await assignmentAnswersInstance(token, assignmentId).get('')).data
 }
-
 export const useGetTodoAnswersByAssignmentId = (
   token: string | null,
   assignmentId: string
@@ -60,6 +60,31 @@ export const useGetTodoAnswersByAssignmentId = (
         throw new Error('Token and assignmentId must be provided')
       }
       return fetchTodoAsnwersByAssignmentId(token, assignmentId)
+    },
+  })
+}
+
+const fetchTodoAsnwersByUserIdAssignmentId = async (
+  token: string,
+  userId: string,
+  assignmentId: string
+) => {
+  return (
+    await assignmentAnswersUserInstance(token, userId, assignmentId).get('')
+  ).data
+}
+export const useGetTodoAnswersByUserIdAssignmentId = (
+  token: string | null,
+  userId: string | null,
+  assignmentId: string | undefined
+): UseQueryResult<OneUserTodoAnswerResponse> => {
+  return useQuery<OneUserTodoAnswerResponse>({
+    queryKey: ['getTodoAnswersByAssignmentId', assignmentId],
+    queryFn: () => {
+      if (!token || !userId || !assignmentId) {
+        throw new Error('Token and assignmentId must be provided')
+      }
+      return fetchTodoAsnwersByUserIdAssignmentId(token, userId, assignmentId)
     },
   })
 }
