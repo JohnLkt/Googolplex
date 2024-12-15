@@ -49,7 +49,7 @@ export default function ClassDetail() {
   const classProp = classData?.data
   const navigate = useNavigate()
 
-  const [contentShown, setContentShown] = useState('Feeds')
+  const [contentShown, setContentShown] = useState('Articles')
   const { data: rawPosts } = useQueryFetchPostByClassId(
     authState.accessToken,
     classId,
@@ -98,10 +98,10 @@ export default function ClassDetail() {
           <div className="h-full w-full">
             <div className="px-6 flex max-mobile:justify-around items-center bg-primary h-20 border-b-2 border-accent sticky z-30 overflow-x-auto gap-4">
               <div
-                onClick={() => setContentShown('Feeds')}
-                className={`cursor-pointer font-plusJakarta ${contentShown == 'Feeds' ? 'font-bold' : 'font-medium'} text-lg text-accent hover:underline`}
+                onClick={() => setContentShown('Articles')}
+                className={`cursor-pointer font-plusJakarta ${contentShown == 'Articles' ? 'font-bold' : 'font-medium'} text-lg text-accent hover:underline`}
               >
-                Feeds
+                Articles
               </div>
               <div
                 onClick={() => setContentShown('Assignments')}
@@ -119,7 +119,7 @@ export default function ClassDetail() {
 
             <div className="h-[calc(100%-80px)] w-full overflow-y-auto">
               <div className="h-full text-xl font-plusJakarta font-medium text-accent">
-                {contentShown == 'Feeds'
+                {contentShown == 'Articles'
                   ? articles && <ArticleList articles={articles} />
                   : contentShown == 'Assignments'
                     ? assignments && (
