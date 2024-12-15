@@ -82,9 +82,6 @@ function Dashboard() {
         <div className="h-full flex flex-row relative">
           {showProfileOptions && (
             <div className="animate-fadeIn font-plusJakarta absolute z-20 bg-white right-2 top-2 w-64 rounded-lg overflow-hidden">
-              <button className="hover:bg-slate-300 p-4 text-sm font-bold w-full text-left">
-                Edit Profile
-              </button>
               <button
                 className="hover:bg-slate-300 p-4 text-red-500 text-sm font-bold w-full text-left"
                 onClick={() => {
