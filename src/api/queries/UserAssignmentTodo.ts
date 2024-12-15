@@ -1,14 +1,22 @@
-import { useQuery, UseQueryResult } from '@tanstack/react-query'
+import {
+  useMutation,
+  UseMutationResult,
+  useQuery,
+  UseQueryResult,
+} from '@tanstack/react-query'
 import {
   GenericResponse,
   UserAssignmentTodo,
+  UserAssignmentTodoUpdate,
 } from '../../interfaces/GrandInterface'
 import {
+  userAssignmentTodoById,
   userAssignmentTodoByUserId,
   userAssignmentTodoByUserIdAndAssignmentId,
 } from '../axiosConfig'
 import { useAuthContext } from '../../contexts/AuthContext'
 import { useEffect, useState } from 'react'
+import { AxiosResponse } from 'axios'
 
 type OneUserAssignmentTodoResponse = GenericResponse<UserAssignmentTodo>
 type ManyUserAssignmentTodoResponse = GenericResponse<UserAssignmentTodo[]>
@@ -82,4 +90,25 @@ export function useFetchManyTodoByUserIdAndAssignmentId(assignmentId: string) {
     if (data) setTodo(data)
   }, [authState, data])
   return { todo, isLoading, isError, refetch }
+}
+
+export const useUserAssignmentTodoUpdate = (): UseMutationResult<
+  AxiosResponse<OneUserAssignmentTodoResponse>,
+  unknown,
+  {
+    token: string
+    userAssignmentTodoId: string
+    data: UserAssignmentTodoUpdate
+  }
+> => {
+  return useMutation({
+    mutationFn: async ({ token, userAssignmentTodoId, data }) => {
+      return userAssignmentTodoById(
+        token,
+        userAssignmentTodoId
+      ).patch<OneUserAssignmentTodoResponse>('', {
+        ...data,
+      })
+    },
+  })
 }

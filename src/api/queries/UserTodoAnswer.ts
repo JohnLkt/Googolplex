@@ -1,11 +1,19 @@
-import { useMutation, UseMutationResult } from '@tanstack/react-query'
+import {
+  useMutation,
+  UseMutationResult,
+  useQuery,
+  UseQueryResult,
+} from '@tanstack/react-query'
 import {
   FormCreateUserTodoAnswer,
   GenericResponse,
   UserTodoAnswer,
 } from '../../interfaces/GrandInterface'
 import { AxiosResponse } from 'axios'
-import { userTodoAnswerInterface } from '../axiosConfig'
+import {
+  assignmentAnswersInstance,
+  userTodoAnswerInterface,
+} from '../axiosConfig'
 
 type OneUserTodoAnswerResponse = GenericResponse<UserTodoAnswer>
 // type ManyUserTodoAnswerResponse = GenericResponse<UserTodoAnswer[]>
@@ -28,6 +36,30 @@ export const useCreateUserTodoAnswer = (
         answer,
         user_assignment_todo_id: userAssignmentTodoId,
       })
+    },
+  })
+}
+
+type getTodoAnswersByAssignmentId = GenericResponse<UserTodoAnswer[]>
+
+const fetchTodoAsnwersByAssignmentId = async (
+  token: string,
+  assignmentId: string
+) => {
+  return (await assignmentAnswersInstance(token, assignmentId).get('')).data
+}
+
+export const useGetTodoAnswersByAssignmentId = (
+  token: string | null,
+  assignmentId: string
+): UseQueryResult<getTodoAnswersByAssignmentId> => {
+  return useQuery<getTodoAnswersByAssignmentId>({
+    queryKey: ['getTodoAnswersByAssignmentId', assignmentId],
+    queryFn: () => {
+      if (!token || !assignmentId) {
+        throw new Error('Token and assignmentId must be provided')
+      }
+      return fetchTodoAsnwersByAssignmentId(token, assignmentId)
     },
   })
 }

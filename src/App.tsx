@@ -13,6 +13,7 @@ import ClassDetail from './components/pages/ClassDetail'
 import ParticlesBackground from './components/molecules/Particles'
 import ArticleDetail from './components/pages/ArticleDetail'
 import AssignmentDetail from './components/pages/AssignmentDetail'
+import GradeAssignment from './components/pages/GradeAssignment'
 
 function App() {
   const queryClient = new QueryClient()
@@ -48,6 +49,10 @@ function App() {
               <Route
                 path="/class-detail/:classId/assignment/:assignmentId"
                 element={<AssignmentDetail />}
+              />
+              <Route
+                path="/class-detail/:classId/assignment/:assignmentId/grade"
+                element={<GradeAssignment />}
               />
             </Route>
           </Routes>
