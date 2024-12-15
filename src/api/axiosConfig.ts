@@ -293,3 +293,30 @@ export const answerFileInstance = (token: string) =>
       Authorization: `Bearer ${token}`,
     },
   })
+
+// ASSIGNMENT_ANSWERS
+export const assignmentAnswersInstance = (
+  token: string,
+  assignmentId: string
+) =>
+  axios.create({
+    baseURL: `${backendAPIUrl}/user_todo_answer/assignment/${assignmentId}`,
+    headers: {
+      accept: '*/*',
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+    },
+  })
+
+export const userAssignmentTodoById = (
+  token: string,
+  userAssignmentTodoId: string
+) =>
+  axios.create({
+    baseURL: `${backendAPIUrl}/user_assignment_todo/${userAssignmentTodoId}`,
+    headers: {
+      accept: '*/*',
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+    },
+  })

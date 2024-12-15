@@ -101,6 +101,13 @@ export interface UserAssignmentTodo {
   assignment: Assignment
 }
 
+export interface UserAssignmentTodoUpdate {
+  score: number
+  is_finish: boolean
+  user_id: string
+  assignment_id: string
+}
+
 export interface UserTodoAnswer {
   id: string
   created_at: string

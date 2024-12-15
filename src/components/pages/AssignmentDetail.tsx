@@ -27,6 +27,8 @@ import {
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { CommentCard } from '../organisms/CommentCard'
 import CreateUserTodoAnswer from '../organisms/CreateUserTodoAnswer'
+import ActionLightButton from '../atoms/ActionLightButton'
+import AuthTeacherWrapper from '../molecules/AuthTeacherWrapper'
 
 library.add(
   faCheckSquare,
@@ -132,6 +134,18 @@ const AssignmentDetail = () => {
           </div>
         </div>
         <div className="flex flex-col space-y-3 justify-center items-center font-plusJakarta px-3">
+          <div className="w-1/2 max-mobile:w-full overflow-y-auto bg-primary z-10">
+            <AuthTeacherWrapper>
+              <div
+                className="w-fit"
+                onClick={() => {
+                  navigate('grade')
+                }}
+              >
+                <ActionLightButton actionText={'Grade Submissions'} />
+              </div>
+            </AuthTeacherWrapper>
+          </div>
           <div className="w-1/2 max-mobile:w-full p-4 border-2 border-accent overflow-y-auto bg-primary z-10">
             <div className="flex flex-col gap-4">
               <div className="text-2xl font-bold text-accent">
