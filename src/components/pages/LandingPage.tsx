@@ -1,7 +1,6 @@
 import { useState } from 'react'
 import LoginForm from '../organisms/Login'
 import RegisterForm from '../organisms/Register'
-import ActionDarkButton from '../atoms/ActionDarkButton'
 import CenteredContainer from '../organisms/CenteredContainer'
 import LandingTitle from '../atoms/LandingTitle'
 import ParticlesBackground from '../molecules/Particles'
@@ -19,7 +18,9 @@ function Landing() {
               title="Manage your educational pursuit with Googolplex"
               textColor="text-accent mb-4 max-mobile:mb-4"
             />
-            <ActionDarkButton actionText={'Get Started'}></ActionDarkButton>
+            <p className="text-accent">
+              All-inclusive Learning Management System in your area
+            </p>
           </div>
         </CenteredContainer>
         <CenteredContainer className="bg-accent z-20 flex flex-col h-screen lg:h-auto">
