@@ -109,8 +109,6 @@ const AssignmentDetail = () => {
     )
   }
 
-  if (answer.isLoading) return <div className=""></div>
-
   return (
     <div className="w-full min-h-screen bg-primary overflow-hidden">
       <div className="flex flex-col h-full space-y-3">
@@ -190,7 +188,7 @@ const AssignmentDetail = () => {
             </div>
           )}
           <AuthStudentWrapper>
-            {answer.data?.data === null ? (
+            {!isLoading && answer.data?.data === null ? (
               <CreateUserTodoAnswer />
             ) : (
               <div
