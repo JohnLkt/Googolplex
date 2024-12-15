@@ -48,6 +48,11 @@ const TodoCard = (prop: UserAssignmentTodo) => {
         >
           {prop.is_finish ? 'Finished' : 'Pending'}
         </div>
+        {prop.score !== 0 && (
+          <div className="text-sm font-bold rounded w-fit">
+            Score: {prop.score}
+          </div>
+        )}
       </div>
       <div className="text-base mt-2">
         <strong>Due Date:</strong>{' '}
